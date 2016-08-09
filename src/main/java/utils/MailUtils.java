@@ -78,7 +78,7 @@ public class MailUtils {
 	    
 /*	    private Multipart addAttachments(Multipart multipart) throws IOException, MessagingException {
 
-	        String screenShotDirPath = System.getProperty("user.dir")+ "/screenShot";
+	        String screenShotDirPath = SystemUtils.getProjectPath()+ "/screenShot";
 	        File screenShotDir = new File(screenShotDirPath);
 	        File[] screenShotList = screenShotDir.listFiles();
 

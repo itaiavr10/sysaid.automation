@@ -8,6 +8,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import utils.ConfigProperties;
 import utils.MailUtils;
+import utils.SystemUtils;
 
 public class SuiteReporter {
 
@@ -26,8 +27,8 @@ public class SuiteReporter {
 	}
 
 	private void init() {
-		String currentDir = System.getProperty("user.dir");
-		String propertiesPath = currentDir + "\\src\\main\\resources\\conf\\log4j.properties"; //TODO : Should be according to os 
+		
+		String propertiesPath = SystemUtils.getResourcesDirectoryPath() + "\\conf\\log4j.properties"; //TODO : Should be according to os 
 		if (!new File(propertiesPath).exists())
 			System.err.println("log4j.properties is missing under : " + propertiesPath);
 		PropertyConfigurator.configure(propertiesPath);

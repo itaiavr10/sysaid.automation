@@ -11,9 +11,9 @@ public class Suite1 extends AbstractSuite{
 		System.out.println("Suite1 - A");
 	}
 	
-	@Test
+	/*@Test
 	public void B(){
 		System.out.println("Suite1 - B");
-	}
+	}*/
 
 }

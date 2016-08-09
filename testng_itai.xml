@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="ITAI Suite">
+
+  <listeners>
+    <listener class-name="base.TestListener" />
+  </listeners>
+
+	
+<!-- -->
+  <test name="example test1-2">
+    <classes>
+       <class name="itai.Suite1" />
+    </classes>
+  </test>
+
+  <test name="example-test2">
+    <classes>
+       <class name="itai.Suite3" />
+    </classes>
+  </test>
+  
+  
+ 
+  
+</suite> 

@@ -11,10 +11,10 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 	
 	
-	//@Test
+	@Test
 	public void flatInstall(){
 		LogManager.info("Run Installer..");
-		AutoItAPI.run("C:\\Users\\itai.avrahami\\Desktop\\SA.exe");
+		AutoItAPI.run("C:\\SA.exe");
 		sleep(10000);
 		LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");
@@ -43,7 +43,7 @@ public class InstallSanitySuite extends AbstractSuite{
 		
 	}*/
 	
-	@Test
+	//@Test
 	public void calc_Demo(){
 		LogManager.info("Run Calc..");
 		validate.validate(true, "Calc Validate - true");

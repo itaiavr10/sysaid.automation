@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import utils.ConfigProperties;
-import utils.MailUtils;
 import utils.SystemUtils;
 
 public class SuiteReporter {
@@ -76,17 +75,7 @@ public class SuiteReporter {
 		logTable.add("</tr>");
 	}
 
-	 public  void sendResult(){
-	       logTable.add("</table>");
-	       String[] recipients = ConfigProperties.getValue("mailRecipients").split(";");
-	       String[] bccRecipients = new String[]{};
-	       String subject = "Test Resuls";
-	       if (testFailed)
-	           subject += " - Failed";
-	       else
-	           subject += " - Passed";
-	       new MailUtils().sendMail(recipients, bccRecipients, subject, logTable.toString().replace(",","").replace("[","").replace("]",""));
-	   }
+
 
 	private enum ReportStepType {
 		Info_Type("Info") {

@@ -45,6 +45,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 	//@Test
 	/*public void calc_Demo(){
+	 * 
 		LogManager.info("Run Calc..");
 		validate.validate(true, "Calc Validate - true");
 		AutoItAPI.run("calc.exe");

@@ -13,7 +13,7 @@ public class Suite1 extends AbstractSuite{
 	
 	@Test
 	public void B(){
-		System.out.println("Suite1 - B");
+		System.out.println("Suite1 - B..");
 	}
 
 }

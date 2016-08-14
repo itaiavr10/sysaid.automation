@@ -50,9 +50,7 @@ public class InstallSanitySuite extends AbstractSuite{
 		AutoItAPI.waitWin("InstallShield Wizard","License File");
 		AutoItAPI.validateVisibility("InstallShield Wizard", "2007", true);
 		
-		LogManager.info("Step6: click Next"); 
-		AutoItAPI.waitWin("InstallShield Wizard","License File");
-		AutoItAPI.clickButton("InstallShield Wizarde", "License File", "Button2");
+		step6_Debug();
 		
 		LogManager.info("Step7: Set credentials");
 		sleep(6,TimeUnit.MINUTES);
@@ -76,6 +74,12 @@ public class InstallSanitySuite extends AbstractSuite{
 		
 		
 	
+	}
+
+	private void step6_Debug() {
+		LogManager.info("Step6: click Next"); 
+		AutoItAPI.waitWin("InstallShield Wizard","");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "Button2");
 	}
 	
 /*	@Test

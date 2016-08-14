@@ -1,5 +1,7 @@
 package server.installer;
 
+import java.util.concurrent.TimeUnit;
+
 import org.testng.annotations.Test;
 
 import utils.AutoItAPI;
@@ -31,8 +33,9 @@ public class InstallSanitySuite extends AbstractSuite{
 		AutoItAPI.waitWin("InstallShield Wizard" , "Typical");
 		AutoItAPI.clickButton("InstallShield Wizard", "Typical", "Button3");
 		
-		LogManager.info("Step4: set licnese file");
-		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 20);
+		LogManager.info("Step4: set activation file");
+		sleep(4,TimeUnit.MINUTES);
+		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 30);
 		AutoItAPI.clickButton("InstallShield Wizard", "License File", "2005");
 		sleep(1500);
 		//set activation & press Open button
@@ -42,7 +45,33 @@ public class InstallSanitySuite extends AbstractSuite{
 		AutoItAPI.clickButton("Select the Activation File", "", "Button1");
 		
 		//validate valid msg:
-		LogManager.info("Step4: validate 'valid license' message");
+		LogManager.info("Step5: validate 'valid license' message");
+		sleep(5,TimeUnit.SECONDS);
+		AutoItAPI.waitWin("InstallShield Wizard","License File");
+		AutoItAPI.validateVisibility("InstallShield Wizard", "2007", true);
+		
+		LogManager.info("Step6: click Next"); 
+		AutoItAPI.clickButton("InstallShield Wizarde", "", "Button2");
+		
+		LogManager.info("Step7: Set credentials");
+		sleep(6,TimeUnit.MINUTES);
+		AutoItAPI.waitWin("InstallShield Wizard","Serial Number",120);
+		AutoItAPI.setControlText("InstallShield Wizard", "2702", "sysaid"); // Set User
+		sleep(500);
+		AutoItAPI.setControlText("InstallShield Wizard", "2703", "changeit"); //Set Pass
+		sleep(500);
+		AutoItAPI.setControlText("InstallShield Wizard", "2704", "changeit"); //Re'enter Password
+		sleep(500);
+		AutoItAPI.clickButton("InstallShield Wizard", "", "Button1"); //Click next
+		
+		LogManager.info("Step8: 'SysAid Enterprise' popup - click OK");
+		AutoItAPI.waitWin("SysAid Enterprise","Account initialized successfully.",30);
+		sleep(2,TimeUnit.SECONDS);
+		AutoItAPI.clickButton("SysAid Enterprise", "OK", "2"); //Click OK
+		
+		LogManager.info("Step9: 'installShield - completing page");
+		AutoItAPI.waitWin("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server",30);
+		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");
 		
 		
 	

@@ -6,6 +6,13 @@ import base.TestManager;
 public class AutoItAPI {
 
 	private static Integer MaxTimeOut = 20;
+	
+	private static void sleep(long time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+		}
+	}
 
 	public static void waitWin(String winTitle) {
 		waitWin(winTitle, "", MaxTimeOut);
@@ -18,16 +25,12 @@ public class AutoItAPI {
 	public static void waitWin(String winTitle, String winText, Integer timeoutInSec) {
 		boolean WinFound = AutoIt.engine().winWait(winTitle, winText, timeoutInSec);
 		TestManager.validator().validate(WinFound, "Wait for Window: " + winTitle);
-		AutoIt.engine().winActivate(winTitle, winText);
-
+		activateWindow(winTitle, winText);
 	}
 
 	public static void waitWinClosed(String winTitle) {
 		AutoIt.engine().winWaitClose(winTitle);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-		}
+		sleep(1000);
 		boolean WinFound = AutoIt.engine().winWait(winTitle, "", 1);
 		TestManager.validator().validate(!WinFound, "Close Window: " + winTitle);
 	}
@@ -41,12 +44,20 @@ public class AutoItAPI {
 	}
 
 	public static void check(String winTitle, String controlID) {
-		AutoIt.engine().winActivate(winTitle);
+		activateWindow(winTitle, "");
 		AutoIt.engine().controlCommandCheck(winTitle, "", controlID);
+		
+	}
+	
+	public static void validateVisibility(String winTitle, String controlID,boolean expected){
+		activateWindow(winTitle, "");
+		boolean actual = AutoIt.engine().controlCommandIsVisible(winTitle, "", controlID);
+		TestManager.validator().validate(actual == expected, String.format("Validae Element visibility Expected = %s , Acutal = %s", expected,actual));
 	}
 
-	public static void activateWindow(String winTitle) {
-		AutoIt.engine().winActivate(winTitle);
+	public static void activateWindow(String winTitle , String winText) {
+		AutoIt.engine().winActivate(winTitle , winText);
+		sleep(500);
 	}
 
 	public static boolean isWinActive(String winTitle) {

@@ -1,5 +1,7 @@
 package base;
 
+import java.util.concurrent.TimeUnit;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -55,6 +57,11 @@ public class AbstractSuite {
 	public void afterTest() { // RUN AFTER each testng.xml - test
 		// System.out.println("@AfterTest");
 		// System.out.println("----------");
+	}
+	
+	protected void sleep(long time , TimeUnit unit) {
+		sleep(unit.toMillis(time));
+		
 	}
 
 	protected void sleep(long time) {

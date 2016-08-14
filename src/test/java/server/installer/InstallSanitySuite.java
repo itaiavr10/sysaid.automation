@@ -16,7 +16,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	@Test
 	public void flatInstall(){
 		LogManager.info("Run Installer..");
-		AutoItAPI.run("C:\\SA.exe");
+		AutoItAPI.run("C:\\SA\\SA.exe");
 		sleep(10000);
 		LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");

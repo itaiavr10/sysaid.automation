@@ -29,7 +29,22 @@ public class InstallSanitySuite extends AbstractSuite{
 		LogManager.info("Step3: setup type");
 		sleep(1000);
 		AutoItAPI.waitWin("InstallShield Wizard" , "Typical");
-		//AutoItAPI.clickButton("InstallShield Wizard", "Typical", "Button3");
+		AutoItAPI.clickButton("InstallShield Wizard", "Typical", "Button3");
+		
+		LogManager.info("Step4: set licnese file");
+		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 20);
+		AutoItAPI.clickButton("InstallShield Wizard", "License File", "2005");
+		sleep(1500);
+		//set activation & press Open button
+		AutoItAPI.waitWin("Select the Activation File");
+		AutoItAPI.setControlText("Select the Activation File", "1148", "c:\\SA\\activation.xml");
+		sleep(500);
+		AutoItAPI.clickButton("Select the Activation File", "", "Button1");
+		
+		//validate valid msg:
+		LogManager.info("Step4: validate 'valid license' message");
+		
+		
 	
 	}
 	

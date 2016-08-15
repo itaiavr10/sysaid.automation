@@ -26,7 +26,7 @@ public class Validate {
 	 * @param msg
 	 */
 	public void soft(boolean condition, String msg) {
-		if (!condition) {
+		if (condition) {
 			LogManager.debug(msg);
 		} else {
 			LogManager.error(msg);

@@ -57,7 +57,7 @@ public class AutoItAPI {
 
 	public static void activateWindow(String winTitle , String winText) {
 		AutoIt.engine().winActivate(winTitle , winText);
-		sleep(1200);
+		sleep(3000);
 	}
 
 	public static boolean isWinActive(String winTitle) {

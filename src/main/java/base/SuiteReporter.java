@@ -51,6 +51,11 @@ public class SuiteReporter {
 		addTableRow(ReportStepType.Pass_Type, msg);
 		log.info(msg);
 	}
+	
+	public void debug(String msg) {
+		addTableRow(ReportStepType.Pass_Type, msg);
+		log.debug(msg);
+	}
 
 	public void info(String msg) {
 		addTableRow(ReportStepType.Info_Type, msg);

@@ -35,13 +35,13 @@ public class InstallSanitySuite extends AbstractSuite{
 		
 		LogManager.info("Step4: set activation file");
 		sleep(4,TimeUnit.MINUTES);
-		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 30);
+		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 60);
 		AutoItAPI.clickButton("InstallShield Wizard", "License File", "2005");
 		sleep(1500);
 		//set activation & press Open button
 		AutoItAPI.waitWin("Select the Activation File");
 		AutoItAPI.setControlText("Select the Activation File", "1148", "c:\\SA\\activation.xml");
-		sleep(500);
+		sleep(5, TimeUnit.SECONDS);
 		AutoItAPI.clickButton("Select the Activation File", "", "Button1");
 		
 		//validate valid msg:

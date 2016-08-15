@@ -19,6 +19,10 @@ public class LogManager {
 	public static void pass(String msg) {
 		report.get().pass(msg);
 	}
+	
+	public static void debug(String msg) {
+		report.get().debug(msg);
+	}
 
 	public static void info(String msg) {
 		report.get().info(msg);

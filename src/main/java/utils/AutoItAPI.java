@@ -26,6 +26,7 @@ public class AutoItAPI {
 		boolean WinFound = AutoIt.engine().winWait(winTitle, winText, timeoutInSec);
 		TestManager.validator().soft(WinFound, "Wait for Window: " + winTitle);
 		activateWindow(winTitle, winText);
+		sleep(2000);
 	}
 
 	public static void waitWinClosed(String winTitle) {
@@ -57,7 +58,7 @@ public class AutoItAPI {
 
 	public static void activateWindow(String winTitle , String winText) {
 		AutoIt.engine().winActivate(winTitle , winText);
-		sleep(3000);
+		sleep(1000);
 	}
 
 	public static boolean isWinActive(String winTitle) {

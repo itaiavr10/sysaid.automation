@@ -77,7 +77,7 @@ public class InstallSanitySuite extends AbstractSuite{
 		AutoItAPI.waitWin("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server",30);
 		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");
 		
-		sleep(5,TimeUnit.SECONDS); //Wait for finish to deploy
+		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		InstallServer.validateInstallation();
 		
 		

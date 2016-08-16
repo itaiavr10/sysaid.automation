@@ -16,6 +16,7 @@ public class InstallServer {
 		//validate SysAidAgent & SysAidServer services are running
 		SystemUtils.validateService("SysAid Agent", true); //TODO : Should be an enum
 		SystemUtils.validateService("SysAid Server", true); //TODO : Should be an enum
+		SystemUtils.validateService("SQL Server (SYSAIDMSSQL)", true); //TODO : Should be an enum
 		
 		//validate icons on desktop:
 		SystemUtils.validateFileExist("SysAid Login.lnk", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum

@@ -85,16 +85,17 @@ public class SystemUtils {
 	private static List<String> getProcessDetails(String processName) {
 		LogManager.debug("Get Process Details for process: " + processName);
 		List<String> processList = null;
+		BufferedReader input = null;
 		try {
 			String cmd = String.format("tasklist.exe /fi \"Imagename eq %s\"", processName);
 			Process proc = Runtime.getRuntime().exec(cmd);
 			InputStream procOutput = proc.getInputStream ();
 			
-				BufferedReader input =new BufferedReader(new InputStreamReader(procOutput));
+				input =new BufferedReader(new InputStreamReader(procOutput));
 				String line;
 				
 				while ((line = input.readLine()) != null) {
-					if(line.contains("no Tasks"))
+					if(line.contains("No tasks"))
 						return null;
 					if(line.contains("====="))
 						break;
@@ -106,10 +107,15 @@ public class SystemUtils {
 					LogManager.debug(line); //<-- Parse data here.
 			        processList.add(line);
 			    }
-			    input.close();
+			    
 			    
 		} catch (Exception e) {
 			TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
+		}finally{
+			try {
+				input.close();
+			} catch (IOException e) {
+			}
 		}
 		return processList;
 	}
@@ -124,8 +130,34 @@ public class SystemUtils {
 		TestManager.validator().validate(shouldRun == isRun, String.format("Validate Service is running : %s . Expected = %s , Actual = %s",serviceName, shouldRun, isRun));
 	}
 	
+	private static boolean isServiceRunning(String serviceName) {
+		BufferedReader input = null;
+		try {
+			//String cmd = String.format("sc query \"%s\"   | FIND \"STATE\"", serviceName);
+			//String cmd = String.format("net START | find \"%s\"", serviceName);
+			String cmd = "net START";
+			Process proc = Runtime.getRuntime().exec(cmd);
+			InputStream procOutput = proc.getInputStream ();
+			
+				input =new BufferedReader(new InputStreamReader(procOutput));
+				String line;
+				while ((line = input.readLine()) != null) {
+					if(line.contains(serviceName))
+						return true;
+					//return false;
+			    }
+		} catch (Exception e) {
+			TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
+		}finally{
+			try {
+				input.close();
+			} catch (IOException e) {
+			}
+		}
+		return false;
+	}
 	
-	public static boolean isServiceRunning(String serviceName) {
+	/*public static boolean isServiceRunning(String serviceName) {
 		LogManager.debug("Is Service Running for service: " + serviceName);
 		try {
 			String cmd = String.format("sc query %s   | FIND \"STATE\"", serviceName);
@@ -144,5 +176,5 @@ public class SystemUtils {
 			TestManager.validator().assertFalse("Error on  isServiceRunning utils : " + e.getMessage());
 		}
 		return false;
-	}
+	}*/
 }

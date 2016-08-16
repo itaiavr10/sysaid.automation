@@ -5,8 +5,10 @@ import java.util.concurrent.TimeUnit;
 import org.testng.annotations.Test;
 
 import utils.AutoItAPI;
+import utils.SystemUtils;
 import base.AbstractSuite;
 import base.LogManager;
+import buisness.InstallServer;
 
 
 public class InstallSanitySuite extends AbstractSuite{
@@ -73,6 +75,8 @@ public class InstallSanitySuite extends AbstractSuite{
 		LogManager.info("Step9: 'installShield - completing page");
 		AutoItAPI.waitWin("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server",30);
 		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");
+		
+		InstallServer.validateInstallation();
 		
 		
 	

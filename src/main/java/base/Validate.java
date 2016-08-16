@@ -1,5 +1,7 @@
 package base;
 
+import java.util.List;
+
 import org.testng.Assert;
 
 public class Validate {
@@ -19,7 +21,6 @@ public class Validate {
 		}
 	}
 	
-	
 	/**
 	 * report as debug
 	 * @param condition
@@ -32,6 +33,12 @@ public class Validate {
 			LogManager.error(msg);
 			Assert.assertTrue(false);
 		}
+	}
+	
+	
+	public void assertFalse(String msg){
+		LogManager.error(msg);
+		Assert.assertTrue(false);
 	}
 
 }

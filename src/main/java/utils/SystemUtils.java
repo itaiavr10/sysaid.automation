@@ -57,9 +57,27 @@ public class SystemUtils {
 	}
 	
 	public static void validateFileExist(String filePath ,  boolean shouldExist){
-		File file = new File(filePath);
+		/*File file = new File(filePath);
 		boolean isExist = file.exists();
-		TestManager.validator().validate(shouldExist == isExist, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isExist));
+		TestManager.validator().validate(shouldExist == isExist, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isExist));*/
+		//////////////////////////////////////////////////////////////
+		File file = new File(filePath);//TODO Should be in Retry Mech
+		long waitInterval = 2000;
+		long maxTimeoutInMiliSec = 20000;
+		//boolean isExist = file.exists();
+		long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
+		boolean isok = false;
+		while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
+			if (file.exists() == shouldExist) {
+				isok = true;
+				break;
+			}
+			// interval to sleep between each iteration
+			try {
+				Thread.sleep(waitInterval);
+			} catch (InterruptedException e) {}
+		}
+		TestManager.validator().validate(isok, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isok));
 	}
 	
 	
@@ -77,7 +95,7 @@ public class SystemUtils {
 	
 	public static void waitForProcessStop(String processName, long maxTimeoutInMiliSec , long waitInterval) {
 		LogManager.debug("Wait For Process Stop: " + processName);
-		long startTime = System.currentTimeMillis();
+		long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
 		boolean isok = false;
 		while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
 			if (!isProcessRunning(processName)) {

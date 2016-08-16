@@ -50,6 +50,7 @@ public class InstallSanitySuite extends AbstractSuite{
 		LogManager.info("Step5: validate 'valid license' message");
 		sleep(5,TimeUnit.SECONDS);
 		AutoItAPI.waitWin("InstallShield Wizard","License File");
+		//Valid License Msg id=2007 , Invalid id= 2008
 		AutoItAPI.validateVisibility("InstallShield Wizard", "2007", true);
 		
 		LogManager.info("Step6: click Next"); 

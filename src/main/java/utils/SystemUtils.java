@@ -75,6 +75,25 @@ public class SystemUtils {
 		TestManager.validator().validate(shouldRun == isRun, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun));
 	}
 	
+	public static void waitForProcessStop(String processName, long maxTimeoutInMiliSec , long waitInterval) {
+		LogManager.debug("Wait For Process Stop: " + processName);
+		long startTime = System.currentTimeMillis();
+		boolean isok = false;
+		while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
+			if (!isProcessRunning(processName)) {
+				isok = true;
+				break;
+			}
+			// interval to sleep between each iteration
+			try {
+				Thread.sleep(waitInterval);
+			} catch (InterruptedException e) {}
+		}
+		if(!isok){
+			LogManager.error("Wait For Process Stop - Failed ");
+		}
+	}
+	
 	public static boolean isProcessRunning(String processName){
 		List<String> processList = getProcessDetails(processName);
 		if(processList == null || processList.isEmpty())

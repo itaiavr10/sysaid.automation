@@ -10,6 +10,8 @@ public class InstallServer {
 	
 	
 	public static void validateInstallation(){
+		//wait for process to finish installstion
+		SystemUtils.waitForProcessStop("SA.exe", 40 * 1000 , 3000);
 		//validate SA.exe is finished to run
 		SystemUtils.validateProcess("SA.exe", false); //TODO : Should be an enum
 		//validate SA Process start to run
@@ -18,11 +20,11 @@ public class InstallServer {
 		SystemUtils.validateProcess("SysAidWorker.exe", true); //TODO : Should be an enum
 	
 		//validate SysAidAgent & SysAidServer services are running
-		SystemUtils.validateService("SysAidAgent", true); //TODO : Should be an enum
-		SystemUtils.validateService("SysAidServer", true); //TODO : Should be an enum
+		SystemUtils.validateService("SysAid Agent", true); //TODO : Should be an enum
+		SystemUtils.validateService("SysAid Server", true); //TODO : Should be an enum
 		//validate icons on desktop:
-		SystemUtils.validateFileExist("SysAid Login", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum
-		SystemUtils.validateFileExist("SysAid", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum
+		SystemUtils.validateFileExist("SysAid Login.lnk", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum
+		SystemUtils.validateFileExist("SysAid.lnk", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum
 		
 		validateSysAidFiles();
 	}

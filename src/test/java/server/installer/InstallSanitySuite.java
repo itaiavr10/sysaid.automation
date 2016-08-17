@@ -79,8 +79,6 @@ public class InstallSanitySuite extends AbstractSuite{
 		
 		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		InstallServer.validateInstallation();
-		
-		
 	
 	}
 

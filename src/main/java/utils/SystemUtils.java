@@ -53,15 +53,31 @@ public class SystemUtils {
 	
 	
 	public static void validateFileExist(String fileName , String direcoryPath , boolean shouldExist){
-		validateFileExist(direcoryPath + "\\" + fileName , shouldExist);
+		validateFileExist(direcoryPath + "\\" + fileName , shouldExist , null);
 	}
 	
-	public static void validateFileExist(String filePath ,  boolean shouldExist){
+	public static void validateFileExist(String filePath ,  final boolean shouldExist){
+		validateFileExist(filePath ,  shouldExist , 5000);
+	}
+	
+	public static void validateFileExist(String filePath ,  final boolean shouldExist , Integer maxTimeOutMs){
+		final ValueRef<Boolean> isExist = new ValueRef<Boolean>(false);
+		final File file = new File(filePath);
+		boolean ispass = Utils.tryUntil(new ActionWrapper("Validat File Exist : " + filePath , maxTimeOutMs) {
+			@Override
+			public boolean invoke() throws Exception {
+				boolean results = file.exists();
+				isExist.setValue(results);
+				return shouldExist == results;
+			}
+		});
+		TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
+		
 		/*File file = new File(filePath);
 		boolean isExist = file.exists();
 		TestManager.validator().validate(shouldExist == isExist, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isExist));*/
 		//////////////////////////////////////////////////////////////
-		File file = new File(filePath);//TODO Should be in Retry Mech
+		/*File file = new File(filePath);//TODO Should be in Retry Mech
 		long waitInterval = 2000;
 		long maxTimeoutInMiliSec = 20000;
 		//boolean isExist = file.exists();
@@ -77,7 +93,7 @@ public class SystemUtils {
 				Thread.sleep(waitInterval);
 			} catch (InterruptedException e) {}
 		}
-		TestManager.validator().validate(isok, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isok));
+		TestManager.validator().validate(isok, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isok));*/
 	}
 	
 	
@@ -88,12 +104,39 @@ public class SystemUtils {
 //												Process														   //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static void validateProcess(String processName , boolean shouldRun){
-		boolean isRun = isProcessRunning(processName);
-		TestManager.validator().validate(shouldRun == isRun, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun));
+	public static synchronized void validateProcess(final String processName , final boolean shouldRun){
+		final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);
+		boolean pass = Utils.tryUntil(new ActionWrapper("Validate Process : " + processName) {
+			@Override
+			public boolean invoke() throws Exception {
+				boolean results = isProcessRunning(processName);
+				isRun.setValue(results);
+				return results == shouldRun;
+			}
+		});
+		TestManager.validator().validate(pass, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun.value));
+		
+		/*boolean isRun = isProcessRunning(processName);
+		TestManager.validator().validate(shouldRun == isRun, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun));*/
 	}
 	
-	public static void waitForProcessStop(String processName, long maxTimeoutInMiliSec , long waitInterval) {
+	public static void waitForProcessStop(final String processName, int maxTimeoutInMiliSec , int waitInterval) {
+		final ValueRef<Boolean> isStoped = new ValueRef<Boolean>(false);
+		boolean pass  = Utils.tryUntil(new ActionWrapper("Wait For Process Stop: " + processName , maxTimeoutInMiliSec , waitInterval) {
+			@Override
+			public boolean invoke() throws Exception {
+				boolean results = !isProcessRunning(processName);
+				isStoped.setValue(results);
+				return results;
+			}
+		});
+		
+		if(!pass){
+			LogManager.error("Wait For Process Stop - Failed ");
+		}
+		
+		/*
+		
 		LogManager.debug("Wait For Process Stop: " + processName);
 		long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
 		boolean isok = false;
@@ -109,7 +152,7 @@ public class SystemUtils {
 		}
 		if(!isok){
 			LogManager.error("Wait For Process Stop - Failed ");
-		}
+		}*/
 	}
 	
 	public static boolean isProcessRunning(String processName){
@@ -132,8 +175,10 @@ public class SystemUtils {
 				String line;
 				
 				while ((line = input.readLine()) != null) {
-					if(line.contains("No tasks"))
+					if(line.contains("No tasks")){
+						LogManager.debug("tasklist.exe - No results for :" + processName);
 						return null;
+					}
 					if(line.contains("====="))
 						break;
 			    }

@@ -2,18 +2,14 @@ package itai;
 
 import org.testng.annotations.Test;
 
+import utils.SystemUtils;
 import base.AbstractSuite;
 
 public class Suite1 extends AbstractSuite{
 	
 	@Test
 	public void A(){
-		System.out.println("Suite1 - A");
-	}
-	
-	@Test
-	public void B(){
-		System.out.println("Suite1 - B..");
+		SystemUtils.validateProcess("calc.exe", true);
 	}
 
 }

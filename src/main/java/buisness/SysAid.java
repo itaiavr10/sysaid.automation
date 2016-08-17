@@ -12,6 +12,7 @@ public class SysAid {
 	private static String msSqlPath = "C:\\Program Files\\SysAidMsSql";
 	private static String tomcatPath = "C:\\Program Files\\SysAidServer\\tomcat";
 	private static String webInfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF";
+	private static String sysaidAgentLogPath = "C:\\Program Files\\SysAid\\logs";
 	
 	
 	static{
@@ -26,6 +27,7 @@ public class SysAid {
 		filesList.add(msSqlPath);
 		filesList.add(tomcatPath);
 		filesList.add(webInfPath);
+		filesList.add(sysaidAgentLogPath);
 	}
 	
 	

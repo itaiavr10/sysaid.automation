@@ -8,19 +8,21 @@
   </listeners>
 
 	
-<!-- -->
+
   <test name="example test1-2">
     <classes>
        <class name="itai.Suite1" />
     </classes>
   </test>
 
+
+<!-- 
   <test name="example-test2">
     <classes>
        <class name="itai.Suite3" />
     </classes>
   </test>
-  
+-->  
   
  
   

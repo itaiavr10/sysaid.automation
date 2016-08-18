@@ -2,6 +2,7 @@ package utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -30,6 +32,31 @@ public class SystemUtils {
 		input = FileUtils.readFileToString(srcFile);
 		return input;
 	}
+	
+	
+	public static void scanFile(String filePath, String... searchQuery){
+        LogManager.debug("Scan File: " + filePath);
+        Scanner scanner = null;
+        try{
+            scanner = new Scanner(new File(filePath));
+            while (scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                for (String reg : searchQuery) {
+                	 if (line.toLowerCase().contains(reg.trim().toLowerCase()))
+                		 LogManager.error("Found Line: " + line);
+				}
+            }
+        } catch (FileNotFoundException e) {
+        	LogManager.error("Scan File - Error : " + e.getMessage());
+		}
+        finally{
+            try{
+                if (scanner != null)
+                    scanner.close();
+            }
+            catch (Exception e) {}
+        }
+    }
 	
 	
 	public static String getProjectPath() {

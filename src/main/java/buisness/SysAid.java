@@ -5,6 +5,7 @@ import java.util.List;
 
 public class SysAid {
 	
+	//TODO : separate to server , agent
 	
 	private static List<String> filesList;
 	private static String serverPath = "C:\\Program Files\\SysAidServer";
@@ -33,6 +34,12 @@ public class SysAid {
 	
 	public static List<String> getFiles(){
 		return filesList;
+	}
+	
+	
+	public static class Agent{
+		public static String configFilePath = "C:\\Program Files\\SysAid\\Configuration\\AgentConfigurationFile.xml"; 
+		public static String logFilePath = "C:\\Program Files\\SysAid\\logs\\SysAidAgentLog.txt"; 
 	}
 
 }

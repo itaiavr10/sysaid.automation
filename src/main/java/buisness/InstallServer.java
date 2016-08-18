@@ -3,6 +3,7 @@ package buisness;
 import java.util.List;
 
 import utils.SystemUtils;
+import utils.XmlUtils;
 
 public class InstallServer {
 	
@@ -32,7 +33,11 @@ public class InstallServer {
 		SystemUtils.validateFileExist("SysAid.lnk", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum
 				
 				
+		// verify Agent send inventory to server - successfully
+		XmlUtils.validteNodeValue(SysAid.Agent.configFilePath, "FirstTime", "N", 150000, 3000);
 		
+		//log verification
+		SystemUtils.scanFile(SysAid.Agent.logFilePath, "Error","Exception");
 		
 		
 	}

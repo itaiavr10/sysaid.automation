@@ -64,10 +64,8 @@ public class AbstractSuite {
 	}
 
 	protected void sleep(long time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-		}
+		TestManager.sleep(time);
+
 	}
 
 }

@@ -26,229 +26,233 @@ public class SystemUtils {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //												Files														   //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//TODO: Check
-	public static String readFile(final File srcFile) throws IOException {
-		String input;
-		input = FileUtils.readFileToString(srcFile);
-		return input;
-	}
 	
-	
-	public static void scanFile(String filePath, String... searchQuery){
-		LogManager.info("Scan File: " + filePath);
-	    BufferedReader br = null;
+	public static class Files{
 
-	     try{
-	            br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
-	            String line;
-	            while ((line = br.readLine()) != null){
-	                 for (String reg : searchQuery) {
-	                 	 if (line.toLowerCase().contains(reg.trim().toLowerCase()))
-	                 		 LogManager.error("Found Line: " + line);
-	 				}
+		//TODO: Check
+		public static String read(final File srcFile) throws IOException {
+			String input;
+			input = FileUtils.readFileToString(srcFile);
+			return input;
+		}
+		
+		
+		public static void scan(String filePath, String... searchQuery){
+			LogManager.info("Scan File: " + filePath);
+		    BufferedReader br = null;
+		     try{
+		            br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+		            String line;
+		            while ((line = br.readLine()) != null){
+		                 for (String reg : searchQuery) {
+		                 	 if (line.toLowerCase().contains(reg.trim().toLowerCase()))
+		                 		 LogManager.error("Found Line: " + line);
+		 				}
+		            }
+		        }catch (Exception e) {
+		        	LogManager.error("Scan File - Error : " + e.getMessage());
+				}
+		        finally{
+		            try{
+		                if (br != null)
+		                    br.close();
+		            }
+		            catch (Exception e){ }
+		        }
+	        /*Scanner scanner = null;
+	        try{
+	            scanner = new Scanner(new File(filePath));
+	            while (scanner.hasNextLine()){
+	                String line = scanner.nextLine();
+	                for (String reg : searchQuery) {
+	                	 if (line.toLowerCase().contains(reg.trim().toLowerCase()))
+	                		 LogManager.error("Found Line: " + line);
+					}
 	            }
-	        }catch (Exception e) {
+	        } catch (FileNotFoundException e) {
 	        	LogManager.error("Scan File - Error : " + e.getMessage());
 			}
 	        finally{
 	            try{
-	                if (br != null)
-	                    br.close();
+	                if (scanner != null)
+	                    scanner.close();
 	            }
-	            catch (Exception e){ }
-	        }
-        /*Scanner scanner = null;
-        try{
-            scanner = new Scanner(new File(filePath));
-            while (scanner.hasNextLine()){
-                String line = scanner.nextLine();
-                for (String reg : searchQuery) {
-                	 if (line.toLowerCase().contains(reg.trim().toLowerCase()))
-                		 LogManager.error("Found Line: " + line);
-				}
-            }
-        } catch (FileNotFoundException e) {
-        	LogManager.error("Scan File - Error : " + e.getMessage());
-		}
-        finally{
-            try{
-                if (scanner != null)
-                    scanner.close();
-            }
-            catch (Exception e) {}
-        }*/
-    }
-	
-	
-	public static String getProjectPath() {
-		return System.getProperty("user.dir");
-	}
-	
-	public static String getPublicDesktopPath() {
-		//return String.format("C:\\Users\\%s\\Desktop", System.getProperty("user.name"));
-		return String.format("C:\\Users\\Public\\Desktop");
-	}
-	
-	public static String getResourcesDirectoryPath() {
-		return getProjectPath() + "\\src\\main\\resources";
-	}
-	
-	
-	public static void createFile(String filePath , final String fileContent) throws IOException {
-		File newFile = new File(filePath);
-		FileUtils.write(newFile, fileContent);
-	}
-	
-	
-	public static void validateFileExist(String fileName , String direcoryPath , boolean shouldExist){
-		validateFileExist(direcoryPath + "\\" + fileName , shouldExist , null);
-	}
-	
-	public static void validateFileExist(String filePath ,  final boolean shouldExist){
-		validateFileExist(filePath ,  shouldExist , 5000);
-	}
-	
-	public static void validateFileExist(String filePath ,  final boolean shouldExist , Integer maxTimeOutMs){
-		final ValueRef<Boolean> isExist = new ValueRef<Boolean>(false);
-		final File file = new File(filePath);
-		boolean ispass = Utils.tryUntil(new ActionWrapper("Validat File Exist : " + filePath , maxTimeOutMs) {
-			@Override
-			public boolean invoke() throws Exception {
-				boolean results = file.exists();
-				isExist.setValue(results);
-				return shouldExist == results;
-			}
-		});
-		TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
+	            catch (Exception e) {}
+	        }*/
+	    }
 		
-		/*File file = new File(filePath);
-		boolean isExist = file.exists();
-		TestManager.validator().validate(shouldExist == isExist, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isExist));*/
-		//////////////////////////////////////////////////////////////
-		/*File file = new File(filePath);//TODO Should be in Retry Mech
-		long waitInterval = 2000;
-		long maxTimeoutInMiliSec = 20000;
-		//boolean isExist = file.exists();
-		long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
-		boolean isok = false;
-		while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
-			if (file.exists() == shouldExist) {
-				isok = true;
-				break;
-			}
-			// interval to sleep between each iteration
-			try {
-				Thread.sleep(waitInterval);
-			} catch (InterruptedException e) {}
+		
+		public static String getProjectPath() {
+			return System.getProperty("user.dir");
 		}
-		TestManager.validator().validate(isok, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isok));*/
+		
+		public static String getPublicDesktopPath() {
+			//return String.format("C:\\Users\\%s\\Desktop", System.getProperty("user.name"));
+			return String.format("C:\\Users\\Public\\Desktop");
+		}
+		
+		public static String getResourcesDirectoryPath() {
+			return getProjectPath() + "\\src\\main\\resources";
+		}
+		
+		
+		public static void createFile(String filePath , final String fileContent) throws IOException {
+			File newFile = new File(filePath);
+			FileUtils.write(newFile, fileContent);
+		}
+		
+		
+		public static void validateExist(String fileName , String direcoryPath , boolean shouldExist){
+			validateExist(direcoryPath + "\\" + fileName , shouldExist , null);
+		}
+		
+		public static void validateExist(String filePath ,  final boolean shouldExist){
+			validateExist(filePath ,  shouldExist , 5000);
+		}
+		
+		public static void validateExist(String filePath ,  final boolean shouldExist , Integer maxTimeOutMs){
+			final ValueRef<Boolean> isExist = new ValueRef<Boolean>(false);
+			final File file = new File(filePath);
+			boolean ispass = Utils.tryUntil(new ActionWrapper("Validat File Exist : " + filePath , maxTimeOutMs) {
+				@Override
+				public boolean invoke() throws Exception {
+					boolean results = file.exists();
+					isExist.setValue(results);
+					return shouldExist == results;
+				}
+			});
+			TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
+			
+			/*File file = new File(filePath);
+			boolean isExist = file.exists();
+			TestManager.validator().validate(shouldExist == isExist, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isExist));*/
+			//////////////////////////////////////////////////////////////
+			/*File file = new File(filePath);//TODO Should be in Retry Mech
+			long waitInterval = 2000;
+			long maxTimeoutInMiliSec = 20000;
+			//boolean isExist = file.exists();
+			long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
+			boolean isok = false;
+			while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
+				if (file.exists() == shouldExist) {
+					isok = true;
+					break;
+				}
+				// interval to sleep between each iteration
+				try {
+					Thread.sleep(waitInterval);
+				} catch (InterruptedException e) {}
+			}
+			TestManager.validator().validate(isok, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isok));*/
+		}
+	
+	
 	}
-	
-	
-	
 	
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //												Process														   //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static synchronized void validateProcess(final String processName , final boolean shouldRun){
-		final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);
-		boolean pass = Utils.tryUntil(new ActionWrapper("Validate Process : " + processName) {
-			@Override
-			public boolean invoke() throws Exception {
-				boolean results = isProcessRunning(processName);
-				isRun.setValue(results);
-				return results == shouldRun;
-			}
-		});
-		TestManager.validator().validate(pass, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun.value));
-		
-		/*boolean isRun = isProcessRunning(processName);
-		TestManager.validator().validate(shouldRun == isRun, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun));*/
-	}
+	public static class Processes{
 	
-	public static void waitForProcessStop(final String processName, int maxTimeoutInMiliSec , int waitInterval) {
-		final ValueRef<Boolean> isStoped = new ValueRef<Boolean>(false);
-		boolean pass  = Utils.tryUntil(new ActionWrapper("Wait For Process Stop: " + processName , maxTimeoutInMiliSec , waitInterval) {
-			@Override
-			public boolean invoke() throws Exception {
-				boolean results = !isProcessRunning(processName);
-				isStoped.setValue(results);
-				return results;
-			}
-		});
-		
-		if(!pass){
-			LogManager.error("Wait For Process Stop - Failed ");
-		}
-		
-		/*
-		
-		LogManager.debug("Wait For Process Stop: " + processName);
-		long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
-		boolean isok = false;
-		while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
-			if (!isProcessRunning(processName)) {
-				isok = true;
-				break;
-			}
-			// interval to sleep between each iteration
-			try {
-				Thread.sleep(waitInterval);
-			} catch (InterruptedException e) {}
-		}
-		if(!isok){
-			LogManager.error("Wait For Process Stop - Failed ");
-		}*/
-	}
-	
-	public static boolean isProcessRunning(String processName){
-		List<String> processList = getProcessDetails(processName);
-		if(processList == null || processList.isEmpty())
-			return false;
-		return true;
-	}
-
-	private static List<String> getProcessDetails(String processName) {
-		LogManager.debug("Get Process Details for process: " + processName);
-		List<String> processList = null;
-		BufferedReader input = null;
-		try {
-			String cmd = String.format("tasklist.exe /fi \"Imagename eq %s\"", processName);
-			Process proc = Runtime.getRuntime().exec(cmd);
-			InputStream procOutput = proc.getInputStream ();
+		public static synchronized void validate(final String processName , final boolean shouldRun){
+			final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);
+			boolean pass = Utils.tryUntil(new ActionWrapper("Validate Process : " + processName) {
+				@Override
+				public boolean invoke() throws Exception {
+					boolean results = isProcessRunning(processName);
+					isRun.setValue(results);
+					return results == shouldRun;
+				}
+			});
+			TestManager.validator().validate(pass, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun.value));
 			
-				input =new BufferedReader(new InputStreamReader(procOutput));
-				String line;
-				
-				while ((line = input.readLine()) != null) {
-					if(line.contains("No tasks")){
-						LogManager.debug("tasklist.exe - No results for :" + processName);
-						return null;
-					}
-					if(line.contains("====="))
-						break;
-			    }
-				//Start reading table results
-				processList = new ArrayList<String>();
-				LogManager.debug("Found Processes :");
-				while ((line = input.readLine()) != null) {
-					LogManager.debug(line); //<-- Parse data here.
-			        processList.add(line);
-			    }
-			    
-			    
-		} catch (Exception e) {
-			TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
-		}finally{
-			try {
-				input.close();
-			} catch (IOException e) {
-			}
+			/*boolean isRun = isProcessRunning(processName);
+			TestManager.validator().validate(shouldRun == isRun, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun));*/
 		}
-		return processList;
+		
+		public static void waitForProcessStop(final String processName, int maxTimeoutInMiliSec , int waitInterval) {
+			final ValueRef<Boolean> isStoped = new ValueRef<Boolean>(false);
+			boolean pass  = Utils.tryUntil(new ActionWrapper("Wait For Process Stop: " + processName , maxTimeoutInMiliSec , waitInterval) {
+				@Override
+				public boolean invoke() throws Exception {
+					boolean results = !isProcessRunning(processName);
+					isStoped.setValue(results);
+					return results;
+				}
+			});
+			
+			if(!pass){
+				LogManager.error("Wait For Process Stop - Failed ");
+			}
+			
+			/*
+			
+			LogManager.debug("Wait For Process Stop: " + processName);
+			long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
+			boolean isok = false;
+			while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
+				if (!isProcessRunning(processName)) {
+					isok = true;
+					break;
+				}
+				// interval to sleep between each iteration
+				try {
+					Thread.sleep(waitInterval);
+				} catch (InterruptedException e) {}
+			}
+			if(!isok){
+				LogManager.error("Wait For Process Stop - Failed ");
+			}*/
+		}
+		
+		public static boolean isProcessRunning(String processName){
+			List<String> processList = getProcessDetails(processName);
+			if(processList == null || processList.isEmpty())
+				return false;
+			return true;
+		}
+	
+		private static List<String> getProcessDetails(String processName) {
+			LogManager.debug("Get Process Details for process: " + processName);
+			List<String> processList = null;
+			BufferedReader input = null;
+			try {
+				String cmd = String.format("tasklist.exe /fi \"Imagename eq %s\"", processName);
+				Process proc = Runtime.getRuntime().exec(cmd);
+				InputStream procOutput = proc.getInputStream ();
+				
+					input =new BufferedReader(new InputStreamReader(procOutput));
+					String line;
+					
+					while ((line = input.readLine()) != null) {
+						if(line.contains("No tasks")){
+							LogManager.debug("tasklist.exe - No results for :" + processName);
+							return null;
+						}
+						if(line.contains("====="))
+							break;
+				    }
+					//Start reading table results
+					processList = new ArrayList<String>();
+					LogManager.debug("Found Processes :");
+					while ((line = input.readLine()) != null) {
+						LogManager.debug(line); //<-- Parse data here.
+				        processList.add(line);
+				    }
+				    
+				    
+			} catch (Exception e) {
+				TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
+			}finally{
+				try {
+					input.close();
+				} catch (IOException e) {
+				}
+			}
+			return processList;
+		}
 	}
 	
 	
@@ -256,56 +260,59 @@ public class SystemUtils {
 //											Services														   //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public static void validateService(String serviceName , boolean shouldRun){
-		boolean isRun = isServiceRunning(serviceName);
-		TestManager.validator().validate(shouldRun == isRun, String.format("Validate Service is running : %s . Expected = %s , Actual = %s",serviceName, shouldRun, isRun));
-	}
+	public static class Services{
 	
-	private static boolean isServiceRunning(String serviceName) {
-		BufferedReader input = null;
-		try {
-			//String cmd = String.format("sc query \"%s\"   | FIND \"STATE\"", serviceName);
-			//String cmd = String.format("net START | find \"%s\"", serviceName);
-			String cmd = "net START";
-			Process proc = Runtime.getRuntime().exec(cmd);
-			InputStream procOutput = proc.getInputStream ();
-			
-				input =new BufferedReader(new InputStreamReader(procOutput));
-				String line;
-				while ((line = input.readLine()) != null) {
-					if(line.contains(serviceName))
-						return true;
-					//return false;
-			    }
-		} catch (Exception e) {
-			TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
-		}finally{
+		public static void validate(String serviceName , boolean shouldRun){
+			boolean isRun = isServiceRunning(serviceName);
+			TestManager.validator().validate(shouldRun == isRun, String.format("Validate Service is running : %s . Expected = %s , Actual = %s",serviceName, shouldRun, isRun));
+		}
+		
+		private static boolean isServiceRunning(String serviceName) {
+			BufferedReader input = null;
 			try {
-				input.close();
-			} catch (IOException e) {
+				//String cmd = String.format("sc query \"%s\"   | FIND \"STATE\"", serviceName);
+				//String cmd = String.format("net START | find \"%s\"", serviceName);
+				String cmd = "net START";
+				Process proc = Runtime.getRuntime().exec(cmd);
+				InputStream procOutput = proc.getInputStream ();
+				
+					input =new BufferedReader(new InputStreamReader(procOutput));
+					String line;
+					while ((line = input.readLine()) != null) {
+						if(line.contains(serviceName))
+							return true;
+						//return false;
+				    }
+			} catch (Exception e) {
+				TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
+			}finally{
+				try {
+					input.close();
+				} catch (IOException e) {
+				}
 			}
+			return false;
 		}
-		return false;
+		
+		/*public static boolean isServiceRunning(String serviceName) {
+			LogManager.debug("Is Service Running for service: " + serviceName);
+			try {
+				String cmd = String.format("sc query %s   | FIND \"STATE\"", serviceName);
+				Process proc = Runtime.getRuntime().exec(cmd);
+				InputStream procOutput = proc.getInputStream ();
+				
+					BufferedReader input =new BufferedReader(new InputStreamReader(procOutput));
+					String line;
+					if ((line = input.readLine()) != null) {
+						LogManager.debug("Service status : " + line);
+						if(line.contains("Running"))
+							return true;
+						return false;
+				    }
+			} catch (Exception e) {
+				TestManager.validator().assertFalse("Error on  isServiceRunning utils : " + e.getMessage());
+			}
+			return false;
+		}*/
 	}
-	
-	/*public static boolean isServiceRunning(String serviceName) {
-		LogManager.debug("Is Service Running for service: " + serviceName);
-		try {
-			String cmd = String.format("sc query %s   | FIND \"STATE\"", serviceName);
-			Process proc = Runtime.getRuntime().exec(cmd);
-			InputStream procOutput = proc.getInputStream ();
-			
-				BufferedReader input =new BufferedReader(new InputStreamReader(procOutput));
-				String line;
-				if ((line = input.readLine()) != null) {
-					LogManager.debug("Service status : " + line);
-					if(line.contains("Running"))
-						return true;
-					return false;
-			    }
-		} catch (Exception e) {
-			TestManager.validator().assertFalse("Error on  isServiceRunning utils : " + e.getMessage());
-		}
-		return false;
-	}*/
 }

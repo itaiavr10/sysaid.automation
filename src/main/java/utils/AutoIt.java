@@ -16,7 +16,7 @@ public class AutoIt {
 	}
 
 	private void init() {
-		String dllPath = SystemUtils.getResourcesDirectoryPath() + "\\lib\\jacob-1.18-x64.dll"; //TODO : Should be according to os 
+		String dllPath = SystemUtils.Files.getResourcesDirectoryPath() + "\\lib\\jacob-1.18-x64.dll"; //TODO : Should be according to os 
 		File file = new File(dllPath);
 		if (!file.exists())
 			System.err.println("file is missing");

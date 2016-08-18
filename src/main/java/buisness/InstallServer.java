@@ -13,31 +13,31 @@ public class InstallServer {
 	public static void validateInstallation(){
 		
 		//wait for process to finish installstion
-		SystemUtils.waitForProcessStop("SA.exe", 60 * 1000 , 3000);
+		SystemUtils.Processes.waitForProcessStop("SA.exe", 60 * 1000 , 3000);
 		//validate SA.exe is finished to run
-		SystemUtils.validateProcess("SA.exe", false); //TODO : Should be an enum
+		SystemUtils.Processes.validate("SA.exe", false); //TODO : Should be an enum
 		//validate SA Process start to run
-		SystemUtils.validateProcess("Wrapper.exe", true); //TODO : Should be an enum
-		SystemUtils.validateProcess("SysAidSM.exe", true); //TODO : Should be an enum
-		SystemUtils.validateProcess("SysAidWorker.exe", true); //TODO : Should be an enum
+		SystemUtils.Processes.validate("Wrapper.exe", true); //TODO : Should be an enum
+		SystemUtils.Processes.validate("SysAidSM.exe", true); //TODO : Should be an enum
+		SystemUtils.Processes.validate("SysAidWorker.exe", true); //TODO : Should be an enum
 		
 		validateSysAidFiles();
 		
 		//validate SysAidAgent & SysAidServer services are running
-		SystemUtils.validateService("SysAid Agent", true); //TODO : Should be an enum
-		SystemUtils.validateService("SysAid Server", true); //TODO : Should be an enum
-		SystemUtils.validateService("SQL Server (SYSAIDMSSQL)", true); //TODO : Should be an enum
+		SystemUtils.Services.validate("SysAid Agent", true); //TODO : Should be an enum
+		SystemUtils.Services.validate("SysAid Server", true); //TODO : Should be an enum
+		SystemUtils.Services.validate("SQL Server (SYSAIDMSSQL)", true); //TODO : Should be an enum
 		
 		//validate icons on desktop:
-		SystemUtils.validateFileExist("SysAid Login.lnk", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum
-		SystemUtils.validateFileExist("SysAid.lnk", SystemUtils.getPublicDesktopPath(), true); //TODO : Should be an enum
+		SystemUtils.Files.validateExist("SysAid Login.lnk", SystemUtils.Files.getPublicDesktopPath(), true); //TODO : Should be an enum
+		SystemUtils.Files.validateExist("SysAid.lnk", SystemUtils.Files.getPublicDesktopPath(), true); //TODO : Should be an enum
 				
 				
 		// verify Agent send inventory to server - successfully
 		XmlUtils.validteNodeValue(SysAid.Agent.configFilePath, "FirstTime", "N", 150000, 3000);
 		
 		//log verification
-		SystemUtils.scanFile(SysAid.Agent.logFilePath, "Error","Exception");
+		SystemUtils.Files.scan(SysAid.Agent.logFilePath, "Error","Exception");
 		
 		
 	}
@@ -46,7 +46,7 @@ public class InstallServer {
 	public static void validateSysAidFiles(){
 		List<String> fileList = SysAid.getFiles();
 		for (String file : fileList) {
-			SystemUtils.validateFileExist(file, true);
+			SystemUtils.Files.validateExist(file, true);
 		}
 	}
 

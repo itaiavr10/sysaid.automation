@@ -27,7 +27,7 @@ public class SuiteReporter {
 
 	private void init() {
 		
-		String propertiesPath = SystemUtils.getResourcesDirectoryPath() + "\\conf\\log4j.properties"; //TODO : Should be according to os 
+		String propertiesPath = SystemUtils.Files.getResourcesDirectoryPath() + "\\conf\\log4j.properties"; //TODO : Should be according to os 
 		if (!new File(propertiesPath).exists())
 			System.err.println("log4j.properties is missing under : " + propertiesPath);
 		PropertyConfigurator.configure(propertiesPath);

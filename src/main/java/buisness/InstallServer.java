@@ -12,6 +12,8 @@ public class InstallServer {
 	
 	public static void validateInstallation(){
 		
+		SystemUtils.Files.replaceLine("C:\\log4j.properties", "log4j.logger.com.ilient=INFO, sysaidLogFile", "log4j.logger.com.ilient=DEBUG, sysaidLogFile");
+		
 		//wait for process to finish installstion
 		SystemUtils.Processes.waitForProcessStop("SA.exe", 60 * 1000 , 3000);
 		//validate SA.exe is finished to run

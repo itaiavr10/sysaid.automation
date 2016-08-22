@@ -12,7 +12,7 @@ public class InstallServer {
 	
 	public static void validateInstallation(){
 		
-		SystemUtils.Files.replaceLine("C:\\log4j.properties", "log4j.logger.com.ilient=INFO, sysaidLogFile", "log4j.logger.com.ilient=DEBUG, sysaidLogFile");
+		SystemUtils.Files.replaceLine(SysAid.Server.log4jPath, "log4j.logger.com.ilient=INFO, sysaidLogFile", "log4j.logger.com.ilient=DEBUG, sysaidLogFile");
 		
 		//wait for process to finish installstion
 		SystemUtils.Processes.waitForProcessStop("SA.exe", 60 * 1000 , 3000);
@@ -36,7 +36,8 @@ public class InstallServer {
 				
 				
 		// verify Agent send inventory to server - successfully
-		XmlUtils.validteNodeValue(SysAid.Agent.configFilePath, "FirstTime", "N", 180000, 3000);
+		//XmlUtils.validteNodeValue(SysAid.Agent.configFilePath, "FirstTime", "N", 180000, 3000);
+		SysAid.Agent.validteInventorySent();
 		
 		//log verification
 		SystemUtils.Files.scan(SysAid.Agent.logFilePath, "Error","Exception");

@@ -34,7 +34,7 @@ public class InstallServer {
 				
 				
 		// verify Agent send inventory to server - successfully
-		XmlUtils.validteNodeValue(SysAid.Agent.configFilePath, "FirstTime", "N", 150000, 3000);
+		XmlUtils.validteNodeValue(SysAid.Agent.configFilePath, "FirstTime", "N", 180000, 3000);
 		
 		//log verification
 		SystemUtils.Files.scan(SysAid.Agent.logFilePath, "Error","Exception");

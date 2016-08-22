@@ -96,15 +96,11 @@ public class InstallSanitySuite extends AbstractSuite{
 	}*/
 	
 	//@Test
-	/*public void calc_Demo(){
-	 * push via SourceTree
+	public void calc_Demo(){
 		LogManager.info("Run Calc..");
-		validate.validate(true, "Calc Validate - true");
 		AutoItAPI.run("calc.exe");
-		validate.validate(true, "Calc Validate - false");
 		LogManager.info("Done");
 		sleep(1000);
-		AutoItAPI.activateWindow("Calculator");
 		AutoItAPI.waitWin("Calculator");
 		//Enter 3
 		AutoItAPI.clickButton("Calculator", "", "133") ;
@@ -118,6 +114,6 @@ public class InstallSanitySuite extends AbstractSuite{
 		//Enter =
 		AutoItAPI.clickButton("Calculator", "", "121");
 		
-	}*/
+	}
 
 }

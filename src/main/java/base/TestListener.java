@@ -34,7 +34,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 	public void onTestSuccess(ITestResult result) {
 		//System.out.println("-> onTestSuccess");
 		//System.out.println(result.getName());
-		LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
+		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
 	}
 
 	public void onTestFailure(ITestResult result) {

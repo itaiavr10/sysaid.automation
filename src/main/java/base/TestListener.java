@@ -21,7 +21,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 
 	public void onFinish(ISuite suite) {
 		//System.out.println("->ISuiteListener onFinish");
-		//LogManager.getReporter().sendResult();
+		LogManager.getReporter().sendResult();
 	}
 
 	//---------------> ITestListener 

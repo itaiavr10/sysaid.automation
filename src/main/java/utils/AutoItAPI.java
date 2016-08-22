@@ -24,7 +24,8 @@ public class AutoItAPI {
 
 	public static void waitWin(String winTitle, String winText, Integer timeoutInSec) {
 		boolean WinFound = AutoIt.engine().winWait(winTitle, winText, timeoutInSec);
-		TestManager.validator().soft(WinFound, "Wait for Window: " + winTitle);
+		//TestManager.validator().soft(WinFound, "Wait for Window: " + winTitle);
+		LogManager.assertTrue(WinFound, "Wait for Window: " + winTitle);
 		activateWindow(winTitle, winText);
 		sleep(2000);
 	}
@@ -33,7 +34,7 @@ public class AutoItAPI {
 		AutoIt.engine().winWaitClose(winTitle);
 		sleep(1000);
 		boolean WinFound = AutoIt.engine().winWait(winTitle, "", 1);
-		TestManager.validator().soft(!WinFound, "Close Window: " + winTitle);
+		LogManager.validate(!WinFound, "Close Window: " + winTitle);
 	}
 
 	public static void setControlText(String winTitle, String controlID, String text) {
@@ -53,7 +54,7 @@ public class AutoItAPI {
 	public static void validateVisibility(String winTitle, String controlID,boolean expected){
 		activateWindow(winTitle, "");
 		boolean actual = AutoIt.engine().controlCommandIsVisible(winTitle, "", controlID);
-		TestManager.validator().validate(actual == expected, String.format("Validae Element visibility Expected = %s , Acutal = %s", expected,actual));
+		LogManager.validate(actual == expected, String.format("Validae Element visibility Expected = %s , Acutal = %s", expected,actual));
 	}
 
 	public static void activateWindow(String winTitle , String winText) {

@@ -13,12 +13,12 @@ import org.testng.annotations.BeforeTest;
 
 public class AbstractSuite {
 
-	protected Validate validate;
+	//protected Validate validate;
 
 	@BeforeSuite
 	public void beforeSuite() { // RUN BEFURE each testng.xml - suite
 		// System.out.println("@BeforeSuite");
-		validate = TestManager.validator();
+		//validate = TestManager.validator();
 	}
 
 	@BeforeClass

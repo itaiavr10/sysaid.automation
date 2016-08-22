@@ -35,5 +35,19 @@ public class LogManager {
 	public static void error(String msg) {
 		report.get().error(msg);
 	}
+	
+	/**
+	 * Will Print to report only if failed
+	 * @param condition
+	 * @param msg
+	 */
+	public static void assertTrue(boolean condition , String msg) {
+		report.get().assertTrue(condition,msg);
+	}
+	
+
+	public static void validate(boolean condition , String msg) {
+		report.get().validate(condition,msg);
+	}
 
 }

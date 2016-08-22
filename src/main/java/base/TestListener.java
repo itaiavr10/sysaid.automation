@@ -15,7 +15,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println(suite.getName());
 		SuiteReporter log = new SuiteReporter(suite.getName());
 		LogManager.setReport(log);
-		TestManager.setValidator(new Validate());
+		//TestManager.setValidator(new Validate());
 
 	}
 

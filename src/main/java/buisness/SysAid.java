@@ -61,7 +61,7 @@ public class SysAid {
 					return expectedValue.equals(actualValue.value);
 				}
 			});
-			TestManager.validator().validate(ispass,"Validate Agent send inventory to server");
+			LogManager.validate(ispass,"Validate Agent send inventory to server");
 		}
 	}
 	

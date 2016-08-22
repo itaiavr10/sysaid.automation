@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.testng.Assert;
 
 import utils.ConfigProperties;
 import utils.MailUtils;
@@ -72,6 +73,23 @@ public class SuiteReporter {
 		addTableRow(ReportStepType.Fail_Type, msg);
 		log.error(msg);
 		this.testFailed = true;
+	}
+	
+	public void validate(boolean condition,String msg) {
+		if(condition){
+			pass(msg);
+		}else{
+			error(msg);
+		}
+	}
+	
+	public void assertTrue(boolean condition,String msg) {
+		if(condition){
+			log.debug(msg);
+		}else{
+			error(msg);
+			Assert.assertTrue(false);
+		}
 	}
 
 	private void addTableRow(ReportStepType reportStepType, String msg) {

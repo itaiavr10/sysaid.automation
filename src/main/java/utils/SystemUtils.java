@@ -118,7 +118,7 @@ public class SystemUtils {
 					return shouldExist == results;
 				}
 			});
-			TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
+			LogManager.validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
 
 			/*File file = new File(filePath);
 			boolean isExist = file.exists();
@@ -145,6 +145,7 @@ public class SystemUtils {
 
 		public static void replaceLine(String filePath, String originalLine, String newLine) {
 			LogManager.debug(String.format("Replace File Content, Original line= %s , new line=%s",originalLine,newLine));
+			validateExist(filePath,true);
 			String tmpFileName = "tmp.dat";
 			boolean lineFound = false;
 			BufferedReader br = null;
@@ -208,7 +209,7 @@ public class SystemUtils {
 					return results == shouldRun;
 				}
 			});
-			TestManager.validator().validate(pass, String.format("Validate Process : %s . Expected = %s , Actual = %s", processName, shouldRun, isRun.value));
+			LogManager.validate(pass, String.format("Validate Process : %s . Expected = %s , Actual = %s", processName, shouldRun, isRun.value));
 
 			/*boolean isRun = isProcessRunning(processName);
 			TestManager.validator().validate(shouldRun == isRun, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun));*/
@@ -226,7 +227,7 @@ public class SystemUtils {
 			});
 
 			if (!pass) {
-				LogManager.error("Wait For Process Stop - Failed ");
+				LogManager.validate(false,"Wait For Process Stop - Failed ");
 			}
 
 			/*
@@ -285,7 +286,7 @@ public class SystemUtils {
 				}
 
 			} catch (Exception e) {
-				TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
+				LogManager.error("Error on  getProcessDetails utils : " + e.getMessage());
 			} finally {
 				try {
 					input.close();
@@ -304,7 +305,7 @@ public class SystemUtils {
 
 		public static void validate(String serviceName, boolean shouldRun) {
 			boolean isRun = isServiceRunning(serviceName);
-			TestManager.validator().validate(shouldRun == isRun, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun));
+			LogManager.validate(shouldRun == isRun, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun));
 		}
 
 		private static boolean isServiceRunning(String serviceName) {
@@ -324,7 +325,7 @@ public class SystemUtils {
 					//return false;
 				}
 			} catch (Exception e) {
-				TestManager.validator().assertFalse("Error on  getProcessDetails utils : " + e.getMessage());
+				LogManager.error("Error on  getProcessDetails utils : " + e.getMessage());
 			} finally {
 				try {
 					input.close();

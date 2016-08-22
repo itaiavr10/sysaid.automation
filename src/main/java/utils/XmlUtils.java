@@ -33,7 +33,7 @@ public class XmlUtils {
 				return expectedValue.equals(actualValue.value);
 			}
 		});
-		TestManager.validator().validate(ispass, String.format("Validate Node Value : %s . Expected = %s , Actual = %s", tagName, expectedValue, actualValue.value));
+		LogManager.validate(ispass, String.format("Validate Node Value : %s . Expected = %s , Actual = %s", tagName, expectedValue, actualValue.value));
 	}
 	
 	

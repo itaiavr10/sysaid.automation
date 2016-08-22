@@ -2,9 +2,11 @@ package base;
 
 import java.util.concurrent.TimeUnit;
 
+import org.testng.Assert;
+
 public class TestManager {
 	
-	private final static ThreadLocal<Validate> validator = new ThreadLocal<Validate>();
+	/*private final static ThreadLocal<Validate> validator = new ThreadLocal<Validate>();
 	
 	 public static void setValidator(Validate val){
 		 validator.set(val);
@@ -13,7 +15,7 @@ public class TestManager {
 	 
 	 public static Validate validator(){
 		 return validator.get();
-	 }
+	 }*/
 	 
 	 
 	 protected void sleep(long time , TimeUnit unit) {
@@ -25,7 +27,7 @@ public class TestManager {
 		 try {
 			Thread.sleep(timeInMiliSec);
 		} catch (InterruptedException e) {
-			validator().soft(false, "TestManager.sleep - InterruptedException : " + e.getMessage());
+			LogManager.error("TestManager.sleep - InterruptedException : " + e.getMessage());
 		}
 	 }
 

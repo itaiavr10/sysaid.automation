@@ -6,6 +6,10 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import utils.ScreenShooter;
+import utils.VideoRecorder;
+
+
 public class TestListener implements ITestListener, ISuiteListener { //IInvokedMethodListener
 
 	// --------------------> ISuiteListener 	
@@ -29,17 +33,27 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 	public void onTestStart(ITestResult result) {
 		//System.out.println("-> onTestStart");
 		LogManager.bold(String.format("Test: %s - Started..", result.getName()));
+		VideoRecorder.getInstance().startRecording();
 	}
 
 	public void onTestSuccess(ITestResult result) {
 		//System.out.println("-> onTestSuccess");
 		//System.out.println(result.getName());
 		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
+		testTerminationHandler(!SuiteReporter.isTestPassed());
+		
+	}
+	
+	public void testTerminationHandler(boolean isFailed){
+		if(isFailed)
+			ScreenShooter.capture();
+		VideoRecorder.getInstance().finishRecord(isFailed);
 	}
 
 	public void onTestFailure(ITestResult result) {
 		//System.out.println("-> onTestFailure");
 		LogManager.error(String.format("Test: %s - Failed!", result.getName()));
+		testTerminationHandler(true);
 	}
 
 	public void onTestSkipped(ITestResult result) {

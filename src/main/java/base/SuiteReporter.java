@@ -15,7 +15,7 @@ public class SuiteReporter {
 
 	private Logger log = null;
 	private ArrayList<String> logTable;
-	private boolean testFailed;
+	private static boolean testFailed;
 	private String suiteName;
 
 	SuiteReporter(String suiteName) {
@@ -110,7 +110,11 @@ public class SuiteReporter {
 	            subject += " - Passed";
 	        new MailUtils().sendMail(recipients, bccRecipients, subject, logTable.toString().replace(",","").replace("[","").replace("]",""));
 	        //deleteScreenShots();
-	    }
+	  }
+	 
+	 public static boolean isTestPassed(){
+		 return !testFailed;
+	 }
 
 
 

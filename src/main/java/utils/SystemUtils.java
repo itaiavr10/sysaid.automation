@@ -104,6 +104,10 @@ public class SystemUtils {
 		public static String getResourcesDirectoryPath() {
 			return getProjectPath() + "\\src\\main\\resources";
 		}
+		
+		public static String getMediaPath() {
+			return getProjectPath() + "\\test-output\\media";
+		}
 
 		public static void createFile(String filePath, final String fileContent) throws IOException {
 			File newFile = new File(filePath);
@@ -173,7 +177,7 @@ public class SystemUtils {
 					bw.write(line + "\n");
 				}
 				if(!lineFound){
-					throw new Exception("Failed to find line");
+					throw new Exception("Failed to find line : " + originalLine);
 				}
 			} catch (Exception e) {
 				LogManager.error("Replace File Content- Error : " + e.getMessage());
@@ -198,8 +202,16 @@ public class SystemUtils {
 			
 		}
 		
-		public static void moveFile(String srcPath,String destPath) throws IOException {
-			FileUtils.moveFile(new File(srcPath), new File(destPath));
+		public static void moveFile(File src,File dest) {
+			try {
+				FileUtils.moveFile(src, dest);
+			} catch (IOException e) {
+				LogManager.error("Failed to move File , Error: " + e.getMessage());
+			}
+		}
+		
+		public static void moveFile(String srcPath,String destPath) {
+			moveFile(new File(srcPath), new File(destPath));
 		}
 
 	}
@@ -324,7 +336,7 @@ public class SystemUtils {
 					return shouldRun == results;
 				}
 			});
-			LogManager.assertTrue(ispass, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun));
+			LogManager.assertTrue(ispass, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun.value));
 			//TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
 			
 			//boolean isRun = isServiceRunning(serviceName);
@@ -380,39 +392,4 @@ public class SystemUtils {
 		}*/
 	}
 	
-	public static class ScreenShooter{
-		
-		public static void main(String[] args) throws AWTException, Exception {
-			Thread.sleep(5000);
-			OutputStream out = null;
-			String path = "./screenShot/itai.jpg";
-			byte[] bytes = regularScreenShot();
-			try {
-			    out = new BufferedOutputStream(new FileOutputStream(path));
-			    out.write(bytes);
-			} finally {
-			    if (out != null) out.close();
-			}
-			System.out.println("DONE");
-		}
-
-		public static byte[] regularScreenShot() throws AWTException, IOException {
-			BufferedImage capture = captureScreen();
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(capture, "jpg", baos);
-			baos.flush();
-			capture.flush();
-			byte[] imageInByte = baos.toByteArray();
-			baos.close();
-			return imageInByte;
-		}
-
-		public static BufferedImage captureScreen() throws AWTException {
-			Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-			Robot robotic = new Robot();
-			BufferedImage capture = robotic.createScreenCapture(screenRect);
-			robotic.waitForIdle();
-			return capture;
-		}
-	}
 }

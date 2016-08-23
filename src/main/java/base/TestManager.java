@@ -18,7 +18,7 @@ public class TestManager {
 	 }*/
 	 
 	 
-	 protected void sleep(long time , TimeUnit unit) {
+	public static void sleep(long time , TimeUnit unit) {
 			sleep(unit.toMillis(time));
 	}
 	 

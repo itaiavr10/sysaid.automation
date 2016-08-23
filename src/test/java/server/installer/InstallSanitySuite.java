@@ -9,7 +9,8 @@ import utils.SystemUtils;
 import base.AbstractSuite;
 import base.LogManager;
 import buisness.InstallServer;
-import buisness.InstallValidation;
+import buisness.SysAidAgent;
+import buisness.SysAidServer;
 
 
 public class InstallSanitySuite extends AbstractSuite{
@@ -20,7 +21,12 @@ public class InstallSanitySuite extends AbstractSuite{
 	public void flatInstall(){
 		InstallServer.defaultInstallation();
 		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
-		InstallValidation.validateInstallation();
+		
+		//wait for process to finish installstion
+		SystemUtils.Processes.waitForProcessStop("SA.exe", 60 * 1000, 3000);
+		
+		SysAidServer.validateInstallation();
+		SysAidAgent.validateInstallation();
 	}
 
 

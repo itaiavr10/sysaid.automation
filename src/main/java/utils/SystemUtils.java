@@ -1,20 +1,31 @@
 package utils;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -303,9 +314,21 @@ public class SystemUtils {
 
 	public static class Services {
 
-		public static void validate(String serviceName, boolean shouldRun) {
-			boolean isRun = isServiceRunning(serviceName);
-			LogManager.validate(shouldRun == isRun, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun));
+		public static void validate(final String serviceName, final boolean shouldRun) {
+			final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);
+			boolean ispass = Utils.tryUntil(new ActionWrapper("Validate Service : " + serviceName) {
+				@Override
+				public boolean invoke() throws Exception {
+					boolean results = isServiceRunning(serviceName);
+					isRun.setValue(results);
+					return shouldRun == results;
+				}
+			});
+			LogManager.assertTrue(ispass, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun));
+			//TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
+			
+			//boolean isRun = isServiceRunning(serviceName);
+			//LogManager.assertTrue(shouldRun == isRun, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun));
 		}
 
 		private static boolean isServiceRunning(String serviceName) {
@@ -355,5 +378,41 @@ public class SystemUtils {
 			}
 			return false;
 		}*/
+	}
+	
+	public static class ScreenShooter{
+		
+		public static void main(String[] args) throws AWTException, Exception {
+			Thread.sleep(5000);
+			OutputStream out = null;
+			String path = "./screenShot/itai.jpg";
+			byte[] bytes = regularScreenShot();
+			try {
+			    out = new BufferedOutputStream(new FileOutputStream(path));
+			    out.write(bytes);
+			} finally {
+			    if (out != null) out.close();
+			}
+			System.out.println("DONE");
+		}
+
+		public static byte[] regularScreenShot() throws AWTException, IOException {
+			BufferedImage capture = captureScreen();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(capture, "jpg", baos);
+			baos.flush();
+			capture.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+			return imageInByte;
+		}
+
+		public static BufferedImage captureScreen() throws AWTException {
+			Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+			Robot robotic = new Robot();
+			BufferedImage capture = robotic.createScreenCapture(screenRect);
+			robotic.waitForIdle();
+			return capture;
+		}
 	}
 }

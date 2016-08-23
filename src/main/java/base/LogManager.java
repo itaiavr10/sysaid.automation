@@ -37,7 +37,7 @@ public class LogManager {
 	}
 	
 	/**
-	 * Will Print to report only if failed
+	 * Will Print to report only if failed & Stop test
 	 * @param condition
 	 * @param msg
 	 */
@@ -45,7 +45,11 @@ public class LogManager {
 		report.get().assertTrue(condition,msg);
 	}
 	
-
+	/**
+	 * Will Print to report for any results & continue to run
+	 * @param condition
+	 * @param msg
+	 */
 	public static void validate(boolean condition , String msg) {
 		report.get().validate(condition,msg);
 	}

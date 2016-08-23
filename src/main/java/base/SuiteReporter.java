@@ -130,13 +130,15 @@ public class SuiteReporter {
 		Pass_Type("Passed") {
 			@Override
 			public String getColor() {
-				return "#00EE00";
+				//return "#00EE00";
+				return "#32C832";
 			}
 		},
 		Fail_Type("Failed") {
 			@Override
 			public String getColor() {
-				return "#FF0000";
+				//return "#FF0000";
+				return "#C81E3C";
 			}
 		},
 		Warning_Type("Warning") {

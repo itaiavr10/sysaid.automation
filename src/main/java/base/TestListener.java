@@ -1,5 +1,6 @@
 package base;
 
+import org.testng.Assert;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.testng.ITestContext;
@@ -40,7 +41,9 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println("-> onTestSuccess");
 		//System.out.println(result.getName());
 		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
-		testTerminationHandler(!SuiteReporter.isTestPassed());
+		boolean testPassed = SuiteReporter.isTestPassed();
+		testTerminationHandler(!testPassed);
+		Assert.assertTrue(testPassed);
 		
 	}
 	

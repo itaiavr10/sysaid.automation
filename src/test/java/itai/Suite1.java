@@ -10,7 +10,8 @@ public class Suite1 extends AbstractSuite{
 	@Test
 	public void A(){
 		LogManager.info("Step1");
-		LogManager.validate(true, "PASS MSG");
+		LogManager.warn("Step2");
+		//LogManager.validate(true, "PASS MSG");
 		
 	}
 

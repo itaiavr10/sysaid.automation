@@ -249,9 +249,7 @@ public class SystemUtils {
 				}
 			});
 
-			if (!pass) {
-				LogManager.validate(false,"Wait For Process Stop - Failed ");
-			}
+			LogManager.validate(pass,"Wait For Process Stop : " + processName);
 
 			/*
 			
@@ -336,7 +334,7 @@ public class SystemUtils {
 					return shouldRun == results;
 				}
 			});
-			LogManager.assertTrue(ispass, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun.value));
+			LogManager.validateAssert(ispass, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun.value));
 			//TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
 			
 			//boolean isRun = isServiceRunning(serviceName);

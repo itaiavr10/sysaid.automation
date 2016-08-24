@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.Test;
 
+import common.annotation.TestCase;
+
 import utils.AutoItAPI;
 import utils.SystemUtils;
 import base.AbstractSuite;
@@ -16,8 +18,11 @@ import buisness.SysAidServer;
 public class InstallSanitySuite extends AbstractSuite{
 	
 	
-	
+	/**
+	 * This is flat installation
+	 */
 	@Test
+	@TestCase(number = 1)
 	public void flatInstall(){
 		InstallServer.defaultInstallation();
 		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep

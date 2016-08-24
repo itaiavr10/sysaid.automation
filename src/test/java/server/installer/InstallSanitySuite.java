@@ -5,17 +5,40 @@ import java.util.concurrent.TimeUnit;
 import org.testng.annotations.Test;
 
 import common.annotation.TestCase;
-
 import utils.AutoItAPI;
 import utils.SystemUtils;
 import base.AbstractSuite;
 import base.LogManager;
+import base.TestManager;
 import buisness.InstallServer;
 import buisness.SysAidAgent;
 import buisness.SysAidServer;
 
 
 public class InstallSanitySuite extends AbstractSuite{
+	
+	
+	
+	/**
+	 * Test should failed!
+	 * Verify License Agreement - page : Next button
+	 */
+	//@Test
+	public void licenseAgreementFailureCase(){
+		LogManager.info("Run Installer..");
+		AutoItAPI.run("C:\\SA\\SA.exe");
+		TestManager.sleep(10000);
+		LogManager.info("Step1: Click Next");
+		AutoItAPI.waitWin("InstallShield Wizard");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
+		
+		LogManager.info("Step2: license agreement - validate 'Next' button status");
+		AutoItAPI.waitWin("InstallShield Wizard" , "license agreement");
+		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", false); // OK
+		AutoItAPI.check("InstallShield Wizard", "1000"); // Check i Agree
+		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", false); // Fail..
+	}
+	
 	
 	
 	/**

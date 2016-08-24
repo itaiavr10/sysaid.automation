@@ -46,6 +46,15 @@ public class LogManager {
 	}
 	
 	/**
+	 * Will Print to report for any results & stop on fail
+	 * @param condition
+	 * @param msg
+	 */
+	public static void validateAssert(boolean condition , String msg) {
+		report.get().validateAssert(condition,msg);
+	}
+	
+	/**
 	 * Will Print to report for any results & continue to run
 	 * @param condition
 	 * @param msg

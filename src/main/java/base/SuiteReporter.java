@@ -83,6 +83,15 @@ public class SuiteReporter {
 		}
 	}
 	
+	public void validateAssert(boolean condition,String msg) {
+		if(condition){
+			pass(msg);
+		}else{
+			error(msg);
+			Assert.assertTrue(false);
+		}
+	}
+	
 	public void assertTrue(boolean condition,String msg) {
 		if(condition){
 			log.debug(msg);

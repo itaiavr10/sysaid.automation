@@ -3,11 +3,28 @@ package buisness;
 import java.util.concurrent.TimeUnit;
 
 import utils.AutoItAPI;
+import utils.SystemUtils.Keyboard;
 import base.LogManager;
 import base.TestManager;
 
 
 public class InstallServer {
+	
+	public static void closeInstaller(){
+		LogManager.info("Close Installer..");
+		AutoItAPI.waitWin("InstallShield Wizard");
+		Keyboard.ClickEsc();
+		//Exit Setup
+		AutoItAPI.waitWin("Exit Setup");
+		AutoItAPI.clickButton("Exit Setup", "", "6");
+		TestManager.sleep(1000);
+		//Press Finish
+		AutoItAPI.waitWin("InstallShield Wizard","Finish");
+		AutoItAPI.clickButton("InstallShield Wizard", "Finish", "1");
+		AutoItAPI.waitWinClosed("InstallShield Wizard");
+		
+		
+	}
 	
 	
 	public static void defaultInstallation(){

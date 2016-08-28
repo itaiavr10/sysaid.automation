@@ -41,22 +41,26 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println("-> onTestSuccess");
 		//System.out.println(result.getName());
 		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
-		boolean testPassed = SuiteReporter.isTestPassed();
+		Assert.assertTrue(SuiteReporter.isTestPassed());
+		VideoRecorder.getInstance().finishRecord(false);
+		/*boolean testPassed = SuiteReporter.isTestPassed();
 		testTerminationHandler(!testPassed);
-		Assert.assertTrue(testPassed);
+		Assert.assertTrue(testPassed);*/
 		
 	}
 	
-	public void testTerminationHandler(boolean isFailed){
+	/*public void testTerminationHandler(boolean isFailed){
 		if(isFailed)
 			ScreenShooter.capture();
 		VideoRecorder.getInstance().finishRecord(isFailed);
-	}
+	}*/
 
 	public void onTestFailure(ITestResult result) {
 		//System.out.println("-> onTestFailure");
 		LogManager.error(String.format("Test: %s - Failed!", result.getName()));
-		testTerminationHandler(true);
+		//testTerminationHandler(true);
+		ScreenShooter.capture();
+		VideoRecorder.getInstance().finishRecord(true);
 	}
 
 	public void onTestSkipped(ITestResult result) {

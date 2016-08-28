@@ -233,6 +233,8 @@ public class SystemUtils {
 		
 		public static void ClickEsc() {
 			Robot robot = get();
+			LogManager.debug("Click Esc");
+			TestManager.sleep(500);
 			robot.keyPress(KeyEvent.VK_ESCAPE);
 			TestManager.sleep(500);
 			robot.keyRelease(KeyEvent.VK_ESCAPE);

@@ -10,9 +10,19 @@ import base.TestManager;
 
 public class InstallServer {
 	
+	
+	
+	
+	public static void exec(){
+		LogManager.info("Run Installer..");
+		AutoItAPI.run("C:\\SA\\SA.exe");
+		TestManager.sleep(10000);
+	}
+	
 	public static void closeInstaller(){
 		LogManager.info("Close Installer..");
 		AutoItAPI.waitWin("InstallShield Wizard");
+		TestManager.sleep(2000);
 		Keyboard.ClickEsc();
 		//Exit Setup
 		AutoItAPI.waitWin("Exit Setup");
@@ -28,9 +38,7 @@ public class InstallServer {
 	
 	
 	public static void defaultInstallation(){
-		LogManager.info("Run Installer..");
-		AutoItAPI.run("C:\\SA\\SA.exe");
-		TestManager.sleep(10000);
+		exec();
 		LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");
 		AutoItAPI.clickButton("InstallShield Wizard", "", "1");

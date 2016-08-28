@@ -23,24 +23,31 @@ public class InstallSanitySuite extends AbstractSuite{
 	 * Test should failed!
 	 * Verify License Agreement - page : Next button
 	 */
-	@Test(priority = 0)
+	@Test(priority = 1)
 	public void licenseAgreementFailureCase(){
-		LogManager.info("Run Installer..");
-		AutoItAPI.run("C:\\SA\\SA.exe");
-		TestManager.sleep(10000);
+		InstallServer.exec();
 		LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");
 		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
 		
-		
 		AutoItAPI.waitWin("InstallShield Wizard" , "license agreement");
 		LogManager.info("Step2: license agreement - validate 'Next' button is Disabled");
+		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", true); // OK
+
+		InstallServer.closeInstaller();	
+	}
+	
+	@Test(priority = 0)
+	public void licenseAgreementPassCase(){
+		InstallServer.exec();
+		LogManager.info("Step1: Click Next");
+		AutoItAPI.waitWin("InstallShield Wizard");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
+		
+		AutoItAPI.waitWin("InstallShield Wizard" , "license agreement");
+		LogManager.info("Step2: license agreement - validate 'Next' button is Disabled By Default!");
 		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", false); // OK
-		LogManager.info("Step3: Check 'I Agree' checkbox");
-		AutoItAPI.check("InstallShield Wizard", "1000"); // Check i Agree
-		LogManager.info("Step4: license agreement - validate 'Next' button is (Still) Disabled");
-		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", false); // Fail..
-			
+
 		InstallServer.closeInstaller();	
 	}
 	

@@ -12,6 +12,7 @@
     <classes>
        	<class name="server.installer.InstallSanitySuite" >
        	<methods>
+       		<include name="licenseAgreementPassCase"></include>
        		<include name="licenseAgreementFailureCase"></include>
        	</methods>
        	</class>

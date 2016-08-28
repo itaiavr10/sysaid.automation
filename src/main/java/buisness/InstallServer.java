@@ -22,13 +22,16 @@ public class InstallServer {
 	public static void closeInstaller(){
 		LogManager.info("Close Installer..");
 		AutoItAPI.waitWin("InstallShield Wizard");
-		TestManager.sleep(2000);
-		Keyboard.ClickEsc();
+		TestManager.sleep(1000);
+		LogManager.info("Click Cancel button");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "9"); //Cancel Button
+		//Keyboard.ClickEsc();
 		//Exit Setup
 		AutoItAPI.waitWin("Exit Setup");
 		AutoItAPI.clickButton("Exit Setup", "", "6");
 		TestManager.sleep(1000);
 		//Press Finish
+		LogManager.info("Click Finish button");
 		AutoItAPI.waitWin("InstallShield Wizard","Finish");
 		AutoItAPI.clickButton("InstallShield Wizard", "Finish", "1");
 		AutoItAPI.waitWinClosed("InstallShield Wizard");

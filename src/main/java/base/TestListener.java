@@ -43,6 +43,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
 		Assert.assertTrue(SuiteReporter.isTestPassed());
 		VideoRecorder.getInstance().finishRecord(false);
+		LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
 		/*boolean testPassed = SuiteReporter.isTestPassed();
 		testTerminationHandler(!testPassed);
 		Assert.assertTrue(testPassed);*/

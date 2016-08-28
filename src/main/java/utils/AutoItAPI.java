@@ -79,7 +79,7 @@ public class AutoItAPI {
 	}
 
 	public static void run(String filename) {
-		LogManager.info("AutoItAPI Run : " + filename);
+		LogManager.debug("AutoItAPI Run : " + filename);
 		AutoIt.engine().run(filename);
 
 	}

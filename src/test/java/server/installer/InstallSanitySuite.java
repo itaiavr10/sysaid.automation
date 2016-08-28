@@ -32,7 +32,7 @@ public class InstallSanitySuite extends AbstractSuite{
 		
 		AutoItAPI.waitWin("InstallShield Wizard" , "license agreement");
 		LogManager.info("Step2: license agreement - validate 'Next' button is Disabled");
-		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", true); // OK
+		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", true); // Fail
 
 		InstallServer.closeInstaller();	
 	}

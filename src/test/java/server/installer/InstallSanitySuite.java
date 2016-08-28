@@ -23,7 +23,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	 * Test should failed!
 	 * Verify License Agreement - page : Next button
 	 */
-	//@Test
+	@Test(priority = 0)
 	public void licenseAgreementFailureCase(){
 		LogManager.info("Run Installer..");
 		AutoItAPI.run("C:\\SA\\SA.exe");
@@ -40,6 +40,8 @@ public class InstallSanitySuite extends AbstractSuite{
 		AutoItAPI.check("InstallShield Wizard", "1000"); // Check i Agree
 		LogManager.info("Step4: license agreement - validate 'Next' button is (Still) Disabled");
 		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", false); // Fail..
+			
+		InstallServer.closeInstaller();	
 	}
 	
 	
@@ -47,7 +49,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	/**
 	 * This is flat installation
 	 */
-	@Test
+	@Test(priority = 1)
 	@TestCase(number = 1)
 	public void flatInstall(){
 		InstallServer.defaultInstallation();

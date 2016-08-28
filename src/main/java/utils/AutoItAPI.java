@@ -54,7 +54,8 @@ public class AutoItAPI {
 	public static void validateElementEnable(String winTitle, String controlID,boolean expected){
 		activateWindow(winTitle, "");
 		boolean actual = AutoIt.engine().controlCommandIsEnabled(winTitle, "", controlID);
-		LogManager.validateAssert(actual == expected, String.format("Validate Element Enable.  Expected = %s , Actual = %s", expected,actual));
+		LogManager.validate(actual == expected, String.format("Validate Element Enable.  Expected = %s , Actual = %s", expected,actual));
+		//LogManager.validateAssert(actual == expected, String.format("Validate Element Enable.  Expected = %s , Actual = %s", expected,actual));
 	}
 	
 	public static void validateVisibility(String winTitle, String controlID,boolean expected){

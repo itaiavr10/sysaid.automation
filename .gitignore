@@ -3,3 +3,5 @@
 !/test-output/media
 /logs/
 .gitignore
+test-output/media/itai.jpg
+test-output/media/video.avi

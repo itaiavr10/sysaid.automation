@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -214,6 +215,29 @@ public class SystemUtils {
 			moveFile(new File(srcPath), new File(destPath));
 		}
 
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//												Keyboard													   //
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static class Keyboard {
+		private static Robot get(){
+			try {
+				return new Robot();
+			} catch (AWTException e) {
+				LogManager.assertTrue(false, "Failed to init Robot");
+			}
+			return null;
+		}
+		
+		public static void ClickEsc() {
+			Robot robot = get();
+			robot.keyPress(KeyEvent.VK_ESCAPE);
+			TestManager.sleep(500);
+			robot.keyRelease(KeyEvent.VK_ESCAPE);
+		}
+		
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

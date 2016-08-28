@@ -6,6 +6,11 @@
   <name>Automation</name>
   
   
+  	<properties>
+  	<suiteName>testng.xml</suiteName>
+    <someproperty> property from commandline </someproperty>
+	</properties>
+  
   
   <build>
         <!-- Source directory configuration -->
@@ -18,7 +23,7 @@
                 <configuration>
                     <!-- Suite testng xml file to consider for test execution -->
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteName}</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>

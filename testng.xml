@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Suite1 - Installer">
+<suite name="Server Installer">
 	
 	<listeners>
     	<listener class-name="base.TestListener" />
   	</listeners>
 	
 
-  	<test name="Installer tests">
+  	<test name="Deafult Installer">
     <classes>
        	<class name="server.installer.InstallSanitySuite" >
        		<methods>

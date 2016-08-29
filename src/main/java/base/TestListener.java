@@ -7,6 +7,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import buisness.SysAidServer;
 import utils.ScreenShooter;
 import utils.VideoRecorder;
 
@@ -20,8 +21,6 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println(suite.getName());
 		SuiteReporter log = new SuiteReporter(suite.getName());
 		LogManager.setReport(log);
-		//TestManager.setValidator(new Validate());
-
 	}
 
 	public void onFinish(ISuite suite) {
@@ -76,6 +75,9 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println(context.getSuite().getName());
 		//System.out.println(context.getName());
 		LogManager.bold("XML Test: " + context.getName());
+		SysAidServer.initInstaller(); //TODO: If it is Agent Tests??
+		
+		
 		//TODO: Missing suite class name
 
 	}

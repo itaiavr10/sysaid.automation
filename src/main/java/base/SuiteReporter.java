@@ -22,7 +22,7 @@ public class SuiteReporter {
 		this.logTable = new ArrayList<String>();
 		this.logTable.add("<table border=\"4\" style=\"width:100%\">");
 		this.suiteName = suiteName;
-		addTableRow(ReportStepType.BOLD_Type, "XML Suite: " + suiteName);
+		//addTableRow(ReportStepType.BOLD_Type, "XML Suite: " + suiteName);
 		this.testFailed = false;
 		init();
 	}
@@ -112,11 +112,11 @@ public class SuiteReporter {
 	        logTable.add("</table>");
 	        String[] recipients = (ConfigProperties.getValue("mailRecipients")).split(";");
 	        String[] bccRecipients = new String[]{};
-	        String subject = "Test Resuls";
+	        String subject = this.suiteName  + " - Test Resuls";
 	        if (testFailed)
-	            subject += " - Failed";
+	            subject += " : Failed";
 	        else
-	            subject += " - Passed";
+	            subject += " : Passed";
 	        new MailUtils().sendMail(recipients, bccRecipients, subject, logTable.toString().replace(",","").replace("[","").replace("]",""));
 	        //deleteScreenShots();
 	  }

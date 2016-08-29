@@ -8,6 +8,10 @@ import utils.SystemUtils;
 
 public class SysAidServer {
 	
+	private static String version = "unknown";
+	private static String build = "unknown";
+	public static String exePath;
+	
 	private static List<String> filesList;
 	private static String serverPath = "C:\\Program Files\\SysAidServer";
 	private static String msSqlPath = "C:\\Program Files\\SysAidMsSql";
@@ -17,16 +21,46 @@ public class SysAidServer {
 	private static String log4jPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\log4j.properties"; 
 	
 	static{
-		init();
+		initFiles();
+	}
+	
+	public static void initInstaller(){
+		boolean getDefaultExe = false;
+		version = System.getProperty("version");
+		build = System.getProperty("build");
+		if(version == null || version.equals("unknown")){
+			LogManager.warn("sysaid version didn't defined via system properties! install default exe : SysAidServer64_default.exe");
+			getDefaultExe = true;
+		}
+		else if(build == null || build.equals("unknown")){
+			LogManager.warn("sysaid build version didn't defined via system properties! install default exe : SysAidServer64_default.exe ");
+			getDefaultExe = true;
+		}
+		
+		//TODO : should check OS bit
+		if(getDefaultExe)
+			exePath = "C:\\SA\\SysAidServer64_default.exe";
+		else{
+			LogManager.info(String.format("SysAid Version:%s , Build: %s",version,build));
+			exePath = String.format("C:\\SA\\SysAidServer64_%s_b%s.exe",version.replace(".", "_"),build);
+			SystemUtils.Files.validateExist(exePath, true,5000);
+			System.out.println("EXE=" + exePath);
+		}
+			
+		
+	
+		
 	}
 
-	private static void init() {
+	private static void initFiles() {
 		filesList = new ArrayList<String>();
 		//add
 		filesList.add(serverPath);
 		filesList.add(msSqlPath);
 		filesList.add(tomcatPath);
 		filesList.add(webInfPath);
+		
+		
 	}
 	
 	public static void validateInstallation(){

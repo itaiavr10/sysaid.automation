@@ -15,7 +15,7 @@ public class InstallServer {
 	
 	public static void exec(){
 		LogManager.info("Run Installer..");
-		AutoItAPI.run("C:\\SA\\SA.exe");
+		AutoItAPI.run(SysAidServer.exePath);
 		TestManager.sleep(10000);
 	}
 	

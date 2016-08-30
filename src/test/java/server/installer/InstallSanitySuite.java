@@ -73,7 +73,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 /*	@Test
 	public void validateCancelOption(){
-	
+	System.out.println("jenkins test");
 		LogManager.info("Validate Cancel option");
 		AutoItAPI.run("C:\\Users\\itai.avrahami\\Desktop\\SA.exe");
 		sleep(10000);

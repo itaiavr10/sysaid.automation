@@ -25,7 +25,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	 */
 	@Test(priority = 1)
 	public void licenseAgreementFailureCase(){
-	/*	InstallServer.exec();
+		InstallServer.exec();
 		LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");
 		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
@@ -34,12 +34,12 @@ public class InstallSanitySuite extends AbstractSuite{
 		LogManager.info("Step2: license agreement - validate 'Next' button is Disabled");
 		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", true); // Fail
 
-		InstallServer.closeInstaller();	*/
+		InstallServer.closeInstaller();	
 	}
 	
 	@Test(priority = 0)
 	public void licenseAgreementPassCase(){
-	/*	InstallServer.exec();
+		InstallServer.exec();
 		LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");
 		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
@@ -48,7 +48,7 @@ public class InstallSanitySuite extends AbstractSuite{
 		LogManager.info("Step2: license agreement - validate 'Next' button is Disabled By Default!");
 		AutoItAPI.validateElementEnable("InstallShield Wizard", "1", false); // OK
 
-		InstallServer.closeInstaller();	*/
+		InstallServer.closeInstaller();	
 	}
 	
 	

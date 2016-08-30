@@ -38,11 +38,13 @@ public class AutoItAPI {
 	}
 
 	public static void setControlText(String winTitle, String controlID, String text) {
-		AutoIt.engine().ControlSetText(winTitle, "", controlID, text);
+		boolean success = AutoIt.engine().ControlSetText(winTitle, "", controlID, text);
+		LogManager.assertTrue(success, "Failed to set text: " + text);
 	}
 
 	public static void clickButton(String winTitle, String controlText, String controlID) {
-		AutoIt.engine().controlClick(winTitle, controlText, controlID);
+		boolean success = AutoIt.engine().controlClick(winTitle, controlText, controlID);
+		LogManager.assertTrue(success, "Failed to click on element: " + controlText);
 	}
 
 	public static void check(String winTitle, String controlID) {

@@ -75,7 +75,7 @@ public class SuiteReporter {
 		this.testFailed = true;
 	}
 	
-	public void validate(boolean condition,String msg) {
+	public void verify(boolean condition,String msg) {
 		if(condition){
 			pass(msg);
 		}else{
@@ -83,7 +83,7 @@ public class SuiteReporter {
 		}
 	}
 	
-	public void validateAssert(boolean condition,String msg) {
+	public void verifyAssert(boolean condition,String msg) {
 		if(condition){
 			pass(msg);
 		}else{

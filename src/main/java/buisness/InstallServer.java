@@ -68,12 +68,12 @@ public class InstallServer {
 		TestManager.sleep(5, TimeUnit.SECONDS);
 		AutoItAPI.clickButton("Select the Activation File", "", "Button1");
 		
-		//validate valid msg:
-		LogManager.info("Step5: validate 'valid license' message");
+		//verify valid msg:
+		LogManager.info("Step5: verify 'valid license' message");
 		TestManager.sleep(5,TimeUnit.SECONDS);
 		AutoItAPI.waitWin("InstallShield Wizard","License File");
 		//Valid License Msg id=2007 , Invalid id= 2008
-		AutoItAPI.validateVisibility("InstallShield Wizard", "2007", true);
+		AutoItAPI.verifyVisibility("InstallShield Wizard", "2007", true);
 		
 		LogManager.info("Step6: click Next"); 
 		AutoItAPI.waitWin("InstallShield Wizard","");

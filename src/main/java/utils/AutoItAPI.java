@@ -24,7 +24,6 @@ public class AutoItAPI {
 
 	public static void waitWin(String winTitle, String winText, Integer timeoutInSec) {
 		boolean WinFound = AutoIt.engine().winWait(winTitle, winText, timeoutInSec);
-		//TestManager.validator().soft(WinFound, "Wait for Window: " + winTitle);
 		LogManager.assertTrue(WinFound, "Wait for Window: " + winTitle);
 		activateWindow(winTitle, winText);
 		sleep(2000);
@@ -34,7 +33,7 @@ public class AutoItAPI {
 		AutoIt.engine().winWaitClose(winTitle);
 		sleep(1000);
 		boolean WinFound = AutoIt.engine().winWait(winTitle, "", 1);
-		LogManager.validate(!WinFound, "Close Window: " + winTitle);
+		LogManager.verify(!WinFound, "Close Window: " + winTitle);
 	}
 
 	public static void setControlText(String winTitle, String controlID, String text) {
@@ -53,17 +52,17 @@ public class AutoItAPI {
 		
 	}
 	
-	public static void validateElementEnable(String winTitle, String controlID,boolean expected){
+	public static void verifyElementEnable(String winTitle, String controlID,boolean expected){
 		activateWindow(winTitle, "");
 		boolean actual = AutoIt.engine().controlCommandIsEnabled(winTitle, "", controlID);
-		LogManager.validate(actual == expected, String.format("Validate Element Enable.  Expected = %s , Actual = %s", expected,actual));
+		LogManager.verify(actual == expected, String.format("Verify Element Enable.  Expected = %s , Actual = %s", expected,actual));
 		//LogManager.validateAssert(actual == expected, String.format("Validate Element Enable.  Expected = %s , Actual = %s", expected,actual));
 	}
 	
-	public static void validateVisibility(String winTitle, String controlID,boolean expected){
+	public static void verifyVisibility(String winTitle, String controlID,boolean expected){
 		activateWindow(winTitle, "");
 		boolean actual = AutoIt.engine().controlCommandIsVisible(winTitle, "", controlID);
-		LogManager.validateAssert(actual == expected, String.format("Validate Element visibility Expected = %s , Actual = %s", expected,actual));
+		LogManager.verifyAssert(actual == expected, String.format("Verify Element visibility Expected = %s , Actual = %s", expected,actual));
 	}
 
 	public static void activateWindow(String winTitle , String winText) {

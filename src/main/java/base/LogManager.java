@@ -50,8 +50,8 @@ public class LogManager {
 	 * @param condition
 	 * @param msg
 	 */
-	public static void validateAssert(boolean condition , String msg) {
-		report.get().validateAssert(condition,msg);
+	public static void verifyAssert(boolean condition , String msg) {
+		report.get().verifyAssert(condition,msg);
 	}
 	
 	/**
@@ -59,8 +59,8 @@ public class LogManager {
 	 * @param condition
 	 * @param msg
 	 */
-	public static void validate(boolean condition , String msg) {
-		report.get().validate(condition,msg);
+	public static void verify(boolean condition , String msg) {
+		report.get().verify(condition,msg);
 	}
 
 }

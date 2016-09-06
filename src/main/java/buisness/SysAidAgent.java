@@ -32,49 +32,49 @@ public class SysAidAgent {
 	}
 	
 	public static void verifyInstallation(){
-		LogManager.bold("SysAid Agent : Validate Installation");
-		validateProcesses();
-		validateServices();
-		validateDesktopIcon();
-		validateDirectories();
-		validteInventorySent();
+		LogManager.bold("SysAid Agent : Verify Installation");
+		verifyProcesses();
+		verifyServices();
+		verifyDesktopIcon();
+		verifyDirectories();
+		verifyInventorySent();
 		logScan();
 		
 	}
 	
-	public static void validateProcesses(){
-		SystemUtils.Processes.validate("SysAidSM.exe", true); //TODO : Should be an enum
-		SystemUtils.Processes.validate("SysAidWorker.exe", true); //TODO : Should be an enum
+	public static void verifyProcesses(){
+		SystemUtils.Processes.verify("SysAidSM.exe", true); //TODO : Should be an enum
+		SystemUtils.Processes.verify("SysAidWorker.exe", true); //TODO : Should be an enum
 	}
 	
-	public static void validateServices(){
-		SystemUtils.Services.validate("SysAid Agent", true); //TODO : Should be an enum
+	public static void verifyServices(){
+		SystemUtils.Services.verify("SysAid Agent", true); //TODO : Should be an enum
 	}
 	
-	public static void validateDesktopIcon(){
-		SystemUtils.Files.validateExist("SysAid.lnk", SystemUtils.Files.getPublicDesktopPath(), true); //TODO : Should be an enum
+	public static void verifyDesktopIcon(){
+		SystemUtils.Files.verifyExist("SysAid.lnk", SystemUtils.Files.getPublicDesktopPath(), true); //TODO : Should be an enum
 	}
 	
-	public static void validateDirectories(){
+	public static void verifyDirectories(){
 		for (String file : filesList) {
-			SystemUtils.Files.validateExist(file, true);
+			SystemUtils.Files.verifyExist(file, true);
 		}
 	}
 	
 	/**
 	 * verify Agent send inventory to server - successfully
 	 */
-	public static void validteInventorySent(){
+	public static void verifyInventorySent(){
 		final String expectedValue = "N";
 		final StringRef actualValue = new StringRef("");
-		boolean ispass = Utils.tryUntil(new ActionWrapper("Validate Inventory Sent to Server.." , 180000 , 3000) {
+		boolean ispass = Utils.tryUntil(new ActionWrapper("Verify Inventory Sent to Server.." , 180000 , 3000) {
 			@Override
 			public boolean invoke() throws Exception {
 				actualValue.setValue(XmlUtils.getNodeValue(configFilePath,"FirstTime"));
 				return expectedValue.equals(actualValue.value);
 			}
 		});
-		LogManager.validate(ispass,"Validate Agent send inventory to server");
+		LogManager.verify(ispass,"Verify Agent send inventory to server");
 	}
 	
 	//log verification

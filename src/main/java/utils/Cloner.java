@@ -28,7 +28,7 @@ public class Cloner {
 					// return the new object
 					return ois.readObject();
 				} catch (Exception e) {
-					LogManager.validateAssert(false,"Exception in ObjectCloner = " + e);
+					LogManager.verifyAssert(false,"Exception in ObjectCloner = " + e);
 				} finally {
 					try {
 						oos.close();

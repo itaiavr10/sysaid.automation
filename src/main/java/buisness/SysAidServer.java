@@ -46,7 +46,7 @@ public class SysAidServer {
 			exeName = String.format("C:\\SA\\SysAidServer64_%s_b%s.exe",version.replace(".", "_"),build);
 		}
 		exePath = "C:\\SA\\" + exeName;
-		SystemUtils.Files.validateExist(exePath, true,2000);
+		SystemUtils.Files.verifyExist(exePath, true,2000);
 		
 	}
 
@@ -62,30 +62,30 @@ public class SysAidServer {
 	}
 	
 	public static void verifyInstallation(){
-		LogManager.bold("SysAid Server : Validate Installation");
+		LogManager.bold("SysAid Server : Verify Installation");
 		changeLog4J();
-		validateProcesses();
-		validateServices();
-		validateDesktopIcon();
-		validateDirectories();
+		verifyProcesses();
+		verifyServices();
+		verifyDesktopIcon();
+		verifyDirectories();
 	}
 	
-	public static void validateProcesses(){ 
-		SystemUtils.Processes.validate("Wrapper.exe", true); //TODO : Should be an enum  ?Is a RDS Process?
+	public static void verifyProcesses(){ 
+		SystemUtils.Processes.verify("Wrapper.exe", true); //TODO : Should be an enum  ?Is a RDS Process?
 	}
 	
-	public static void validateServices(){
-		SystemUtils.Services.validate("SysAid Server", true); //TODO : Should be an enum
-		SystemUtils.Services.validate("SQL Server (SYSAIDMSSQL)", true); //TODO : Should be an enum
+	public static void verifyServices(){
+		SystemUtils.Services.verify("SysAid Server", true); //TODO : Should be an enum
+		SystemUtils.Services.verify("SQL Server (SYSAIDMSSQL)", true); //TODO : Should be an enum
 	}
 	
-	public static void validateDesktopIcon(){
-		SystemUtils.Files.validateExist("SysAid Login.lnk", SystemUtils.Files.getPublicDesktopPath(), true); //TODO : Should be an enum
+	public static void verifyDesktopIcon(){
+		SystemUtils.Files.verifyExist("SysAid Login.lnk", SystemUtils.Files.getPublicDesktopPath(), true); //TODO : Should be an enum
 	}
 	
-	public static void validateDirectories(){
+	public static void verifyDirectories(){
 		for (String file : filesList) {
-			SystemUtils.Files.validateExist(file, true);
+			SystemUtils.Files.verifyExist(file, true);
 		}
 	}
 	

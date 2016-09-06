@@ -19,21 +19,21 @@ public class XmlUtils {
 	
 	
 	
-	public static void validteNodeValue(final String filePath , final String tagName, final String expectedValue){
-		validteNodeValue(filePath , tagName, expectedValue, null , null);
+	public static void verifyNodeValue(final String filePath , final String tagName, final String expectedValue){
+		verifyNodeValue(filePath , tagName, expectedValue, null , null);
 	}
 	
 
-	public static void validteNodeValue(final String filePath , final String tagName, final String expectedValue, Integer maxTimeOutMs , Integer intervalMs){
+	public static void verifyNodeValue(final String filePath , final String tagName, final String expectedValue, Integer maxTimeOutMs , Integer intervalMs){
 		final StringRef actualValue = new StringRef("");
-		boolean ispass = Utils.tryUntil(new ActionWrapper("Validate Node Value" , maxTimeOutMs , intervalMs) {
+		boolean ispass = Utils.tryUntil(new ActionWrapper("Verify Node Value" , maxTimeOutMs , intervalMs) {
 			@Override
 			public boolean invoke() throws Exception {
 				actualValue.setValue(getNodeValue(filePath,tagName));
 				return expectedValue.equals(actualValue.value);
 			}
 		});
-		LogManager.validate(ispass, String.format("Validate Node Value : %s . Expected = %s , Actual = %s", tagName, expectedValue, actualValue.value));
+		LogManager.verify(ispass, String.format("Verify Node Value : %s . Expected = %s , Actual = %s", tagName, expectedValue, actualValue.value));
 	}
 	
 	

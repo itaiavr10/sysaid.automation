@@ -455,7 +455,7 @@ public class DBconst {
 			@Override
 			public List<List<String>> getExpected() {
 				List<List<String>> table = new ArrayList<List<String>>();
-				table.add(Arrays.asList("cmdb","985305C75EBE5DEV","2017-08-31 12:01:35.467"));
+				table.add(Arrays.asList("cmdb","985305C75EBE5DEV","2017-08-31 12:01:35.467")); //TODO : get from activation.xml
 				return table;
 			}
 		},

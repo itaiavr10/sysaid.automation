@@ -27,7 +27,7 @@ public class DBQuery {
 				if(expectedRow.equals(row)){ // verify current row
 					LogManager.debug("Found same table row content: " +row.toString());
 				}else{
-					LogManager.validate(false,String.format("Verify Table Content: Expected = %s , Actual = %s" , expectedRow.toString(),row.toString()));
+					LogManager.verify(false,String.format("Verify Table Content: Expected = %s , Actual = %s" , expectedRow.toString(),row.toString()));
 					passed = false;
 				}
 				if(rowIndex>= expectedTable.size()){ // verify current table is not bigger the expected
@@ -38,16 +38,16 @@ public class DBQuery {
 			}
 			
 			if(expectedTable.size() != actualTable.size()){
-				LogManager.validate(false,String.format("Verify Table Content: %s  - Incorrect Size , Expected Rows = %s , Actual Rows = %s" , 
+				LogManager.verify(false,String.format("Verify Table Content: %s  - Incorrect Size , Expected Rows = %s , Actual Rows = %s" , 
 						tableContent.getDescription(),expectedTable.size(),actualTable.size()));
 				passed = false;
 			}
 			
 		} catch (Exception e) {
-			LogManager.validate(false, "Verify Table Content: - Error : " + e.getMessage());
+			LogManager.verify(false, "Verify Table Content: - Error : " + e.getMessage());
 		}finally{
 			if(passed)
-				LogManager.validate(true,"Verify Table Content: "+ tableContent.getDescription());
+				LogManager.verify(true,"Verify Table Content: "+ tableContent.getDescription());
 		}
 	}
 	
@@ -82,13 +82,13 @@ public class DBQuery {
 		try {
 			if(rs.next()){
 				String actual = rs.getString(1);
-				LogManager.validate(expected.equals(actual),String.format("Verify DB Query=%s , Expected = %s , Actual = %s" , query,expected,actual));
+				LogManager.verify(expected.equals(actual),String.format("Verify DB Query=%s , Expected = %s , Actual = %s" , query,expected,actual));
 				if(rs.next())
 					LogManager.warn("More then 1 query results..");
 			}else
 				throw new Exception("No results from DB");
 		} catch (Exception e) {
-			LogManager.validate(false, "Verify DB Result - Error : " + e.getMessage());
+			LogManager.verify(false, "Verify DB Result - Error : " + e.getMessage());
 		}finally{
 			
 		}
@@ -102,9 +102,9 @@ public class DBQuery {
 			while(rs.next()){
 				actualRows++;
 			}
-			LogManager.validate(expectedRows == actualRows ,String.format("Verify DB - Num Of Rows, Query=%s , Expected = %s , Actual = %s" , query,expectedRows,actualRows));
+			LogManager.verify(expectedRows == actualRows ,String.format("Verify DB - Num Of Rows, Query=%s , Expected = %s , Actual = %s" , query,expectedRows,actualRows));
 		} catch (Exception e) {
-			LogManager.validate(false, "Verify Num Of Rows - Error : " + e.getMessage());
+			LogManager.verify(false, "Verify Num Of Rows - Error : " + e.getMessage());
 		}finally{
 			
 		}

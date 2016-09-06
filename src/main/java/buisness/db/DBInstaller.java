@@ -17,7 +17,7 @@ public class DBInstaller {
 	 *  verification #252 : Tables content
 	 */
 	public static void verifyTableContents(){
-		LogManager.bold("Validate DB - Tables Content");
+		LogManager.bold("Verify DB - Tables Content");
 		//Step 1 Table: account
 		DBQuery.verifyNumOfRows("SELECT COUNT(*) FROM ACCOUNT", 1);
 		DBQuery.verifyTable(TableContent.ACCOUNT); 
@@ -105,7 +105,7 @@ public class DBInstaller {
 	 * verification	 #251 : DB Tables Count
 	*/
 	public  static void verifyTablesCount(){//TODO : Should be according to DBType
-		LogManager.bold("Validate DB - Tables Count");
+		LogManager.bold("Verify DB - Tables Count");
 		// Count all tables in database
 		DBQuery.verifyResult("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES", "265"); 
 		//Tables (prefix = account)

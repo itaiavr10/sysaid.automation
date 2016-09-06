@@ -117,18 +117,18 @@ public class SystemUtils {
 			FileUtils.write(newFile, fileContent);
 		}
 
-		public static void validateExist(String fileName, String direcoryPath, boolean shouldExist) {
-			validateExist(direcoryPath + "\\" + fileName, shouldExist, null);
+		public static void verifyExist(String fileName, String direcoryPath, boolean shouldExist) {
+			verifyExist(direcoryPath + "\\" + fileName, shouldExist, null);
 		}
 
-		public static void validateExist(String filePath, final boolean shouldExist) {
-			validateExist(filePath, shouldExist, 5000);
+		public static void verifyExist(String filePath, final boolean shouldExist) {
+			verifyExist(filePath, shouldExist, 5000);
 		}
 
-		public static void validateExist(String filePath, final boolean shouldExist, Integer maxTimeOutMs) {
+		public static void verifyExist(String filePath, final boolean shouldExist, Integer maxTimeOutMs) {
 			final ValueRef<Boolean> isExist = new ValueRef<Boolean>(false);
 			final File file = new File(filePath);
-			boolean ispass = Utils.tryUntil(new ActionWrapper("Validat File Exist : " + filePath, maxTimeOutMs) {
+			boolean ispass = Utils.tryUntil(new ActionWrapper("Verify File Exist : " + filePath, maxTimeOutMs) {
 				@Override
 				public boolean invoke() throws Exception {
 					boolean results = file.exists();
@@ -136,7 +136,7 @@ public class SystemUtils {
 					return shouldExist == results;
 				}
 			});
-			LogManager.validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
+			LogManager.verify(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
 
 			/*File file = new File(filePath);
 			boolean isExist = file.exists();
@@ -163,7 +163,7 @@ public class SystemUtils {
 
 		public static void replaceLine(String filePath, String originalLine, String newLine) {
 			LogManager.debug(String.format("Replace File Content, Original line= %s , new line=%s",originalLine,newLine));
-			validateExist(filePath,true);
+			verifyExist(filePath,true);
 			String tmpFileName = "tmp.dat";
 			boolean lineFound = false;
 			BufferedReader br = null;
@@ -265,9 +265,9 @@ public class SystemUtils {
 
 	public static class Processes {
 
-		public static synchronized void validate(final String processName, final boolean shouldRun) {
+		public static synchronized void verify(final String processName, final boolean shouldRun) {
 			final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);
-			boolean pass = Utils.tryUntil(new ActionWrapper("Validate Process : " + processName) {
+			boolean pass = Utils.tryUntil(new ActionWrapper("Verify Process : " + processName) {
 				@Override
 				public boolean invoke() throws Exception {
 					boolean results = isProcessRunning(processName);
@@ -275,7 +275,7 @@ public class SystemUtils {
 					return results == shouldRun;
 				}
 			});
-			LogManager.validate(pass, String.format("Validate Process : %s . Expected = %s , Actual = %s", processName, shouldRun, isRun.value));
+			LogManager.verify(pass, String.format("Verify Process : %s . Expected = %s , Actual = %s", processName, shouldRun, isRun.value));
 
 			/*boolean isRun = isProcessRunning(processName);
 			TestManager.validator().validate(shouldRun == isRun, String.format("Validate Process : %s . Expected = %s , Actual = %s",processName, shouldRun, isRun));*/
@@ -292,7 +292,7 @@ public class SystemUtils {
 				}
 			});
 
-			LogManager.validate(pass,"Wait For Process Stop : " + processName);
+			LogManager.verify(pass,"Wait For Process Stop : " + processName);
 
 			/*
 			
@@ -367,9 +367,9 @@ public class SystemUtils {
 
 	public static class Services {
 
-		public static void validate(final String serviceName, final boolean shouldRun) {
+		public static void verify(final String serviceName, final boolean shouldRun) {
 			final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);
-			boolean ispass = Utils.tryUntil(new ActionWrapper("Validate Service : " + serviceName) {
+			boolean ispass = Utils.tryUntil(new ActionWrapper("Verify Service : " + serviceName) {
 				@Override
 				public boolean invoke() throws Exception {
 					boolean results = isServiceRunning(serviceName);
@@ -377,7 +377,7 @@ public class SystemUtils {
 					return shouldRun == results;
 				}
 			});
-			LogManager.validateAssert(ispass, String.format("Validate Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun.value));
+			LogManager.verifyAssert(ispass, String.format("Verify Service is running : %s . Expected = %s , Actual = %s", serviceName, shouldRun, isRun.value));
 			//TestManager.validator().validate(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
 			
 			//boolean isRun = isServiceRunning(serviceName);

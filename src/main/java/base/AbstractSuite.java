@@ -2,6 +2,7 @@ package base;
 
 import java.util.concurrent.TimeUnit;
 
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -11,6 +12,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
+import buisness.SysAidServer;
+
 public class AbstractSuite {
 
 	//protected Validate validate;
@@ -19,6 +22,7 @@ public class AbstractSuite {
 	public void beforeSuite() { // RUN BEFURE each testng.xml - suite
 		// System.out.println("@BeforeSuite");
 		//validate = TestManager.validator();
+		SysAidServer.initInstaller();
 	}
 
 	@BeforeClass
@@ -49,8 +53,13 @@ public class AbstractSuite {
 	}
 
 	@AfterMethod
-	public void afterMethod() { // RUN AFTER each test
-		// System.out.println("@AfterMethod RUN AFTER each test");
+	public void afterMethod(ITestResult tr) { // RUN AFTER each test
+		LogManager.bold("Test Execution time = " + (tr.getEndMillis() - tr.getStartMillis()));
+		
+	}
+	@AfterMethod
+	public void getRunTime(ITestResult tr) {
+	    long time = tr.getEndMillis() - tr.getStartMillis();
 	}
 
 	@AfterTest

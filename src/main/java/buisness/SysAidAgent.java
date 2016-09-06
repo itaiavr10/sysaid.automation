@@ -31,7 +31,7 @@ public class SysAidAgent {
 		filesList.add(sysaidAgentLogPath);
 	}
 	
-	public static void validateInstallation(){
+	public static void verifyInstallation(){
 		LogManager.bold("SysAid Agent : Validate Installation");
 		validateProcesses();
 		validateServices();

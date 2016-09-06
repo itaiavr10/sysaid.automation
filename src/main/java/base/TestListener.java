@@ -40,7 +40,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println("-> onTestSuccess");
 		//System.out.println(result.getName());
 		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
-		Assert.assertTrue(SuiteReporter.isTestPassed());
+		Assert.assertTrue(SuiteReporter.isTestPassed());  //TODO : should check if we do it in another place! issue : Test Pass + Test Fail in TESTNG Results
 		VideoRecorder.getInstance().finishRecord(false);
 		LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
 		/*boolean testPassed = SuiteReporter.isTestPassed();
@@ -75,7 +75,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println(context.getSuite().getName());
 		//System.out.println(context.getName());
 		LogManager.bold("XML Test: " + context.getName());
-		SysAidServer.initInstaller(); //TODO: If it is Agent Tests??
+		//TODO: If it is Agent Tests??
 		
 		
 		//TODO: Missing suite class name
@@ -83,7 +83,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 	}
 
 	public void onFinish(ITestContext context) {
-		//System.out.println("->ITestListener onFinish");
+		System.out.println("->ITestListener onFinish");
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {

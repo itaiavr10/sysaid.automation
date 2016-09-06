@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -215,6 +217,21 @@ public class SystemUtils {
 			moveFile(new File(srcPath), new File(destPath));
 		}
 
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//												OS      													   //
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static class OS {
+		public static String getCurrentIP(){
+			try {
+				return Inet4Address.getLocalHost().getHostAddress();
+			} catch (UnknownHostException e) {
+				LogManager.assertTrue(false, "Failed to get current IP , Error : " + e.getMessage());
+			}
+			return "";
+		}
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -415,5 +432,8 @@ public class SystemUtils {
 			return false;
 		}*/
 	}
+	
+	
+	
 	
 }

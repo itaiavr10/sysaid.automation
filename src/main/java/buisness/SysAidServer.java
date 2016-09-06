@@ -10,6 +10,7 @@ public class SysAidServer {
 	
 	private static String version = "unknown";
 	private static String build = "unknown";
+	public static String exeName;
 	public static String exePath;
 	
 	private static List<String> filesList;
@@ -39,16 +40,13 @@ public class SysAidServer {
 		
 		//TODO : should check OS bit
 		if(getDefaultExe)
-			exePath = "C:\\SA\\SysAidServer64_default.exe";
+			exeName = "SysAidServer64_default.exe";
 		else{
 			LogManager.info(String.format("SysAid Version:%s , Build: %s",version,build));
-			exePath = String.format("C:\\SA\\SysAidServer64_%s_b%s.exe",version.replace(".", "_"),build);
-			SystemUtils.Files.validateExist(exePath, true,5000);
-			System.out.println("EXE=" + exePath);
+			exeName = String.format("C:\\SA\\SysAidServer64_%s_b%s.exe",version.replace(".", "_"),build);
 		}
-			
-		
-	
+		exePath = "C:\\SA\\" + exeName;
+		SystemUtils.Files.validateExist(exePath, true,2000);
 		
 	}
 
@@ -63,7 +61,7 @@ public class SysAidServer {
 		
 	}
 	
-	public static void validateInstallation(){
+	public static void verifyInstallation(){
 		LogManager.bold("SysAid Server : Validate Installation");
 		changeLog4J();
 		validateProcesses();

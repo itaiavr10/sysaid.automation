@@ -1,15 +1,17 @@
 package itai;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
+import com.core.db.DBQuery;
 
 import utils.SystemUtils;
 
 public class Test {
 	
 	public static void main(String[] args) throws UnknownHostException {
-		String computername=InetAddress.getLocalHost().getHostName();
-		System.out.println(computername);
+		//DBQuery.validateResult("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES", "265");
 	}
 
 }

@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
-import base.LogManager;
+import com.core.base.LogManager;
 
 public class ConfigProperties {
 

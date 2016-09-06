@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 import java.awt.AWTException;
 import java.awt.Rectangle;
@@ -33,8 +33,8 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.util.Strings;
 
-import base.LogManager;
-import base.TestManager;
+import com.core.base.LogManager;
+import com.core.base.TestManager;
 
 //OSUtils
 public class SystemUtils {

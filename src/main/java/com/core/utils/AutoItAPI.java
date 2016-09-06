@@ -1,7 +1,7 @@
-package utils;
+package com.core.utils;
 
-import base.LogManager;
-import base.TestManager;
+import com.core.base.LogManager;
+import com.core.base.TestManager;
 
 public class AutoItAPI {
 

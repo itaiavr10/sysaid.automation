@@ -4,7 +4,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import base.LogManager;
+import com.core.base.LogManager;
+
 import buisness.db.DBconst.TableContent;
 
 public class DBQuery {

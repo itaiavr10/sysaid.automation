@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import utils.Cloner;
-import utils.SystemUtils.OS;
-import base.LogManager;
+import com.core.base.LogManager;
+import com.core.utils.Cloner;
+import com.core.utils.SystemUtils.OS;
 
 public class DBconnector {
 

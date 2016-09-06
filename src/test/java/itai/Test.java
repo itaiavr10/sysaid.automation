@@ -5,8 +5,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import com.core.db.DBQuery;
-
-import utils.SystemUtils;
+import com.core.utils.SystemUtils;
 
 public class Test {
 	

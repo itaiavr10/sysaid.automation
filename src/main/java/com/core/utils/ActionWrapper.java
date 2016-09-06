@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 public abstract class ActionWrapper {
 	

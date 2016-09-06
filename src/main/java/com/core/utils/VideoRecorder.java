@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -14,7 +14,7 @@ import static org.monte.media.VideoFormatKeys.*;
 
 import org.monte.screenrecorder.ScreenRecorder;
 
-import base.LogManager;
+import com.core.base.LogManager;
 
 public class VideoRecorder {
 	

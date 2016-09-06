@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -14,7 +14,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import base.LogManager;
+import com.core.base.LogManager;
 
 public class MailUtils {
 	

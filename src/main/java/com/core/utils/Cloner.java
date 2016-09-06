@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import base.LogManager;
+import com.core.base.LogManager;
 
 public class Cloner {
 	// so that nobody can accidentally create an ObjectCloner object

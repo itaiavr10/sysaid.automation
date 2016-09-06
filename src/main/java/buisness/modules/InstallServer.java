@@ -1,11 +1,11 @@
-package buisness;
+package buisness.modules;
 
 import java.util.concurrent.TimeUnit;
 
-import utils.AutoItAPI;
-import utils.SystemUtils.Keyboard;
-import base.LogManager;
-import base.TestManager;
+import com.core.base.LogManager;
+import com.core.base.TestManager;
+import com.core.utils.AutoItAPI;
+import com.core.utils.SystemUtils.Keyboard;
 
 
 public class InstallServer {

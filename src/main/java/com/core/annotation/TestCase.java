@@ -1,4 +1,4 @@
-package common.annotation;
+package com.core.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

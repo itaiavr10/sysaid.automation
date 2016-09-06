@@ -2,9 +2,9 @@ package buisness.db;
 
 import java.util.Arrays;
 
+import com.core.base.LogManager;
 import com.core.db.DBQuery;
 
-import base.LogManager;
 import buisness.db.DBconst.TableContent;
 
 public class DBInstaller {

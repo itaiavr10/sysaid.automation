@@ -1,10 +1,10 @@
-package buisness;
+package buisness.modules;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import base.LogManager;
-import utils.SystemUtils;
+import com.core.base.LogManager;
+import com.core.utils.SystemUtils;
 
 public class SysAidServer {
 	

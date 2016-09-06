@@ -4,18 +4,18 @@ import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.Test;
 
+import com.core.annotation.TestCase;
+import com.core.base.AbstractSuite;
+import com.core.base.LogManager;
+import com.core.base.TestManager;
 import com.core.db.DBQuery;
+import com.core.utils.AutoItAPI;
+import com.core.utils.SystemUtils;
 
-import common.annotation.TestCase;
-import utils.AutoItAPI;
-import utils.SystemUtils;
-import base.AbstractSuite;
-import base.LogManager;
-import base.TestManager;
-import buisness.InstallServer;
-import buisness.SysAidAgent;
-import buisness.SysAidServer;
 import buisness.db.DBInstaller;
+import buisness.modules.InstallServer;
+import buisness.modules.SysAidAgent;
+import buisness.modules.SysAidServer;
 
 
 public class InstallSanitySuite extends AbstractSuite{

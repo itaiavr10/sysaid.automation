@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 import java.io.IOException;
 
@@ -12,8 +12,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import base.LogManager;
-import base.TestManager;
+import com.core.base.LogManager;
+import com.core.base.TestManager;
 
 public class XmlUtils {
 	
@@ -51,7 +51,6 @@ public class XmlUtils {
 				throw new Exception("Error: we get incorrect #elemnts (!1) for tag name = " + tagName);
 			for (int temp = 0; temp < nodeList.getLength(); temp++) {
 				Node node = nodeList.item(temp);
-				//System.out.println("\nCurrent Element :" + node.getNodeName());
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) node;
 					return eElement.getTextContent();
@@ -62,7 +61,6 @@ public class XmlUtils {
 			LogManager.error("Get Node Value - Error : " + e.getMessage());
 		}
 		return "UnKnown";
-		
 	}
 	
 	

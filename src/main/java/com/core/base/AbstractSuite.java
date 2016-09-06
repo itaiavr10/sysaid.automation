@@ -1,4 +1,4 @@
-package base;
+package com.core.base;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import buisness.SysAidServer;
+import buisness.modules.SysAidServer;
 
 public class AbstractSuite {
 

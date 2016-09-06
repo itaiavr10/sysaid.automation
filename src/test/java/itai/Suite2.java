@@ -2,7 +2,7 @@ package itai;
 
 import org.testng.annotations.Test;
 
-import base.AbstractSuite;
+import com.core.base.AbstractSuite;
 
 public class Suite2 extends AbstractSuite {
 	

@@ -1,4 +1,4 @@
-package base;
+package com.core.base;
 
 import org.testng.Assert;
 import org.testng.ISuite;
@@ -7,9 +7,10 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import buisness.SysAidServer;
-import utils.ScreenShooter;
-import utils.VideoRecorder;
+import com.core.utils.ScreenShooter;
+import com.core.utils.VideoRecorder;
+
+import buisness.modules.SysAidServer;
 
 
 public class TestListener implements ITestListener, ISuiteListener { //IInvokedMethodListener

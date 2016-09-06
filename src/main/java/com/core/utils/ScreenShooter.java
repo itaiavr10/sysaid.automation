@@ -1,4 +1,4 @@
-package utils;
+package com.core.utils;
 
 import java.awt.AWTException;
 import java.awt.Rectangle;
@@ -13,8 +13,8 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
-import utils.SystemUtils.Files;
-import base.LogManager;
+import com.core.base.LogManager;
+import com.core.utils.SystemUtils.Files;
 
 public class ScreenShooter {
 	

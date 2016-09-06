@@ -1,4 +1,4 @@
-package base;
+package com.core.base;
 
 public class LogManager {
 

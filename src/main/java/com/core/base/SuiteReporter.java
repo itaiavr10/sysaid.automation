@@ -1,4 +1,4 @@
-package base;
+package com.core.base;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,9 +7,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
 
-import utils.ConfigProperties;
-import utils.MailUtils;
-import utils.SystemUtils;
+import com.core.utils.ConfigProperties;
+import com.core.utils.MailUtils;
+import com.core.utils.SystemUtils;
 
 public class SuiteReporter {
 

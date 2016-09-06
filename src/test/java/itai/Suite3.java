@@ -2,8 +2,8 @@ package itai;
 
 import org.testng.annotations.Test;
 
-import base.AbstractSuite;
-import base.LogManager;
+import com.core.base.AbstractSuite;
+import com.core.base.LogManager;
 
 public class Suite3 extends AbstractSuite{
 	

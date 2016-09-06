@@ -1,14 +1,14 @@
-package buisness;
+package buisness.modules;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.ActionWrapper;
-import utils.StringRef;
-import utils.Utils;
-import utils.XmlUtils;
-import base.LogManager;
-import base.TestManager;
+import com.core.base.LogManager;
+import com.core.base.TestManager;
+import com.core.utils.ActionWrapper;
+import com.core.utils.StringRef;
+import com.core.utils.Utils;
+import com.core.utils.XmlUtils;
 
 public abstract class SysAid {
 	

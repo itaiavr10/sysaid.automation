@@ -79,6 +79,14 @@
 	
 	
 	<dependency>
+		<groupId>sqljdbc4</groupId>
+		<artifactId>sqljdbc4</artifactId>
+		<version>2.0</version>
+		<scope>system</scope>
+		<systemPath>${basedir}/lib/sqljdbc4.jar</systemPath>
+	</dependency>
+	
+	<dependency>
 		<groupId>autoit</groupId>
 		<artifactId>autoit</artifactId>
 		<version>1.0</version>

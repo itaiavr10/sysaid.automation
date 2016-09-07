@@ -1,16 +1,19 @@
 package buisness.modules;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.core.base.LogManager;
-import com.core.base.TestManager;
-import com.core.utils.ActionWrapper;
-import com.core.utils.StringRef;
-import com.core.utils.Utils;
-import com.core.utils.XmlUtils;
 
 public abstract class SysAid {
+	
+	
+	public static InstallType type = InstallType.TYPICAL;
+	
+	
+	
+	
+	
+	public enum InstallType{
+		TYPICAL
+		;
+	}
 	
 	/*//TODO : separate to server , agent
 	

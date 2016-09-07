@@ -4,11 +4,52 @@ import java.util.Arrays;
 
 import com.core.base.LogManager;
 import com.core.db.DBQuery;
+import com.core.utils.SystemUtils;
+import com.core.utils.XmlUtils;
 
 import buisness.db.DBconst.TableContent;
 
 public class DBInstaller {
 	
+	
+	private static String serviceName = "SQL Server (SYSAIDMSSQL)";
+	private static String msSqlPath = "C:\\Program Files\\SysAidMsSql";
+	private static String serverConfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\serverConf.xml";
+	
+	
+	
+
+	/**
+	 * Test #246
+	 * Only Typical Installation with MSSQL Embedded
+	 */
+	public static void verifyMsSqlEmbedded(){ //TODO: Abstraction
+		//Verify service installed and running
+		SystemUtils.Services.verify(serviceName, true);
+		// verify directory
+		SystemUtils.Files.verifyExist(msSqlPath, true);
+		
+		verifyServerConfFile();
+		
+	}
+	
+	/*
+	 * embedded only
+	 */
+	private static void verifyServerConfFile(){ //TODO : Send list of nodes
+		//Verify serverconf.xml contain correct database connection details
+		XmlUtils.verifyNodeValue(serverConfPath, "dbDriver", "net.sourceforge.jtds.jdbc.Driver");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbUrl", "jdbc:jtds:sqlserver://localhost:1450/ilient;useCursorsAlways=true");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbUser", "sa");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbType", "mssql");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbCPType", "TomcatCP");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbMultiply", "false");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbMainName", "ilient");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolMaxConn", "100");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolIdleTimeout", "360");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolCheckoutTimeout", "100");
+		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolMaxCheckout", "100");
+	}
 	
 	/**
 	 *  verification #252 : Tables content

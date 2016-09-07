@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import buisness.db.DBInstaller;
+import buisness.modules.SysAid.InstallType;
 
 import com.core.base.LogManager;
 import com.core.utils.SystemUtils;
@@ -15,9 +16,9 @@ public class SysAidServer {
 	public static String exeName;
 	public static String exePath;
 	
+	
 	private static List<String> filesList;
 	private static String serverPath = "C:\\Program Files\\SysAidServer";
-	private static String msSqlPath = "C:\\Program Files\\SysAidMsSql";
 	private static String tomcatPath = "C:\\Program Files\\SysAidServer\\tomcat";
 	private static String webInfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF";
 	
@@ -56,7 +57,6 @@ public class SysAidServer {
 		filesList = new ArrayList<String>();
 		//add
 		filesList.add(serverPath);
-		filesList.add(msSqlPath);
 		filesList.add(tomcatPath);
 		filesList.add(webInfPath);
 		
@@ -77,19 +77,13 @@ public class SysAidServer {
 	 * Test# 251 , #252
 	 */
 	public static void verifyDB(){
-		verifyMsSqlEmbedded();//TODO if typical c-> check
+		if(SysAid.type == InstallType.TYPICAL)
+			DBInstaller.verifyMsSqlEmbedded();//TODO if typical c-> check
 		DBInstaller.verifyTablesCount();
 		DBInstaller.verifyTableContents();
 	}
 	
 	
-	/**
-	 * Test #246
-	 * Only Typical Installation with MSSQL Embedded
-	 */
-	public static void verifyMsSqlEmbedded(){
-		//TODO if typical check 
-	}
 	
 	
 	public static void verifyProcesses(){ 
@@ -98,7 +92,6 @@ public class SysAidServer {
 	
 	public static void verifyServices(){
 		SystemUtils.Services.verify("SysAid Server", true); //TODO : Should be an enum
-		SystemUtils.Services.verify("SQL Server (SYSAIDMSSQL)", true); //TODO : Should be an enum
 	}
 	
 	public static void verifyDesktopIcon(){

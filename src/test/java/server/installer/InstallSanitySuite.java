@@ -29,8 +29,8 @@ public class InstallSanitySuite extends AbstractSuite{
 	 */
 	@Test(priority = 1)
 	@TestCase(number = 107)
-	public void flatInstall(){
-		InstallServer.defaultInstallation();
+	public void typicalInstall(){
+		InstallServer.typicalInstallation();
 		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		
 		//wait for process to finish installstion

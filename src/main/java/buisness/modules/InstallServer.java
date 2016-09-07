@@ -2,6 +2,8 @@ package buisness.modules;
 
 import java.util.concurrent.TimeUnit;
 
+import buisness.modules.SysAid.InstallType;
+
 import com.core.base.LogManager;
 import com.core.base.TestManager;
 import com.core.utils.AutoItAPI;
@@ -40,7 +42,7 @@ public class InstallServer {
 	}
 	
 	
-	public static void defaultInstallation(){
+	public static void typicalInstallation(){
 		exec();
 		LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");
@@ -98,6 +100,8 @@ public class InstallServer {
 		LogManager.info("Step9: 'installShield - completing page");
 		AutoItAPI.waitWin("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server",30);
 		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");
+		
+		SysAid.type = InstallType.TYPICAL;
 		
 	}
 	

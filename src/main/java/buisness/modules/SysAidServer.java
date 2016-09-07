@@ -8,6 +8,7 @@ import buisness.modules.SysAid.InstallType;
 
 import com.core.base.LogManager;
 import com.core.utils.SystemUtils;
+import com.core.utils.XmlUtils;
 
 public class SysAidServer {
 	
@@ -21,7 +22,6 @@ public class SysAidServer {
 	private static String serverPath = "C:\\Program Files\\SysAidServer";
 	private static String tomcatPath = "C:\\Program Files\\SysAidServer\\tomcat";
 	private static String webInfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF";
-	
 	private static String log4jPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\log4j.properties"; 
 	
 	static{
@@ -63,13 +63,23 @@ public class SysAidServer {
 		
 	}
 	
+	
+	/**
+	 *  Test #242
+	 */
 	public static void verifyInstallation(){
 		LogManager.bold("SysAid Server : Verify Installation");
 		changeLog4J();
-		verifyProcesses();
 		verifyServices();
+		verifyProcesses();
 		verifyDesktopIcon();
 		verifyDirectories();
+		//TODO: step 4 Verify Browser opened with 2 tabs
+		//TODO: step 6 Verify configuration files in C:\Program Files\SysAidServer\root\WEB-INF\conf 
+		// Verify accountConf file exist , add TODO TBD (content)
+		//TODO: step 7 Logs (sysaid.log) C:\Program Files\SysAidServer\root\WEB-INF\logs
+		//TODO: step 8 Logs (upgradeToNewReports.log)
+		//TODO: step 9 Logs Logs (q-scheduler.log)
 	}
 	
 	
@@ -77,12 +87,12 @@ public class SysAidServer {
 	 * Test# 251 , #252
 	 */
 	public static void verifyDB(){
+		LogManager.bold("Verification - MSSQL embedded");
 		if(SysAid.type == InstallType.TYPICAL)
-			DBInstaller.verifyMsSqlEmbedded();//TODO if typical c-> check
+			DBInstaller.verifyMsSqlEmbedded();
 		DBInstaller.verifyTablesCount();
 		DBInstaller.verifyTableContents();
 	}
-	
 	
 	
 	

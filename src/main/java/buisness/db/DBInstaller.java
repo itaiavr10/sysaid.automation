@@ -29,7 +29,7 @@ public class DBInstaller {
 		// verify directory
 		SystemUtils.Files.verifyExist(msSqlPath, true);
 		
-		verifyServerConfFile();
+		verifyServerConfFile(); //TODO : This file always created! not only on Embedded mode!
 		
 	}
 	
@@ -37,6 +37,7 @@ public class DBInstaller {
 	 * embedded only
 	 */
 	private static void verifyServerConfFile(){ //TODO : Send list of nodes
+		LogManager.debug("Verify serverconfig.xml");
 		//Verify serverconf.xml contain correct database connection details
 		XmlUtils.verifyNodeValue(serverConfPath, "dbDriver", "net.sourceforge.jtds.jdbc.Driver");
 		XmlUtils.verifyNodeValue(serverConfPath, "dbUrl", "jdbc:jtds:sqlserver://localhost:1450/ilient;useCursorsAlways=true");
@@ -55,7 +56,7 @@ public class DBInstaller {
 	 *  verification #252 : Tables content
 	 */
 	public static void verifyTableContents(){
-		LogManager.bold("Verify DB - Tables Content");
+		LogManager.debug("Verify DB - Tables Content");
 		//Step 1 Table: account
 		DBQuery.verifyNumOfRows("SELECT COUNT(*) FROM ACCOUNT", 1);
 		DBQuery.verifyTable(TableContent.ACCOUNT); 
@@ -143,7 +144,7 @@ public class DBInstaller {
 	 * verification	 #251 : DB Tables Count
 	*/
 	public  static void verifyTablesCount(){//TODO : Should be according to DBType
-		LogManager.bold("Verify DB - Tables Count");
+		LogManager.debug("Verify DB - Tables Count");
 		// Count all tables in database
 		DBQuery.verifyResult("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES", "265"); 
 		//Tables (prefix = account)

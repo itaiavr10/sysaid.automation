@@ -37,9 +37,11 @@ public class InstallSanitySuite extends AbstractSuite{
 		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
 		
 		SysAidServer.verifyInstallation();
+		//TODO : RDS Internal
 		SysAidAgent.verifyInstallation();
 		
-		DBInstaller.verifyTablesCount();
+		
+		SysAidServer.verifyDB();
 		
 		
 	}

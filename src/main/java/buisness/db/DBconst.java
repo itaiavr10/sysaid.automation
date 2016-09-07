@@ -158,6 +158,7 @@ public class DBconst {
 		
 		/**
 		 * Verify discovery_service table
+		 * 
 		 */
 			DISCOVERT_SERVICE(2) {
 			@Override

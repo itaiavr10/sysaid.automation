@@ -3,6 +3,8 @@ package buisness.modules;
 import java.util.ArrayList;
 import java.util.List;
 
+import buisness.db.DBInstaller;
+
 import com.core.base.LogManager;
 import com.core.utils.SystemUtils;
 
@@ -69,6 +71,26 @@ public class SysAidServer {
 		verifyDesktopIcon();
 		verifyDirectories();
 	}
+	
+	
+	/**
+	 * Test# 251 , #252
+	 */
+	public static void verifyDB(){
+		verifyMsSqlEmbedded();//TODO if typical c-> check
+		DBInstaller.verifyTablesCount();
+		DBInstaller.verifyTableContents();
+	}
+	
+	
+	/**
+	 * Test #246
+	 * Only Typical Installation with MSSQL Embedded
+	 */
+	public static void verifyMsSqlEmbedded(){
+		//TODO if typical check 
+	}
+	
 	
 	public static void verifyProcesses(){ 
 		SystemUtils.Processes.verify("Wrapper.exe", true); //TODO : Should be an enum  ?Is a RDS Process?

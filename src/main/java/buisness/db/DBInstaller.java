@@ -10,9 +10,6 @@ import buisness.db.DBconst.TableContent;
 public class DBInstaller {
 	
 	
-	
-	
-	
 	/**
 	 *  verification #252 : Tables content
 	 */

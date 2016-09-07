@@ -79,7 +79,7 @@ public class SysAidAgent {
 	
 	//log verification
 	public static void logScan(){
-		SystemUtils.Files.scan(logFilePath, "Error", "Exception");
+		SystemUtils.Files.scanByLine(logFilePath, "Error", "Exception");
 	}
 	
 	

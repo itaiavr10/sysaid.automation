@@ -52,7 +52,12 @@ public class SystemUtils {
 			return input;
 		}
 
-		public static void scan(String filePath, String... searchQuery) {
+		/**
+		 * Scan File - line by line
+		 * @param filePath
+		 * @param searchQuery
+		 */
+		public static void scanByLine(String filePath, String... searchQuery) {
 			LogManager.info("Scan File: " + filePath);
 			BufferedReader br = null;
 			try {

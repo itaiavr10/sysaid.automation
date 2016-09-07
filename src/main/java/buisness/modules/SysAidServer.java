@@ -1,8 +1,10 @@
 package buisness.modules;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -27,7 +29,9 @@ public class SysAidServer {
 	private static String tomcatPath = "C:\\Program Files\\SysAidServer\\tomcat";
 	private static String webInfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF";
 	private static String log4jPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\log4j.properties";
+	
 	private static String accountConfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\accountConf.xml";
+	private static String sysAidLogsPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\logs\\sysaid.log";
 	
 	static{
 		initFiles();
@@ -78,16 +82,45 @@ public class SysAidServer {
 		verifyServices();
 		verifyProcesses();
 		verifyDesktopIcon();
-		verifyDirectories();
 		//TODO: step 4 Verify Browser opened with 2 tabs
-		//TODO: step 6 Verify configuration files in C:\Program Files\SysAidServer\root\WEB-INF\conf 
-		
+		verifyDirectories();
 		verifyConfigurationFiles();
-		//TODO: step 7 Logs (sysaid.log) C:\Program Files\SysAidServer\root\WEB-INF\logs
+		verifySysAidLog();
 		//TODO: step 8 Logs (upgradeToNewReports.log)
 		//TODO: step 9 Logs Logs (q-scheduler.log)
 	}
 	
+	 
+	// verify sysaid.log file
+	public static void verifySysAidLog() {
+		LogManager.debug("Verify sysaid.log ..");
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(sysAidLogsPath)));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if(line.contains("] ERROR")){
+					// search exception line
+					while ((line = br.readLine()) != null){
+						if(line.contains("Exception"))
+							break;
+					}
+					// on line with the exception details
+					//TODO: Check Known Exception
+					LogManager.error("Found Error on sysaid.log file , Exception: " + line);
+				}
+			}
+		} catch (Exception e) {
+			LogManager.error("Verify sysaid.log - Error : " + e.getMessage());
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+
 	//Verify configuration files in C:\Program Files\SysAidServer\root\WEB-INF\conf 
 	public static void verifyConfigurationFiles() {
 		LogManager.debug("Verify configurations file..");

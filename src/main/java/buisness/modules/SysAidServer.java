@@ -1,7 +1,11 @@
 package buisness.modules;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import buisness.db.DBInstaller;
 import buisness.modules.SysAid.InstallType;
@@ -12,8 +16,8 @@ import com.core.utils.XmlUtils;
 
 public class SysAidServer {
 	
-	private static String version = "unknown";
-	private static String build = "unknown";
+	private static String server_ver = "unknown";
+	private static String server_build = "unknown";
 	public static String exeName;
 	public static String exePath;
 	
@@ -22,7 +26,8 @@ public class SysAidServer {
 	private static String serverPath = "C:\\Program Files\\SysAidServer";
 	private static String tomcatPath = "C:\\Program Files\\SysAidServer\\tomcat";
 	private static String webInfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF";
-	private static String log4jPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\log4j.properties"; 
+	private static String log4jPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\log4j.properties";
+	private static String accountConfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\accountConf.xml";
 	
 	static{
 		initFiles();
@@ -30,13 +35,13 @@ public class SysAidServer {
 	
 	public static void initInstaller(){
 		boolean getDefaultExe = false;
-		version = System.getProperty("version");
-		build = System.getProperty("build");
-		if(version == null || version.equals("unknown")){
+		server_ver = System.getProperty("version");
+		server_build = System.getProperty("build");
+		if(server_ver == null || server_ver.equals("unknown")){
 			LogManager.warn("sysaid version didn't defined via system properties! install default exe : SysAidServer64_default.exe");
 			getDefaultExe = true;
 		}
-		else if(build == null || build.equals("unknown")){
+		else if(server_build == null || server_build.equals("unknown")){
 			LogManager.warn("sysaid build version didn't defined via system properties! install default exe : SysAidServer64_default.exe ");
 			getDefaultExe = true;
 		}
@@ -45,8 +50,8 @@ public class SysAidServer {
 		if(getDefaultExe)
 			exeName = "SysAidServer64_default.exe";
 		else{
-			LogManager.info(String.format("SysAid Version:%s , Build: %s",version,build));
-			exeName = String.format("C:\\SA\\SysAidServer64_%s_b%s.exe",version.replace(".", "_"),build);
+			LogManager.info(String.format("SysAid Version:%s , Build: %s",server_ver,server_build));
+			exeName = String.format("C:\\SA\\SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
 		}
 		exePath = "C:\\SA\\" + exeName;
 		SystemUtils.Files.verifyExist(exePath, true,2000);
@@ -76,13 +81,40 @@ public class SysAidServer {
 		verifyDirectories();
 		//TODO: step 4 Verify Browser opened with 2 tabs
 		//TODO: step 6 Verify configuration files in C:\Program Files\SysAidServer\root\WEB-INF\conf 
-		// Verify accountConf file exist , add TODO TBD (content)
+		
+		verifyConfigurationFiles();
 		//TODO: step 7 Logs (sysaid.log) C:\Program Files\SysAidServer\root\WEB-INF\logs
 		//TODO: step 8 Logs (upgradeToNewReports.log)
 		//TODO: step 9 Logs Logs (q-scheduler.log)
 	}
 	
-	
+	//Verify configuration files in C:\Program Files\SysAidServer\root\WEB-INF\conf 
+	public static void verifyConfigurationFiles() {
+		LogManager.debug("Verify configurations file..");
+		LogManager.debug("verify sysaid.ver file..");
+		// verify sysaid.ver file:
+		Properties properties = new Properties();
+		try {
+			properties.load(new FileInputStream("C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\sysaid.ver"));
+			String rdsVer = properties.getProperty("rdsVersion");
+			String ver = properties.getProperty("version");
+			String clientVersion = properties.getProperty("clientVersion");
+			LogManager.assertSoft(rdsVer.equals(server_ver), String.format("Incorrect Server Version! Expected : %s , Actual: %s" ,server_ver , rdsVer ));
+			LogManager.assertSoft(ver.equals(server_ver), String.format("Incorrect Server Version! Expected : %s , Actual: %s" ,server_ver , ver ));
+			LogManager.assertSoft(clientVersion.equals(server_ver), String.format("Incorrect Server Version! Expected : %s , Actual: %s" ,server_ver , clientVersion ));
+		
+		}catch (Exception e) {
+			LogManager.error("Verify configurations file - Error : " + e.getMessage());
+		}
+		
+		//verify serverconf.xml file exist.. // TODO: Should check content instead on DBInstaller class! (Discussion with Alex)
+		SystemUtils.Files.verifyExist(DBInstaller.serverConfPath, true);
+		
+		// Verify accountConf file exist , add TODO TBD (content)
+		SystemUtils.Files.verifyExist(accountConfPath, true);
+		
+	}
+
 	/**
 	 * Test# 251 , #252
 	 */

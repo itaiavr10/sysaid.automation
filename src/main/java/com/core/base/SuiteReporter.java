@@ -92,6 +92,15 @@ public class SuiteReporter {
 		}
 	}
 	
+	public void assertSoft(boolean condition,String msg) {
+		if(condition){
+			log.debug(msg);
+		}else{
+			error(msg);
+		}
+	}
+	
+	
 	public void assertTrue(boolean condition,String msg) {
 		if(condition){
 			log.debug(msg);

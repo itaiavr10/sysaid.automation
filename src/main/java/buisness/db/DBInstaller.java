@@ -14,7 +14,7 @@ public class DBInstaller {
 	
 	private static String serviceName = "SQL Server (SYSAIDMSSQL)";
 	private static String msSqlPath = "C:\\Program Files\\SysAidMsSql";
-	private static String serverConfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\serverConf.xml";
+	public static String serverConfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\serverConf.xml";
 	
 	
 	

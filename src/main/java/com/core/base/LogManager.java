@@ -36,8 +36,18 @@ public class LogManager {
 		report.get().error(msg);
 	}
 	
+	
 	/**
-	 * Will Print to report only if failed & Stop test
+	 * Will Print to report ONLY if failed & & Continue to run
+	 * @param condition
+	 * @param msg
+	 */
+	public static void assertSoft(boolean condition , String msg) {
+		report.get().assertSoft(condition,msg);
+	}
+	
+	/**
+	 * Will Print to report ONLY if failed & STOP test
 	 * @param condition
 	 * @param msg
 	 */
@@ -46,7 +56,7 @@ public class LogManager {
 	}
 	
 	/**
-	 * Will Print to report for any results & stop on fail
+	 * Will Print to report for ANY results & STOP on fail
 	 * @param condition
 	 * @param msg
 	 */
@@ -55,7 +65,7 @@ public class LogManager {
 	}
 	
 	/**
-	 * Will Print to report for any results & continue to run
+	 * Will Print to report for ANY results & Continue to run
 	 * @param condition
 	 * @param msg
 	 */

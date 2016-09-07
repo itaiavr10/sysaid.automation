@@ -4,7 +4,7 @@
 <suite name="Server Installer">
 	
 	<listeners>
-    	<listener class-name="base.TestListener" />
+    	<listener class-name="com.core.base.TestListener" />
   	</listeners>
 	
 

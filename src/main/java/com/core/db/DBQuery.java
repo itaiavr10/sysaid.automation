@@ -28,12 +28,12 @@ public class DBQuery {
 				if(expectedRow.equals(row)){ // verify current row
 					LogManager.debug("Found same table row content: " +row.toString());
 				}else{
-					LogManager.verify(false,String.format("Verify Table Content: Expected = %s , Actual = %s" , expectedRow.toString(),row.toString()));
+					LogManager.verify(false,String.format("Verify %s - Table Content: Expected = %s , Actual = %s" , tableContent.getDescription(), expectedRow.toString(), row.toString()));
 					passed = false;
 				}
 				if(rowIndex>= expectedTable.size()){ // verify current table is not bigger the expected
 					passed = false;
-					throw new Exception("Current Table is bigger then expexted");
+					throw new Exception(tableContent + " : Current Table is bigger then expexted");
 				}
 				rowIndex++;
 			}

@@ -11,6 +11,7 @@ public class Test {
 	
 	public static void main(String[] args) throws UnknownHostException {
 		//DBQuery.validateResult("SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES", "265");
+		System.out.println("Hi");
 	}
 
 }

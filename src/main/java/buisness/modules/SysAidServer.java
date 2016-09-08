@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Stack;
+import java.util.regex.Pattern;
 
 import buisness.db.DBInstaller;
 import buisness.modules.SysAid.InstallType;
@@ -32,6 +34,8 @@ public class SysAidServer {
 	
 	private static String accountConfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\accountConf.xml";
 	private static String sysAidLogsPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\logs\\sysaid.log";
+	private static String upgradeToNewReportsPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\logs\\upgradeToNewReports.log";
+	private static String qschedulerLogPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\logs\\q-scheduler.log";
 	
 	static{
 		initFiles();
@@ -86,11 +90,50 @@ public class SysAidServer {
 		verifyDirectories();
 		verifyConfigurationFiles();
 		verifySysAidLog();
-		//TODO: step 8 Logs (upgradeToNewReports.log)
-		//TODO: step 9 Logs Logs (q-scheduler.log)
+		verifyupgradeToNewReports();
+		verifyQschedulerLog();
 	}
 	
 	 
+	private static void verifyQschedulerLog() {
+		SystemUtils.Files.scanByLine(qschedulerLogPath, "Error", "Exception");
+	}
+
+	private static void verifyupgradeToNewReports() {
+		LogManager.debug("Verify upgradeToNewReports.log ..");
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(upgradeToNewReportsPath)));
+			String line;
+			Stack<String> stack = new Stack<String>();
+			while ((line = br.readLine()) != null) {
+				LogManager.debug("Line = " + line);
+				if(line.contains("ERROR")){
+					LogManager.assertSoft(false, "upgradeToNewReports.log file contains error : " + line);
+				}else if(line.contains("Start")){
+					stack.push("Start");
+				}else if(line.contains("End")){
+					if(stack.isEmpty()){
+						LogManager.assertSoft(false, "Incorrect Start -End Order. see debug log");
+						break;
+					}else{
+						stack.pop();
+					}
+				}
+			}
+			// after reading all lines , stack should be empty
+			LogManager.assertSoft(!stack.isEmpty(), "Incorrect Start -End Order. see debug log");
+		} catch (Exception e) {
+			LogManager.error("Verify upgradeToNewReports.log - Error : " + e.getMessage());
+		} finally {
+			try {
+				if (br != null)
+					br.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+
 	// verify sysaid.log file
 	public static void verifySysAidLog() {
 		LogManager.debug("Verify sysaid.log ..");
@@ -98,8 +141,9 @@ public class SysAidServer {
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(sysAidLogsPath)));
 			String line;
+			Pattern p = Pattern.compile(".*]\\s*ERROR.*");
 			while ((line = br.readLine()) != null) {
-				if(line.contains("] ERROR")){
+				if(p.matcher(line).matches()){
 					// search exception line
 					while ((line = br.readLine()) != null){
 						if(line.contains("Exception"))

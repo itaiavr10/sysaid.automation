@@ -58,19 +58,24 @@ public class SystemUtils {
 		 * @param searchQuery
 		 */
 		public static void scanByLine(String filePath, String... searchQuery) {
-			LogManager.debug("Scan File: " + filePath);
+			LogManager.info("Scan File: " + filePath);
 			boolean pass =true;
 			BufferedReader br = null;
 			try {
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
 				String line;
+				String regex = String.format("(?i:.*%s.*)", searchQuery.toString().replace("[", "(").replace(",", "|").replace("]", ")"));
 				while ((line = br.readLine()) != null) {
-					for (String reg : searchQuery) { //TODO regex
-						if (line.toLowerCase().contains(reg.trim().toLowerCase())){
-							LogManager.error("Found Line: " + line);
-							pass = false;
-						}
+					if(line.matches(regex)){
+						LogManager.error("Found Line: " + line);
+						pass = false;
 					}
+//					for (String reg : searchQuery) { //TODO regex
+//						if (line.toLowerCase().contains(reg.trim().toLowerCase())){
+//							LogManager.error("Found Line: " + line);
+//							pass = false;
+//						}
+//					}
 				}
 				
 				

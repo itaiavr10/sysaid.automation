@@ -33,7 +33,7 @@ public class InstallSanitySuite extends AbstractSuite{
 		InstallServer.typicalInstallation();
 		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		
-		//wait for process to finish installstion
+		//wait for process to finish installation
 		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
 		
 		SysAidServer.verifyInstallation();

@@ -122,7 +122,7 @@ public class SysAidServer {
 				}
 			}
 			// after reading all lines , stack should be empty
-			LogManager.assertSoft(stack.isEmpty(), "Incorrect Start -End Order. see debug log");
+			LogManager.verify(stack.isEmpty(), "Incorrect Start -End Order. see debug log");
 		} catch (Exception e) {
 			LogManager.error("Verify upgradeToNewReports.log - Error : " + e.getMessage());
 		} finally {
@@ -137,6 +137,7 @@ public class SysAidServer {
 	// verify sysaid.log file
 	public static void verifySysAidLog() {
 		LogManager.debug("Verify sysaid.log ..");
+		boolean pass = true;
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(sysAidLogsPath)));
@@ -152,11 +153,13 @@ public class SysAidServer {
 					// on line with the exception details
 					//TODO: Check Known Exception
 					LogManager.error("Found Error on sysaid.log file , Exception: " + line);
+					pass = false;
 				}
 			}
 		} catch (Exception e) {
 			LogManager.error("Verify sysaid.log - Error : " + e.getMessage());
 		} finally {
+			LogManager.verify(pass, "Verify sysaid.log");
 			try {
 				if (br != null)
 					br.close();

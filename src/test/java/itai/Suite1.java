@@ -7,6 +7,7 @@ import com.core.base.LogManager;
 import com.core.db.DBQuery;
 
 import buisness.db.DBInstaller;
+import buisness.modules.SysAidAgent;
 
 public class Suite1 extends AbstractSuite{
 	
@@ -14,6 +15,7 @@ public class Suite1 extends AbstractSuite{
 	public void A(){
 		DBInstaller.verifyTableContents();
 		//LogManager.validate(true, "PASS MSG");
+		SysAidAgent.logScan();
 		
 	}
 

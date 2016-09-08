@@ -25,6 +25,7 @@ import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -64,7 +65,7 @@ public class SystemUtils {
 			try {
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
 				String line;
-				String regex = String.format("(?i:.*%s.*)", searchQuery.toString().replace("[", "(").replace(",", "|").replace("]", ")"));
+				String regex = String.format("(?i:.*%s.*)", Arrays.asList(searchQuery).toString().replace("[", "(").replace(",", "|").replace("]", ")"));
 				while ((line = br.readLine()) != null) {
 					if(line.matches(regex)){
 						LogManager.error("Found Line: " + line);
@@ -271,6 +272,22 @@ public class SystemUtils {
 			robot.keyPress(KeyEvent.VK_ESCAPE);
 			TestManager.sleep(500);
 			robot.keyRelease(KeyEvent.VK_ESCAPE);
+		}
+		
+		/**
+		 * Switch browser tab by CTRL + ALT 
+		 */
+		public static void switchBrowserTab() {
+			Robot robot = get();
+			LogManager.debug("switch browser tab");
+			TestManager.sleep(500);
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			TestManager.sleep(500);
+			robot.keyPress(KeyEvent.VK_TAB);
+			TestManager.sleep(500);
+			robot.keyRelease(KeyEvent.VK_TAB);
+			TestManager.sleep(500);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
 		}
 		
 	}

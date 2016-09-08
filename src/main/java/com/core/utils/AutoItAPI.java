@@ -13,6 +13,11 @@ public class AutoItAPI {
 		} catch (InterruptedException e) {
 		}
 	}
+	
+	
+	public static void verifyWinActivate(String winTitle , boolean expected){
+		LogManager.verify(isWinActive(winTitle) == expected, "Verify Window Activate : " + winTitle);
+	}
 
 	public static void waitWin(String winTitle) {
 		waitWin(winTitle, "", MaxTimeOut);

@@ -8,14 +8,13 @@ import com.core.db.DBQuery;
 
 import buisness.db.DBInstaller;
 import buisness.modules.SysAidAgent;
+import buisness.modules.SysAidServer;
 
 public class Suite1 extends AbstractSuite{
 	
 	@Test
 	public void A(){
-		DBInstaller.verifyTableContents();
-		//LogManager.validate(true, "PASS MSG");
-		SysAidAgent.logScan();
+		SysAidServer.verifyLoginBrowser();
 		
 	}
 

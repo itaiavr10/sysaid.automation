@@ -15,6 +15,8 @@ import buisness.db.DBInstaller;
 import buisness.modules.SysAid.InstallType;
 
 import com.core.base.LogManager;
+import com.core.base.TestManager;
+import com.core.utils.AutoItAPI;
 import com.core.utils.SystemUtils;
 import com.core.utils.XmlUtils;
 
@@ -86,7 +88,7 @@ public class SysAidServer {
 		verifyServices();
 		verifyProcesses();
 		verifyDesktopIcon();
-		//TODO: step 4 Verify Browser opened with 2 tabs
+		verifyLoginBrowser();
 		verifyDirectories();
 		verifyConfigurationFiles();
 		verifySysAidLog();
@@ -94,6 +96,18 @@ public class SysAidServer {
 		verifyQschedulerLog();
 	}
 	
+	//Verify Browser opened with 2 tabs
+	public static void verifyLoginBrowser(){
+		LogManager.debug("Verify Browser opened with 2 tabs ..");
+		SystemUtils.Processes.verify("chrome.exe", true);
+		AutoItAPI.activateWindow("SysAid Help Tree","");
+		AutoItAPI.verifyWinActivate("SysAid Help Tree", true);
+		TestManager.sleep(1000);
+		SystemUtils.Keyboard.switchBrowserTab();
+		AutoItAPI.verifyWinActivate("SysAid Help Desk Software",true);
+		
+		
+	}
 	 
 	private static void verifyQschedulerLog() {
 		SystemUtils.Files.scanByLine(qschedulerLogPath, "Error", "Exception");
@@ -122,7 +136,7 @@ public class SysAidServer {
 				}
 			}
 			// after reading all lines , stack should be empty
-			LogManager.verify(stack.isEmpty(), "Incorrect Start -End Order. see debug log");
+			LogManager.verify(stack.isEmpty(), "Verify upgradeToNewReports.log");
 		} catch (Exception e) {
 			LogManager.error("Verify upgradeToNewReports.log - Error : " + e.getMessage());
 		} finally {

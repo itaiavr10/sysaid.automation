@@ -122,7 +122,7 @@ public class SysAidServer {
 				}
 			}
 			// after reading all lines , stack should be empty
-			LogManager.assertSoft(!stack.isEmpty(), "Incorrect Start -End Order. see debug log");
+			LogManager.assertSoft(stack.isEmpty(), "Incorrect Start -End Order. see debug log");
 		} catch (Exception e) {
 			LogManager.error("Verify upgradeToNewReports.log - Error : " + e.getMessage());
 		} finally {

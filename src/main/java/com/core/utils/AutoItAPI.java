@@ -43,12 +43,12 @@ public class AutoItAPI {
 
 	public static void setControlText(String winTitle, String controlID, String text) {
 		boolean success = AutoIt.engine().ControlSetText(winTitle, "", controlID, text);
-		LogManager.assertTrue(success, "Failed to set text: " + text);
+		LogManager.assertTrue(success, "set text: " + text);
 	}
 
 	public static void clickButton(String winTitle, String controlText, String controlID) {
 		boolean success = AutoIt.engine().controlClick(winTitle, controlText, controlID);
-		LogManager.assertTrue(success, "Failed to click on element: " + controlText);
+		LogManager.assertTrue(success, "click on element: " + controlText);
 	}
 
 	public static void check(String winTitle, String controlID) {

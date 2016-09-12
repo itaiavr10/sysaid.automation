@@ -61,7 +61,7 @@ public class SysAidServer {
 			exeName = "SysAidServer64_default.exe";
 		else{
 			LogManager.info(String.format("SysAid Version:%s , Build: %s",server_ver,server_build));
-			exeName = String.format("C:\\SA\\SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
+			exeName = String.format("SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
 		}
 		exePath = "C:\\SA\\" + exeName;
 		SystemUtils.Files.verifyExist(exePath, true,2000);

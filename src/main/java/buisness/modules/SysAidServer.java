@@ -194,8 +194,8 @@ public class SysAidServer {
 			String ver = properties.getProperty("version");
 			String clientVersion = properties.getProperty("clientVersion");
 			LogManager.assertSoft(rdsVer.equals(server_ver), String.format("Incorrect Server Version! Expected : %s , Actual: %s" ,server_ver , rdsVer ));
-			LogManager.assertSoft(ver.equals(server_ver), String.format("Incorrect Server Version! Expected : %s , Actual: %s" ,server_ver , ver ));
 			LogManager.assertSoft(clientVersion.equals(server_ver), String.format("Incorrect Server Version! Expected : %s , Actual: %s" ,server_ver , clientVersion ));
+			LogManager.assertSoft(ver.equals("v"+server_ver), String.format("Incorrect Server Version! Expected : %s , Actual: %s" ,server_ver , ver ));
 		
 		}catch (Exception e) {
 			LogManager.error("Verify configurations file - Error : " + e.getMessage());

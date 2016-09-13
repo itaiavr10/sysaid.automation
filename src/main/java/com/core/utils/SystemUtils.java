@@ -153,7 +153,7 @@ public class SystemUtils {
 					return shouldExist == results;
 				}
 			});
-			LogManager.verify(ispass, String.format("Validate File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
+			LogManager.verify(ispass, String.format("Verify File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
 
 			/*File file = new File(filePath);
 			boolean isExist = file.exists();

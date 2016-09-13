@@ -63,9 +63,9 @@ public class InstallServer {
 		TestManager.sleep(4,TimeUnit.MINUTES);
 		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 100);
 		AutoItAPI.clickButton("InstallShield Wizard", "License File", "2005");
-		TestManager.sleep(1500);
 		//set activation & press Open button
 		AutoItAPI.waitWin("Select the Activation File");
+		TestManager.sleep(1500);
 		AutoItAPI.setControlText("Select the Activation File", "1148", "c:\\SA\\activation.xml");
 		TestManager.sleep(5, TimeUnit.SECONDS);
 		AutoItAPI.clickButton("Select the Activation File", "", "Button1");

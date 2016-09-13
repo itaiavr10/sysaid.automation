@@ -31,7 +31,7 @@ public class AutoItAPI {
 		boolean WinFound = AutoIt.engine().winWait(winTitle, winText, timeoutInSec);
 		LogManager.assertTrue(WinFound, "Wait for Window: " + winTitle);
 		activateWindow(winTitle, winText);
-		sleep(2000);
+		sleep(3000); // VM is too slow
 	}
 
 	public static void waitWinClosed(String winTitle) {

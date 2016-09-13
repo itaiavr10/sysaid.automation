@@ -2,6 +2,7 @@ package server.installer;
 
 import java.util.concurrent.TimeUnit;
 
+import org.hamcrest.Description;
 import org.testng.annotations.Test;
 
 import com.core.annotation.TestCase;
@@ -27,9 +28,10 @@ public class InstallSanitySuite extends AbstractSuite{
 	/**
 	 * This is flat installation
 	 */
-	@Test(priority = 1)
-	@TestCase(number = 107)
+	@Test()
+	@TestCase(number = 107 , description = "Typical Installation with MsSQL Embedded - check")
 	public void typicalInstall(){
+		LogManager.bold("Hi ITAI");
 		InstallServer.typicalInstallation();
 		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		

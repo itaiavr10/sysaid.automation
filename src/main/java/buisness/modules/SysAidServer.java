@@ -184,9 +184,8 @@ public class SysAidServer {
 
 	//Verify configuration files in C:\Program Files\SysAidServer\root\WEB-INF\conf 
 	public static void verifyConfigurationFiles() {
-		LogManager.debug("Verify configurations file..");
-		LogManager.debug("verify sysaid.ver file..");
 		// verify sysaid.ver file:
+		LogManager.debug("Verify configurations file : sysaid.ver..");
 		Properties properties = new Properties();
 		try {
 			properties.load(new FileInputStream("C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\sysaid.ver"));

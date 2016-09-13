@@ -54,7 +54,7 @@ public class AbstractSuite {
 
 	@AfterMethod
 	public void afterMethod(ITestResult tr) { // RUN AFTER each test
-		LogManager.bold("Test Execution time = " + (tr.getEndMillis() - tr.getStartMillis()));
+		//LogManager.bold("Test Execution time = " + (tr.getEndMillis() - tr.getStartMillis()));
 		
 	}
 	@AfterMethod

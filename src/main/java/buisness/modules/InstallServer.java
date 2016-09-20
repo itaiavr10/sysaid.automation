@@ -91,15 +91,20 @@ public class InstallServer {
 	
 	public static void typicalInstallation(){
 		exec();
-		LogManager.info("Step1: Click Next");
+		/*LogManager.info("Step1: Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard");
-		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "1");*/
+		installer.WelcomeStep.waitTo("Welcome.. click next");
+		installer.WelcomeStep.clickNext();
 		
-		LogManager.info("Step2: license agreement - check + Click Next");
+		/*LogManager.info("Step2: license agreement - check + Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard" , "license agreement");
 		AutoItAPI.check("InstallShield Wizard", "1000");
 		TestManager.sleep(1000);
-		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "1");*/
+		installer.LicenseAgreementStep.waitTo("license agreement - check + Click Next");
+		installer.LicenseAgreementStep.acceptAgreement();
+		installer.LicenseAgreementStep.clickNext();
 		
 		installer.SetupTypeStep.waitTo("setup type- use default Typical and click Next");
 		installer.SetupTypeStep.clickNext();
@@ -107,7 +112,6 @@ public class InstallServer {
 		//AutoItAPI.clickButton("InstallShield Wizard", "Typical", "Button3");
 		
 		//LogManager.info("Step4: set activation file");
-		TestManager.sleep(4,TimeUnit.MINUTES);
 		installer.LicenseFileStep.waitTo("set activation file");
 		installer.LicenseFileStep.selectLicenseFile("c:\\SA\\activation.xml");
 		/*AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 200);

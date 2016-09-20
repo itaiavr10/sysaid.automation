@@ -28,7 +28,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	@Test()
 	@TestCase(number = 8 , description = "SysAid Server installation - Customized MySQL")
 	public void customizedMySqlInstall(){
-		InstallServer.typicalInstallation();
+		InstallServer.customizedMySqlInstallation();
 		//sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		
 		//wait for process to finish installation

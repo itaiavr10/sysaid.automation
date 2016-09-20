@@ -51,15 +51,19 @@ public class InstallServer {
 	
 	public static void customizedMySqlInstallation(){
 		exec();
-		LogManager.info("Step: Click Next");
-		AutoItAPI.waitWin("InstallShield Wizard");
-		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
+		installer.WelcomeStep.waitTo("Welcome.. click next");
+		installer.WelcomeStep.clickNext();
 		
-		LogManager.info("Step: license agreement - check + Click Next");
+		installer.LicenseAgreementStep.waitTo("license agreement - check + Click Next");
+		installer.LicenseAgreementStep.acceptAgreement();
+		installer.LicenseAgreementStep.clickNext();
+		
+		/*LogManager.info("Step: license agreement - check + Click Next");
 		AutoItAPI.waitWin("InstallShield Wizard" , "license agreement");
 		AutoItAPI.check("InstallShield Wizard", "1000");
 		TestManager.sleep(1000);
-		AutoItAPI.clickButton("InstallShield Wizard", "", "1");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "1");*/
+		
 		//step 5 : select customized
 		installer.SetupTypeStep.waitTo("setup type - Select Customized and click Next");
 		installer.SetupTypeStep.selectType(SetupType.Customized);

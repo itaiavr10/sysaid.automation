@@ -11,7 +11,7 @@ public class InstallerFolderDestinationStep extends InstallerAbstractStep{
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "Setup will install SysAid Server in the following folder");
+		AutoItAPI.waitWin("InstallShield Wizard" , "Setup will install the SysAid Server in the following folder");
 
 	}
 	

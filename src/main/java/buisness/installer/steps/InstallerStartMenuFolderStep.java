@@ -20,7 +20,7 @@ public class InstallerStartMenuFolderStep extends InstallerAbstractStep{
 	}
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "Setup will install SysAid Server in the following folder", nextButtonID);
+		AutoItAPI.clickButton("InstallShield Wizard", "add program icons to the Program Folder", nextButtonID);
 	}
 
 }

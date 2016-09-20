@@ -18,7 +18,7 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 300);
+		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 360);
 		
 	}
 	
@@ -50,5 +50,6 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	
 	public void clickNext(){
 		AutoItAPI.clickButton("InstallShield Wizard", "License File", nextButtonID);
+		//TODO: How much time to wait for
 	}
 }

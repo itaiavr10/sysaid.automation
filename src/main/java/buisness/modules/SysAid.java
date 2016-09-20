@@ -11,7 +11,7 @@ public abstract class SysAid {
 	
 	
 	public enum InstallType{
-		TYPICAL
+		TYPICAL,Customized;
 		;
 	}
 	

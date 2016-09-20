@@ -11,6 +11,8 @@ public class InstallerApi {
 	public InstallerRepositoryDestinationStep PatchMngRepositoryStep;
 	public InstallerStartMenuFolderStep StartMenuProgramStep;
 	public InstallerLicenseFileStep LicenseFileStep;
+	public InstallerUserCredentialsStep UserCredentialsStep;
+	public InstallerCompletedStep CompletedStep;
 	
 	
 	public InstallerApi(){
@@ -21,6 +23,8 @@ public class InstallerApi {
 		LicenseFileStep = new InstallerLicenseFileStep();
 		WelcomeStep= new InstallerWelcomeStep();
 		LicenseAgreementStep = new InstallerLicenseAgreementStep();
+		UserCredentialsStep = new InstallerUserCredentialsStep();
+		CompletedStep  = new InstallerCompletedStep();
 	}
 
 }

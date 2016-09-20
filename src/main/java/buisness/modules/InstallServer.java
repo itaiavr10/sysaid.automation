@@ -80,6 +80,8 @@ public class InstallServer {
 		//Step 9: Select license file
 		installer.LicenseFileStep.waitTo("set activation file");
 		installer.LicenseFileStep.selectLicenseFile("c:\\SA\\activation.xml");
+		installer.LicenseFileStep.verifyLicneseMsg(true);
+		installer.LicenseFileStep.clickNext();
 		//Step 10: select DB  - Choose 'Use external database (Oracle, MS SQL, MySQL) and click Next
 		
 		
@@ -136,7 +138,13 @@ public class InstallServer {
 		AutoItAPI.waitWin("InstallShield Wizard","");
 		AutoItAPI.clickButton("InstallShield Wizard", "", "Button2");*/
 		
-		LogManager.info("Step7: Set credentials");
+		TestManager.sleep(6,TimeUnit.MINUTES);//TODO should be inside step
+		installer.UserCredentialsStep.waitTo("Set credentials");
+		installer.UserCredentialsStep.setCredentials("sysaid", "changeit");
+		installer.UserCredentialsStep.clickNext();
+		installer.UserCredentialsStep.handlePopUp();
+		
+		/*LogManager.info("Step7: Set credentials");
 		TestManager.sleep(6,TimeUnit.MINUTES);
 		AutoItAPI.waitWin("InstallShield Wizard","Serial Number",250);
 		AutoItAPI.setControlText("InstallShield Wizard", "2702", "sysaid"); // Set User
@@ -151,10 +159,13 @@ public class InstallServer {
 		AutoItAPI.waitWin("SysAid Enterprise","Account initialized successfully.",50);
 		TestManager.sleep(2,TimeUnit.SECONDS);
 		AutoItAPI.clickButton("SysAid Enterprise", "OK", "2"); //Click OK
-		
-		LogManager.info("Step9: 'installShield - completing page");
+		*/
+
+		installer.CompletedStep.waitTo("completed page");
+		installer.CompletedStep.clickFinish();
+		/*LogManager.info("Step9: 'installShield - completing page");
 		AutoItAPI.waitWin("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server",30);
-		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");
+		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");*/
 		
 		AutoItAPI.waitWinClosed("InstallShield Wizard");
 		

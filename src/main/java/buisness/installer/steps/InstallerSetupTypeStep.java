@@ -1,5 +1,7 @@
 package buisness.installer.steps;
 
+import buisness.modules.SysAid.InstallType;
+
 import com.core.base.LogManager;
 import com.core.base.TestManager;
 import com.core.utils.AutoItAPI;
@@ -37,6 +39,7 @@ import com.core.utils.AutoItAPI;
 			break;
 		case Customized:
 			AutoItAPI.check("InstallShield Wizard", customizedOptionID); 
+			installType = InstallType.Customized;
 			break;
 		}
 		TestManager.sleep(1000);

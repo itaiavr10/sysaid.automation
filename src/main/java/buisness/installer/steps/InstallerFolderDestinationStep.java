@@ -21,7 +21,7 @@ public class InstallerFolderDestinationStep extends InstallerAbstractStep{
 	}
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "Setup will install SysAid Server in the following folder", nextButtonID);
+		AutoItAPI.clickButton("InstallShield Wizard", "Setup will install the SysAid Server in the following folder", nextButtonID);
 	}
 
 	

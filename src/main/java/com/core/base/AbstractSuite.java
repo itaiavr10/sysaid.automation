@@ -2,6 +2,7 @@ package com.core.base;
 
 import java.util.concurrent.TimeUnit;
 
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -54,6 +55,7 @@ public class AbstractSuite {
 
 	@AfterMethod
 	public void afterMethod(ITestResult tr) { // RUN AFTER each test
+		//Assert.assertTrue(SuiteReporter.isTestPassed()); 
 		//LogManager.bold("Test Execution time = " + (tr.getEndMillis() - tr.getStartMillis()));
 		
 	}

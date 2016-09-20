@@ -27,12 +27,34 @@ public class AutoItAPI {
 		waitWin(winTitle, winText, MaxTimeOut);
 	}
 
+	
+	/**
+	 * wait for window and verify win found
+	 * @param winTitle
+	 * @param winText
+	 * @param timeoutInSec
+	 */
 	public static void waitWin(String winTitle, String winText, Integer timeoutInSec) {
 		boolean WinFound = AutoIt.engine().winWait(winTitle, winText, timeoutInSec);
-		LogManager.assertTrue(WinFound, "Wait for Window: " + winTitle);
+		LogManager.assertTrue(WinFound, String.format("Wait for Window: %s - %s " , winTitle , winText));
 		activateWindow(winTitle, winText);
 		sleep(3000); // VM is too slow
 	}
+	
+	
+	/**
+	 * wait for window and return if found
+	 * @param winTitle
+	 * @param winText
+	 * @param timeoutInSec
+	 * @return
+	 */
+	public static boolean softWait(String winTitle, String winText, Integer timeoutInSec) {
+		boolean WinFound = AutoIt.engine().winWait(winTitle, winText, timeoutInSec);
+		return WinFound;
+	}
+
+	
 
 	public static void waitWinClosed(String winTitle) {
 		AutoIt.engine().winWaitClose(winTitle);

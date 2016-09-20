@@ -21,13 +21,13 @@ public class DBconnector {
 
 	public DBconnector() {
 		//connect();
-		//dbIP = OS.getCurrentIP();
+		dbIP = OS.getCurrentIP();
 	}
 
 	private void connect() { //TODO: might be a singleton , connect only 1 time!
 		try {
-			//url = String.format(url, dbIP);
-			url = "jdbc:sqlserver://10.14.1.103:1450;databaseName=ilient";
+			url = String.format(url, dbIP);
+			//url = "jdbc:sqlserver://10.14.1.103:1450;databaseName=ilient";
 			LogManager.debug("MS SQL - connecting..");
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 			conn = DriverManager.getConnection(url, user, pass);

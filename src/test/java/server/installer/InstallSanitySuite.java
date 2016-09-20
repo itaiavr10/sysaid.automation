@@ -16,6 +16,7 @@ import com.core.utils.SystemUtils;
 import buisness.db.DBInstaller;
 import buisness.modules.InstallServer;
 import buisness.modules.SysAidAgent;
+import buisness.modules.SysAidLog;
 import buisness.modules.SysAidServer;
 
 
@@ -24,16 +25,11 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 	
 
-	
-	/**
-	 * This is flat installation
-	 */
 	@Test()
-	@TestCase(number = 107 , description = "Typical Installation with MsSQL Embedded - check")
-	public void typicalInstall(){
-		LogManager.bold("Hi ITAI");
+	@TestCase(number = 8 , description = "SysAid Server installation - Customized MySQL")
+	public void customizedMySqlInstall(){
 		InstallServer.typicalInstallation();
-		sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
+		//sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		
 		//wait for process to finish installation
 		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
@@ -42,10 +38,29 @@ public class InstallSanitySuite extends AbstractSuite{
 		//TODO : RDS Internal
 		SysAidAgent.verifyInstallation();
 		
+		SysAidServer.verifyDB();
+		
+		SysAidLog.verifyLog();
+	}
+	
+	
+	
+	@Test()
+	@TestCase(number = 1 , description = "Typical Installation with MsSQL Embedded")
+	public void typicalInstall(){
+		InstallServer.typicalInstallation();
+		//sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
+		
+		//wait for process to finish installation
+		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
+		
+		SysAidServer.verifyInstallation();
+		//TODO : RDS Internal
+		SysAidAgent.verifyInstallation();
 		
 		SysAidServer.verifyDB();
 		
-		
+		SysAidLog.verifyLog();
 	}
 	
 	

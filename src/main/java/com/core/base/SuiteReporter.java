@@ -44,12 +44,12 @@ public class SuiteReporter {
 		log.info("XML Suite: " + this.suiteName);
 	}
 
-	public void bold(String msg) {//TODO
+	public void bold(String msg) {
 		addTableRow(ReportStepType.BOLD_Type, msg);
 		log.info(msg);
 	}
 
-	public void pass(String msg) {//TODO
+	public void pass(String msg) {
 		addTableRow(ReportStepType.Pass_Type, msg);
 		log.info(msg);
 	}
@@ -111,6 +111,7 @@ public class SuiteReporter {
 	}
 
 	private void addTableRow(ReportStepType reportStepType, String msg) {
+		msg = msg.replace(",", "&sbquo;");
 		logTable.add("<tr bgcolor=\" " + reportStepType.getColor() + "\">");
 		logTable.add("<td>" + msg + "<td>");
 		logTable.add("<td>" + reportStepType.name + "<td>");

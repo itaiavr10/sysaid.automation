@@ -45,9 +45,9 @@ public class VideoRecorder {
 				new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)),null);	
 	}
 	
-	public void finishRecord(boolean save){
+	public void finishRecord(boolean testPassed){
 		stopRecording();
-		if(save){
+		if(!testPassed){
 			saveVideo();
 		}
 	}

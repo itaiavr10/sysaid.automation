@@ -1,8 +1,11 @@
 package buisness.db;
 
 import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.concurrent.TimeUnit;
 
 import com.core.base.LogManager;
+import com.core.base.TestManager;
 import com.core.db.DBQuery;
 import com.core.utils.SystemUtils;
 import com.core.utils.XmlUtils;
@@ -20,7 +23,7 @@ public class DBInstaller {
 	
 
 	/**
-	 * Test #246
+	 * Test #6 Verification - MSSQL embedded
 	 * Only Typical Installation with MSSQL Embedded
 	 */
 	public static void verifyMsSqlEmbedded(){ //TODO: Abstraction
@@ -33,27 +36,31 @@ public class DBInstaller {
 		
 	}
 	
-	/*
+	/**
+	 * Verify serverconf.xml contain correct database connection details
 	 * embedded only
 	 */
-	private static void verifyServerConfFile(){ //TODO : Send list of nodes
+	private static void verifyServerConfFile(){
+		//
 		LogManager.debug("Verify serverconfig.xml");
-		//Verify serverconf.xml contain correct database connection details
-		XmlUtils.verifyNodeValue(serverConfPath, "dbDriver", "net.sourceforge.jtds.jdbc.Driver");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbUrl", "jdbc:jtds:sqlserver://localhost:1450/ilient;useCursorsAlways=true");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbUser", "sa");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbType", "mssql");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbCPType", "TomcatCP");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbMultiply", "false");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbMainName", "ilient");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolMaxConn", "100");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolIdleTimeout", "360");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolCheckoutTimeout", "100");
-		XmlUtils.verifyNodeValue(serverConfPath, "dbPoolMaxCheckout", "100");
+		Hashtable<String,String> table = new Hashtable<String, String>();
+		table.put("dbDriver", "net.sourceforge.jtds.jdbc.Driver");
+		table.put("dbUrl", "jdbc:jtds:sqlserver://localhost:1450/ilient;useCursorsAlways=true");
+		table.put("dbUser", "sa");
+		table.put("dbType", "mssql");
+		table.put("dbCPType", "TomcatCP");
+		table.put("dbMultiply", "false");
+		table.put("dbMainName", "ilient");
+		table.put("dbPoolMaxConn", "100");
+		table.put("dbPoolIdleTimeout", "360");
+		table.put("dbPoolCheckoutTimeout", "100");
+		table.put("dbPoolMaxCheckout", "100");
+		
+		XmlUtils.verifyNodeList(serverConfPath, table);
 	}
 	
 	/**
-	 *  verification #252 : Tables content
+	 *  Test #252 Verification - Database (part II): Tables content
 	 */
 	public static void verifyTableContents(){
 		LogManager.debug("Verify DB - Tables Content");
@@ -104,10 +111,10 @@ public class DBInstaller {
 		DBQuery.verifyTable(TableContent.REPORTS);
 		
 		//Step 13 Table: discovery_service
-		DBQuery.verifyTable(TableContent.DISCOVERT_SERVICE);
+		DBQuery.verifyTable(TableContent.DISCOVERY_SERVICE);
 		
-		//Step 14 DISCOVERT_SERVICE 
-		DBQuery.verifyTable(TableContent.COMPUTER);
+		/*//Step 14 DISCOVERT_SERVICE 
+		DBQuery.verifyTable(TableContent.COMPUTER);*/
 		
 		//Step 15 Table: faq
 		DBQuery.verifyResult("SELECT COUNT(*) FROM FAQ", "1");
@@ -134,14 +141,14 @@ public class DBInstaller {
 		//Step 22 Table: schedule_task
 		DBQuery.verifyResult("SELECT COUNT(*) FROM SCHEDULE_TASK", "2");
 		
-	
-		
+		//Step 14 DISCOVERT_SERVICE 
+		DBQuery.verifyTableRetry(TableContent.COMPUTER ,  60 * 1000 , 3 * 1000);
 		
 	}
 	
 	
 	/**
-	 * verification	 #251 : DB Tables Count
+	 * Test #11  Verification - Database (part I): DB Tables Count
 	*/
 	public  static void verifyTablesCount(){//TODO : Should be according to DBType
 		LogManager.debug("Verify DB - Tables Count");

@@ -10,13 +10,17 @@ public class AutoIt {
 
 	private AutoItX engine;
 	private static AutoIt instance = null;
+	private static String jacobDll = "jacob-1.18-x64.dll";
 
 	private AutoIt() {
+		if(SystemUtils.OS.is32Bit())
+			jacobDll = "jacob-1.18-x86.dll";
 		init();
 	}
 
 	private void init() {
-		String dllPath = SystemUtils.Files.getResourcesDirectoryPath() + "\\lib\\jacob-1.18-x64.dll"; //TODO : Should be according to os 
+		
+		String dllPath = SystemUtils.Files.getResourcesDirectoryPath() + "\\lib\\" + jacobDll; //TODO : Should be according to os 
 		File file = new File(dllPath);
 		if (!file.exists())
 			System.err.println("file is missing");

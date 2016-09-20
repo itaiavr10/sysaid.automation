@@ -7,10 +7,11 @@ public class TimeUtils {
 	
 	
 	
-	//TODO :Check
 	public static long getTimeDiff(Calendar calendar1,Calendar calendar2,TimeUnit units) {
-	    long milsecs1= calendar1.getTimeInMillis();
-	    long milsecs2 = calendar2.getTimeInMillis();
+	    return getTimeDiff(calendar1.getTimeInMillis(),calendar2.getTimeInMillis(),units);
+	}
+	
+	public static long getTimeDiff(long milsecs1,long milsecs2,TimeUnit units) {
 	    long diff = milsecs1 -  milsecs2;
 	    
 	    if(units == TimeUnit.SECONDS){

@@ -22,7 +22,7 @@ import com.core.utils.XmlUtils;
 
 public class SysAidServer {
 	
-	private static String server_ver = "unknown";
+	public static String server_ver = "unknown";
 	private static String server_build = "unknown";
 	public static String exeName;
 	public static String exePath;
@@ -35,11 +35,11 @@ public class SysAidServer {
 	private static String log4jPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\log4j.properties";
 	
 	private static String accountConfPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\conf\\accountConf.xml";
-	private static String sysAidLogsPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\logs\\sysaid.log";
 	private static String upgradeToNewReportsPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\logs\\upgradeToNewReports.log";
 	private static String qschedulerLogPath = "C:\\Program Files\\SysAidServer\\root\\WEB-INF\\logs\\q-scheduler.log";
 	
 	static{
+		exeName = "SysAidServer64_default.exe";
 		initFiles();
 	}
 	
@@ -48,24 +48,25 @@ public class SysAidServer {
 		server_ver = System.getProperty("version");
 		server_build = System.getProperty("build");
 		if(server_ver == null || server_ver.equals("unknown")){
-			LogManager.warn("sysaid version didn't defined via system properties! install default exe : SysAidServer64_default.exe");
+			LogManager.warn("sysaid version didn't defined via system properties! install default exe");
 			getDefaultExe = true;
 		}
 		else if(server_build == null || server_build.equals("unknown")){
-			LogManager.warn("sysaid build version didn't defined via system properties! install default exe : SysAidServer64_default.exe ");
+			LogManager.warn("sysaid build version didn't defined via system properties! install default exe");
 			getDefaultExe = true;
 		}
 		
-		//TODO : should check OS bit
-		if(getDefaultExe)
-			exeName = "SysAidServer64_default.exe";
-		else{
+		if(!getDefaultExe){
 			LogManager.info(String.format("SysAid Version:%s , Build: %s",server_ver,server_build));
 			exeName = String.format("SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
 		}
-		exePath = "C:\\SA\\" + exeName;
-		SystemUtils.Files.verifyExist(exePath, true,2000);
 		
+		//Check OS Bit
+		if(SystemUtils.OS.is32Bit())
+			exeName = exeName.replace("64", "");
+		
+		exePath = "C:\\SA\\" + exeName;
+		LogManager.assertTrue(SystemUtils.Files.isFileExist(exePath), "verify exe exists: " + exePath);
 	}
 
 	private static void initFiles() {
@@ -80,7 +81,7 @@ public class SysAidServer {
 	
 	
 	/**
-	 *  Test #242
+	 *  Test #2 Verification - SysAid Server installation
 	 */
 	public static void verifyInstallation(){
 		LogManager.bold("SysAid Server : Verify Installation");
@@ -88,23 +89,37 @@ public class SysAidServer {
 		verifyServices();
 		verifyProcesses();
 		verifyDesktopIcon();
-		verifyLoginBrowser();
 		verifyDirectories();
 		verifyConfigurationFiles();
-		verifySysAidLog();
+		//verifySysAidLog();
 		verifyupgradeToNewReports();
 		verifyQschedulerLog();
+		verifyLoginBrowser();
 	}
 	
 	//Verify Browser opened with 2 tabs
 	public static void verifyLoginBrowser(){
 		LogManager.debug("Verify Browser opened with 2 tabs ..");
 		SystemUtils.Processes.verify("chrome.exe", true);
-		AutoItAPI.activateWindow("SysAid Help Tree","");
-		AutoItAPI.verifyWinActivate("SysAid Help Tree", true);
-		TestManager.sleep(1000);
-		SystemUtils.Keyboard.switchBrowserTab();
-		AutoItAPI.verifyWinActivate("SysAid Help Desk Software",true);
+		if(AutoItAPI.softWait("SysAid Help Tree", "", 5)){
+			// Browser is focus on 'SysAid Help Tree' - Tab
+			AutoItAPI.activateWindow("SysAid Help Tree","");
+			AutoItAPI.verifyWinActivate("SysAid Help Tree", true);
+			TestManager.sleep(1000);
+			SystemUtils.Keyboard.switchBrowserTab();
+			AutoItAPI.softWait("SysAid Help Desk Software", "", 30);
+			AutoItAPI.verifyWinActivate("SysAid Help Desk Software",true);
+		}else{
+			// Browser is focus on 'SysAid Help Desk Software' - Tab
+			AutoItAPI.softWait("SysAid Help Desk Software", "", 30);
+			AutoItAPI.activateWindow("SysAid Help Desk Software","");
+			AutoItAPI.verifyWinActivate("SysAid Help Desk Software", true);
+			TestManager.sleep(1000);
+			SystemUtils.Keyboard.switchBrowserTab();
+			AutoItAPI.softWait("SysAid Help Tree", "", 5);
+			AutoItAPI.verifyWinActivate("SysAid Help Tree",true);
+		}
+		
 		
 		
 	}
@@ -148,39 +163,7 @@ public class SysAidServer {
 		}
 	}
 
-	// verify sysaid.log file
-	public static void verifySysAidLog() {
-		LogManager.debug("Verify sysaid.log ..");
-		boolean pass = true;
-		BufferedReader br = null;
-		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(sysAidLogsPath)));
-			String line;
-			Pattern p = Pattern.compile(".*]\\s*ERROR.*");
-			while ((line = br.readLine()) != null) {
-				if(p.matcher(line).matches()){
-					// search exception line
-					while ((line = br.readLine()) != null){
-						if(line.contains("Exception"))
-							break;
-					}
-					// on line with the exception details
-					//TODO: Check Known Exception
-					LogManager.error("Found Error on sysaid.log file , Exception: " + line);
-					pass = false;
-				}
-			}
-		} catch (Exception e) {
-			LogManager.error("Verify sysaid.log - Error : " + e.getMessage());
-		} finally {
-			LogManager.verify(pass, "Verify sysaid.log");
-			try {
-				if (br != null)
-					br.close();
-			} catch (Exception e) {
-			}
-		}
-	}
+	
 
 	//Verify configuration files in C:\Program Files\SysAidServer\root\WEB-INF\conf 
 	public static void verifyConfigurationFiles() {

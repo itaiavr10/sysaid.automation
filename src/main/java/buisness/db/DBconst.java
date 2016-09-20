@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import buisness.modules.SysAidServer;
+
 import com.core.db.DBconnector;
+import com.core.utils.SystemUtils;
 
 public class DBconst {
 	
@@ -150,7 +153,7 @@ public class DBconst {
 			@Override
 			public List<List<String>> getExpected() {
 				List<List<String>> table = new ArrayList<List<String>>();
-				table.add(Arrays.asList("WIN7X64-AUTOMAT", DBconnector.dbIP , "16.3.15.102"));  // TODO :  Computer Name + RDS Version            
+				table.add(Arrays.asList(SystemUtils.OS.getComputerName(), DBconnector.dbIP , SysAidServer.server_ver+".102"));  // TODO :  Computer Name + RDS Version            
 				return table;
 			}
 		},
@@ -160,7 +163,7 @@ public class DBconst {
 		 * Verify discovery_service table
 		 * 
 		 */
-			DISCOVERT_SERVICE(2) {
+			DISCOVERY_SERVICE(2) {
 			@Override
 			public String getDescription() {
 				return "discovery_service - table";
@@ -174,7 +177,7 @@ public class DBconst {
 			@Override
 			public List<List<String>> getExpected() {
 				List<List<String>> table = new ArrayList<List<String>>();
-				table.add(Arrays.asList("SysAid Server","16.3.15"));  // TODO : RDS Version            
+				table.add(Arrays.asList("SysAid Server",SysAidServer.server_ver));  // TODO : RDS Version            
 				return table;
 			}
 		},
@@ -442,7 +445,8 @@ public class DBconst {
 		/**
 		 * Verify account table
 		 */
-		ACCOUNT(3) {
+		//ACCOUNT(3) { // Remove EXPIRATION_TIME col.
+		ACCOUNT(2) {
 			@Override
 			public String getDescription() {
 				return "account table";
@@ -450,13 +454,15 @@ public class DBconst {
 			
 			@Override
 			public String getQuery() {
-				return "SELECT ACCOUNT_ID, SERIAL_KEY, EXPIRATION_TIME FROM ACCOUNT";
+				//return "SELECT ACCOUNT_ID, SERIAL_KEY, EXPIRATION_TIME FROM ACCOUNT";
+				return "SELECT ACCOUNT_ID, SERIAL_KEY FROM ACCOUNT";
 			}
 			
 			@Override
 			public List<List<String>> getExpected() {
 				List<List<String>> table = new ArrayList<List<String>>();
-				table.add(Arrays.asList("cmdb","985305C75EBE5DEV","2017-08-31 12:01:35.467")); //TODO : get from activation.xml
+				//table.add(Arrays.asList("cmdb","985305C75EBE5DEV","2017-08-31 12:01:35.467")); //TODO : get from activation.xml
+				table.add(Arrays.asList("cmdb","985305C75EBE5DEV")); //TODO : get from activation.xml
 				return table;
 			}
 		},

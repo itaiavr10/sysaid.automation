@@ -1,6 +1,8 @@
 package com.core.utils;
 
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,6 +40,32 @@ public class XmlUtils {
 	
 	
 	
+	public static void verifyNodeList(String filePath , Hashtable<String,String> table){
+		LogManager.debug(String.format("Verfiy Nodes value on xml = %s",filePath));
+		Document doc;
+		try {
+			doc = loadDocument(filePath);
+			Set<String> keys = table.keySet();
+			for(String key: keys){
+				String expected = table.get(key);
+	            NodeList nodeList = doc.getElementsByTagName(key);
+				if(nodeList == null)
+					throw new Exception("Failed to find Element with tag name = " + key);
+				if(nodeList.getLength() != 1)
+					throw new Exception("Error: we get incorrect #elemnts (!1) for tag name = " + key);
+				Node node = nodeList.item(0);
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) node;
+					String actual = eElement.getTextContent();
+					LogManager.verify(expected.equals(actual), String.format("Verify Node: %s - Value, Expected= %s , Actual= %s",key,expected,actual));
+				}else
+					LogManager.error("Node is invalid : " + key);
+	        }
+		} catch (Exception e) {
+			LogManager.error("Verify Nodes Value - Error : " + e.getMessage());
+		}
+	}
+	
 	
 	
 	public static String getNodeValue(String filePath , String tagName){
@@ -59,7 +87,7 @@ public class XmlUtils {
 			}
 	
 		} catch (Exception e) {
-			LogManager.error("Get Node Value - Error : " + e.getMessage());
+			LogManager.debug("Get Node Value - Error : " + e.getMessage());
 		}
 		return "UnKnown";
 	}

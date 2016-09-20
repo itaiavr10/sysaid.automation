@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,7 +72,7 @@ public class SystemUtils {
 						LogManager.error("Found Line: " + line);
 						pass = false;
 					}
-//					for (String reg : searchQuery) { //TODO regex
+//					for (String reg : searchQuery) {
 //						if (line.toLowerCase().contains(reg.trim().toLowerCase())){
 //							LogManager.error("Found Line: " + line);
 //							pass = false;
@@ -127,6 +128,10 @@ public class SystemUtils {
 		
 		public static String getMediaPath() {
 			return getProjectPath() + "\\test-output\\media";
+		}
+		
+		public static boolean isFileExist(String path){
+			return new File(path).exists();
 		}
 
 		public static void createFile(String filePath, final String fileContent) throws IOException {
@@ -241,11 +246,44 @@ public class SystemUtils {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public static class OS {
+		
+		private static boolean is64;
+		private static boolean is32;
+		
+		
+		static{
+			if(System.getProperty("sun.arch.data.model").equals("64")){
+				is64 = true;
+				is32 = false;
+			}else{
+				is64 = false;
+				is32 = true;
+			}
+		}
+		
+		public static boolean is64Bit(){
+			return is64;
+		}
+		
+		public static boolean is32Bit(){
+			return is32;
+		}
+		
+		
 		public static String getCurrentIP(){
 			try {
 				return Inet4Address.getLocalHost().getHostAddress();
 			} catch (UnknownHostException e) {
 				LogManager.assertTrue(false, "Failed to get current IP , Error : " + e.getMessage());
+			}
+			return "";
+		}
+		
+		public static String getComputerName(){
+			try {
+				return InetAddress.getLocalHost().getHostName();
+			} catch (UnknownHostException e) {
+				LogManager.assertTrue(false, "Failed to get computer name , Error : " + e.getMessage());
 			}
 			return "";
 		}
@@ -297,6 +335,32 @@ public class SystemUtils {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static class Processes {
+		
+		
+		public static void executeAndCheckProcess(final String exePath, final String processName){
+			final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);
+			boolean ispass = Utils.tryUntil(new ActionWrapper("Execute and Verify Process" , 30000 , 10000) {
+				@Override
+				public boolean invoke() throws Exception {
+					execute(exePath);
+					boolean results = isProcessRunning(processName);
+					isRun.setValue(results);
+					return results;
+				}
+			});
+			LogManager.assertTrue(ispass, String.format("Execute and Verify Process : %s", processName));
+		}
+		
+		
+		public static void execute(String exePath){
+			LogManager.debug("CMD Execute : " + exePath);
+			try {
+				Runtime.getRuntime().exec(exePath);
+				LogManager.debug("executed Successfully..");
+			} catch (IOException e) {
+				LogManager.error("CD Execute - Error:" + e.getMessage());
+			}
+		}
 
 		public static synchronized void verify(final String processName, final boolean shouldRun) {
 			final ValueRef<Boolean> isRun = new ValueRef<Boolean>(false);

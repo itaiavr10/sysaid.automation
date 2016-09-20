@@ -89,7 +89,7 @@ public class AutoItAPI {
 	public static void verifyVisibility(String winTitle, String controlID,boolean expected){
 		activateWindow(winTitle, "");
 		boolean actual = AutoIt.engine().controlCommandIsVisible(winTitle, "", controlID);
-		LogManager.verifyAssert(actual == expected, String.format("Verify Element visibility Expected = %s , Actual = %s", expected,actual));
+		LogManager.verify(actual == expected, String.format("Verify Element visibility Expected = %s , Actual = %s", expected,actual));
 	}
 
 	public static void activateWindow(String winTitle , String winText) {

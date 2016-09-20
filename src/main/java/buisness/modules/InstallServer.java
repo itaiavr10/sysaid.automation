@@ -126,14 +126,15 @@ public class InstallServer {
 		//verify valid msg:
 		LogManager.info("Step5: verify 'valid license' message");
 		installer.LicenseFileStep.verifyLicneseMsg(true);
+		installer.LicenseFileStep.clickNext();
 		//TestManager.sleep(5,TimeUnit.SECONDS);
 		//AutoItAPI.waitWin("InstallShield Wizard","License File");
 		//Valid License Msg id=2007 , Invalid id= 2008
 		//AutoItAPI.verifyVisibility("InstallShield Wizard", "2007", true);
 		
-		LogManager.info("Step6: click Next"); 
+		/*LogManager.info("Step6: click Next"); 
 		AutoItAPI.waitWin("InstallShield Wizard","");
-		AutoItAPI.clickButton("InstallShield Wizard", "", "Button2");
+		AutoItAPI.clickButton("InstallShield Wizard", "", "Button2");*/
 		
 		LogManager.info("Step7: Set credentials");
 		TestManager.sleep(6,TimeUnit.MINUTES);

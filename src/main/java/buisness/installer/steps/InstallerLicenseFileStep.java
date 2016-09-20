@@ -13,6 +13,7 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	private String fileNameTextBoxID = "1148";
 	private String validLicenseMsgID = "2007";
 	private String inValidLicenseMsgID = "2008";
+	private String nextButtonID = "Button2"; 
 	
 	@Override
 	public void waitTo(String logInfo) {
@@ -44,7 +45,10 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 			AutoItAPI.verifyVisibility("InstallShield Wizard", validLicenseMsgID, true);
 		else
 			AutoItAPI.verifyVisibility("InstallShield Wizard", inValidLicenseMsgID, true);
-			
 	}
 
+	
+	public void clickNext(){
+		AutoItAPI.clickButton("InstallShield Wizard", "License File", nextButtonID);
+	}
 }

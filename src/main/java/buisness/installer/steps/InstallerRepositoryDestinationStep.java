@@ -10,12 +10,17 @@ import com.core.utils.AutoItAPI;
  */
 public class InstallerRepositoryDestinationStep  extends InstallerAbstractStep{
 
+	InstallerRepositoryDestinationStep() {
+		super("Patch Management repository folder");
+		// TODO Auto-generated constructor stub
+	}
+
 	private String nextButtonID = "1";
 	
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "Patch Management repository folder");
+		AutoItAPI.waitWin(installerTitle , visibleText);
 		
 	}
 	
@@ -25,7 +30,7 @@ public class InstallerRepositoryDestinationStep  extends InstallerAbstractStep{
 	}
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "Patch Management repository folder", nextButtonID);
+		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
 
 	

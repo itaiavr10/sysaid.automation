@@ -8,6 +8,12 @@ import com.core.utils.AutoItAPI;
 
 public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	
+	InstallerLicenseFileStep() {
+		super("License File");
+		// TODO Auto-generated constructor stub
+	}
+
+
 	private String browseButtonId = "2005";
 	private String openButtonId = "Button1";
 	private String fileNameTextBoxID = "1148";
@@ -18,7 +24,7 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 360);
+		AutoItAPI.waitWin(installerTitle , visibleText , 360);
 		
 	}
 	
@@ -29,7 +35,7 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	
 	public void selectLicenseFile(String filePath){
 		//click Browser button
-		AutoItAPI.clickButton("InstallShield Wizard", "License File", browseButtonId);
+		AutoItAPI.clickButton(installerTitle, visibleText, browseButtonId);
 		//set activation & press Open button
 		AutoItAPI.waitWin("Select the Activation File");
 		TestManager.sleep(1500);
@@ -42,14 +48,14 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	
 	public void verifyLicneseMsg(boolean isValid){
 		if(isValid)
-			AutoItAPI.verifyVisibility("InstallShield Wizard", validLicenseMsgID, true);
+			AutoItAPI.verifyVisibility(installerTitle, validLicenseMsgID, true);
 		else
-			AutoItAPI.verifyVisibility("InstallShield Wizard", inValidLicenseMsgID, true);
+			AutoItAPI.verifyVisibility(installerTitle, inValidLicenseMsgID, true);
 	}
 
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "License File", nextButtonID);
+		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 		//TODO: How much time to wait for
 	}
 }

@@ -5,12 +5,16 @@ import com.core.utils.AutoItAPI;
 
 public class InstallerWelcomeStep extends InstallerAbstractStep {
 	
+	InstallerWelcomeStep() {
+		super("");
+	}
+
 	private String nextButtonID = "1";
 	
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "");
+		AutoItAPI.waitWin(installerTitle , visibleText);
 	}
 	
 	@Override
@@ -19,7 +23,7 @@ public class InstallerWelcomeStep extends InstallerAbstractStep {
 	}
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "", nextButtonID);
+		AutoItAPI.clickButton(installerTitle,visibleText, nextButtonID);
 	}
 
 }

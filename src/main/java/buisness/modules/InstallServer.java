@@ -54,7 +54,7 @@ public class InstallServer {
 		installer.WelcomeStep.waitTo("Welcome.. click next");
 		installer.WelcomeStep.clickNext();
 		
-		installer.LicenseAgreementStep.waitTo("license agreement - check + Click Next");
+		installer.LicenseAgreementStep.waitTo("License agreement - check + Click Next");
 		installer.LicenseAgreementStep.acceptAgreement();
 		installer.LicenseAgreementStep.clickNext();
 		
@@ -65,7 +65,7 @@ public class InstallServer {
 		AutoItAPI.clickButton("InstallShield Wizard", "", "1");*/
 		
 		//step 5 : select customized
-		installer.SetupTypeStep.waitTo("setup type - Select Customized and click Next");
+		installer.SetupTypeStep.waitTo("Setup type - Select Customized and click Next");
 		installer.SetupTypeStep.selectType(SetupType.Customized);
 		installer.SetupTypeStep.clickNext();
 		//step 6: Continue to select Patch management destination
@@ -104,17 +104,17 @@ public class InstallServer {
 		AutoItAPI.check("InstallShield Wizard", "1000");
 		TestManager.sleep(1000);
 		AutoItAPI.clickButton("InstallShield Wizard", "", "1");*/
-		installer.LicenseAgreementStep.waitTo("license agreement - check + Click Next");
+		installer.LicenseAgreementStep.waitTo("License agreement - check + Click Next");
 		installer.LicenseAgreementStep.acceptAgreement();
 		installer.LicenseAgreementStep.clickNext();
 		
-		installer.SetupTypeStep.waitTo("setup type- use default Typical and click Next");
+		installer.SetupTypeStep.waitTo("Setup type- use default Typical and click Next");
 		installer.SetupTypeStep.clickNext();
 		//AutoItAPI.waitWin("InstallShield Wizard" , "Typical");
 		//AutoItAPI.clickButton("InstallShield Wizard", "Typical", "Button3");
 		
 		//LogManager.info("Step4: set activation file");
-		installer.LicenseFileStep.waitTo("set activation file");
+		installer.LicenseFileStep.waitTo("Set activation file");
 		installer.LicenseFileStep.selectLicenseFile("c:\\SA\\activation.xml");
 		/*AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 200);
 		AutoItAPI.clickButton("InstallShield Wizard", "License File", "2005");
@@ -126,7 +126,7 @@ public class InstallServer {
 		AutoItAPI.clickButton("Select the Activation File", "", "Button1");*/
 		
 		//verify valid msg:
-		LogManager.info("Step5: verify 'valid license' message");
+		//LogManager.info("Step5: verify 'valid license' message");
 		installer.LicenseFileStep.verifyLicneseMsg(true);
 		installer.LicenseFileStep.clickNext();
 		//TestManager.sleep(5,TimeUnit.SECONDS);

@@ -5,13 +5,18 @@ import com.core.utils.AutoItAPI;
 
 public class InstallerFolderDestinationStep extends InstallerAbstractStep{
 
+	InstallerFolderDestinationStep() {
+		super("Setup will install the SysAid Server in the following folder");
+		// TODO Auto-generated constructor stub
+	}
+
 	private String nextButtonID = "1"; 
 	
 	
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "Setup will install the SysAid Server in the following folder");
+		AutoItAPI.waitWin(installerTitle , visibleText);
 
 	}
 	
@@ -21,7 +26,7 @@ public class InstallerFolderDestinationStep extends InstallerAbstractStep{
 	}
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "Setup will install the SysAid Server in the following folder", nextButtonID);
+		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
 
 	

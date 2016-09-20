@@ -5,12 +5,17 @@ import com.core.utils.AutoItAPI;
 
 public class InstallerCompletedStep extends InstallerAbstractStep{
 	
+	InstallerCompletedStep() {
+		super("The InstallShield Wizard has successfully installed the SysAid Server");
+		// TODO Auto-generated constructor stub
+	}
+
 	private String finishButtonId = "Button1"; 
 	
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "The InstallShield Wizard has successfully installed the SysAid Server",30);
+		AutoItAPI.waitWin(installerTitle , visibleText, 30);
 	}
 	
 	@Override
@@ -19,7 +24,7 @@ public class InstallerCompletedStep extends InstallerAbstractStep{
 	}
 	
 	public void clickFinish(){
-		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server",finishButtonId);
+		AutoItAPI.clickButton(installerTitle, visibleText, finishButtonId);
 	}
 
 }

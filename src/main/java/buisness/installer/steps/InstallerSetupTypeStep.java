@@ -9,19 +9,23 @@ import com.core.utils.AutoItAPI;
  public class InstallerSetupTypeStep extends InstallerAbstractStep {
 	
 	
+	InstallerSetupTypeStep() {
+		super("Typical");
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	private String typicalOptionID = "504"; 
 	private String customizedOptionID = "503"; 
 	private String nextButtonID = "Button3"; 
 	
-	InstallerSetupTypeStep(){
-		
-	}
 	
 	
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "Typical");
+		AutoItAPI.waitWin(installerTitle , visibleText);
 	}
 	
 	/**
@@ -35,10 +39,10 @@ import com.core.utils.AutoItAPI;
 	public void selectType(SetupType type){
 		switch (type) {
 		case Typical:
-			AutoItAPI.check("InstallShield Wizard", typicalOptionID); 
+			AutoItAPI.check(installerTitle, typicalOptionID); 
 			break;
 		case Customized:
-			AutoItAPI.check("InstallShield Wizard", customizedOptionID); 
+			AutoItAPI.check(installerTitle, customizedOptionID); 
 			installType = InstallType.Customized;
 			break;
 		}
@@ -47,7 +51,7 @@ import com.core.utils.AutoItAPI;
 	}
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "Typical", nextButtonID);
+		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
 	
 	

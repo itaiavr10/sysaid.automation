@@ -5,12 +5,17 @@ import com.core.utils.AutoItAPI;
 
 public class InstallerStartMenuFolderStep extends InstallerAbstractStep{
 
+	InstallerStartMenuFolderStep() {
+		super("add program icons to the Program Folder");
+		// TODO Auto-generated constructor stub
+	}
+
 	private String nextButtonID = "1";
 	
 	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin("InstallShield Wizard" , "add program icons to the Program Folder");
+		AutoItAPI.waitWin(installerTitle , visibleText);
 		
 	}
 	
@@ -20,7 +25,7 @@ public class InstallerStartMenuFolderStep extends InstallerAbstractStep{
 	}
 	
 	public void clickNext(){
-		AutoItAPI.clickButton("InstallShield Wizard", "add program icons to the Program Folder", nextButtonID);
+		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
 
 }

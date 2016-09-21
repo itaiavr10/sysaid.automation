@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import buisness.installer.steps.InstallerApi;
 import buisness.installer.steps.InstallerSetupTypeStep.SetupType;
+import buisness.modules.SysAid.DataBaseType;
 import buisness.modules.SysAid.InstallType;
 
 import com.core.base.LogManager;
@@ -57,13 +58,6 @@ public class InstallServer {
 		installer.LicenseAgreementStep.waitTo("License agreement - check + Click Next");
 		installer.LicenseAgreementStep.acceptAgreement();
 		installer.LicenseAgreementStep.clickNext();
-		
-		/*LogManager.info("Step: license agreement - check + Click Next");
-		AutoItAPI.waitWin("InstallShield Wizard" , "license agreement");
-		AutoItAPI.check("InstallShield Wizard", "1000");
-		TestManager.sleep(1000);
-		AutoItAPI.clickButton("InstallShield Wizard", "", "1");*/
-		
 		//step 5 : select customized
 		installer.SetupTypeStep.waitTo("Setup type - Select Customized and click Next");
 		installer.SetupTypeStep.selectType(SetupType.Customized);
@@ -83,10 +77,41 @@ public class InstallServer {
 		installer.LicenseFileStep.verifyLicneseMsg(true);
 		installer.LicenseFileStep.clickNext();
 		//Step 10: select DB  - Choose 'Use external database (Oracle, MS SQL, MySQL) and click Next
+		installer.SelectDbStep.waitTo("Choose 'Use external database (Oracle, MS SQL, MySQL) and click Next");
+		installer.SelectDbStep.selectExternal();
+		installer.SelectDbStep.clickNext();
+		//Step 11: Setting Database Connection
+		installer.DbSettingStep.waitTo("DB Setting: select MySQL");
+		installer.DbSettingStep.setDB(DataBaseType.MySQL);
+		installer.DbSettingStep.setCredentials("root", "Password1");
+		installer.DbSettingStep.checkConnection();
+		installer.DbSettingStep.clickNext();
+		//Step 12: skip email setting
+		installer.EmailSettingStep.waitTo("Email setting: Skip");
+		installer.EmailSettingStep.clickSkip();
+		//Step 13: HTTP port setting
+		installer.HttpPortStep.waitTo("HTTP port setting: Accept default port 8080 and click Next");
+		installer.HttpPortStep.clickNext();
+		//Step 14: LDAP integration settings
+		installer.LdapStep.waitTo("LDAP Integration: Skip");
+		installer.LdapStep.clickNext();
+		//Step 15: Language - default
+		installer.LanguageStep.waitTo("Language setting: default , click next");
+		installer.LanguageStep.clickNext();
+		//Step 16: Initializing account 
+		installer.UserCredentialsStep.waitTo("Set credentials");
+		installer.UserCredentialsStep.setCredentials("sysaid", "changeit");
+		installer.UserCredentialsStep.clickNext();
+		installer.UserCredentialsStep.handlePopUp();
+		//Step 18
+		installer.CompletedStep.waitTo("completed page");
+		installer.CompletedStep.clickFinish();
+		/*LogManager.info("Step9: 'installShield - completing page");
+		AutoItAPI.waitWin("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server",30);
+		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");*/
 		
+		AutoItAPI.waitWinClosed("InstallShield Wizard");
 		
-		///Step 8: Continue to installing
-		///Step 8: Continue to installing
 		
 	}
 	
@@ -168,8 +193,6 @@ public class InstallServer {
 		AutoItAPI.clickButton("InstallShield Wizard","The InstallShield Wizard has successfully installed the SysAid Server","Button1");*/
 		
 		AutoItAPI.waitWinClosed("InstallShield Wizard");
-		
-		SysAid.type = InstallType.TYPICAL;
 		
 	}
 	

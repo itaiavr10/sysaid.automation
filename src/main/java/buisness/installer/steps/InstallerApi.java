@@ -13,6 +13,12 @@ public class InstallerApi {
 	public InstallerLicenseFileStep LicenseFileStep;
 	public InstallerUserCredentialsStep UserCredentialsStep;
 	public InstallerCompletedStep CompletedStep;
+	public InstallerSelectDbStep SelectDbStep;
+	public InstallerDbSettingStep DbSettingStep;
+	public InstallerEmailSettingStep EmailSettingStep;
+	public InstallerHttpPortStep HttpPortStep;
+	public InstallerLdapStep LdapStep;
+	public InstallerLanguageStep LanguageStep;
 	
 	
 	public InstallerApi(){
@@ -25,6 +31,12 @@ public class InstallerApi {
 		LicenseAgreementStep = new InstallerLicenseAgreementStep();
 		UserCredentialsStep = new InstallerUserCredentialsStep();
 		CompletedStep  = new InstallerCompletedStep();
+		SelectDbStep = new InstallerSelectDbStep();
+		DbSettingStep = new InstallerDbSettingStep();
+		EmailSettingStep = new InstallerEmailSettingStep();
+		HttpPortStep = new InstallerHttpPortStep();
+		LdapStep = new InstallerLdapStep();
+		LanguageStep = new InstallerLanguageStep();
 	}
 
 }

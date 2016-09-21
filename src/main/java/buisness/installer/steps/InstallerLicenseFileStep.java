@@ -39,7 +39,7 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 		//set activation & press Open button
 		AutoItAPI.waitWin("Select the Activation File");
 		TestManager.sleep(1500);
-		AutoItAPI.setControlText("Select the Activation File", fileNameTextBoxID, filePath);
+		AutoItAPI.setText("Select the Activation File", fileNameTextBoxID, filePath);
 		TestManager.sleep(5, TimeUnit.SECONDS);
 		AutoItAPI.clickButton("Select the Activation File", "", openButtonId);
 		TestManager.sleep(5,TimeUnit.SECONDS);

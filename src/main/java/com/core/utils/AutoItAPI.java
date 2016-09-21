@@ -63,9 +63,14 @@ public class AutoItAPI {
 		LogManager.verify(!WinFound, "Close Window: " + winTitle);
 	}
 
-	public static void setControlText(String winTitle, String controlID, String text) {
+	public static void setText(String winTitle, String controlID, String text) {
 		boolean success = AutoIt.engine().ControlSetText(winTitle, "", controlID, text);
 		LogManager.assertTrue(success, "set text: " + text);
+	}
+	
+	public static String getText(String winTitle, String controlID) {
+		 return AutoIt.engine().controlGetText(winTitle, "", controlID);
+		
 	}
 
 	public static void clickButton(String winTitle, String controlText, String controlID) {
@@ -76,6 +81,15 @@ public class AutoItAPI {
 	public static void check(String winTitle, String controlID) {
 		activateWindow(winTitle, "");
 		AutoIt.engine().controlCommandCheck(winTitle, "", controlID);
+	}
+	
+	public static void selectFromDropDownList(String winTitle, String controlID, String selector){
+		activateWindow(winTitle, "");
+		LogManager.debug("Set Drop down value to: " + selector);
+		AutoIt.engine().controlCommandSelectString(winTitle, "", controlID, selector);
+		sleep(500);
+		String current = getText(winTitle, controlID);
+		LogManager.assertSoft(current.equals(selector), "Current Drop Down list value is : " + current);
 		
 	}
 	

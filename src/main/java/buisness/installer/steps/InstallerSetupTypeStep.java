@@ -1,5 +1,6 @@
 package buisness.installer.steps;
 
+import buisness.modules.SysAid;
 import buisness.modules.SysAid.InstallType;
 
 import com.core.base.LogManager;
@@ -51,6 +52,7 @@ import com.core.utils.AutoItAPI;
 	}
 	
 	public void clickNext(){
+		SysAid.type = installType;
 		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
 	

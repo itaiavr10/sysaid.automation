@@ -6,7 +6,54 @@ public abstract class SysAid {
 	
 	public static InstallType type = InstallType.TYPICAL;
 	
+	public enum DataBaseType{
+		Oracle("Oracle") {
+			@Override
+			public String getDriver() {
+				return "oracle.jdbc.driver.OracleDriver";
+			}
+
+			@Override
+			public String getURL() {
+				return "jdbc:oracle:thin:@localhost:1521:ILIENT"; //TODO : Ask Alex localhost?
+			}
+		},
+		MsSQL("Microsoft QSL Server") {
+			@Override
+			public String getDriver() {
+				return "net.sourceforge.jtds.jdbc.Driver";
+			}
+
+			@Override
+			public String getURL() {
+				return "jdbc:jtds:sqlserver://localhost:1433/ilient;useCursorsAlways=true"; //TODO : Ask Alex localhost?
+			}
+		},
+		MySQL("MySql") {
+			@Override
+			public String getDriver() {
+				return "com.mysql.jdbc.Driver";
+			}
+
+			@Override
+			public String getURL() {
+				return "jdbc:mysql://localhost/ilient"; //TODO : Ask Alex localhost?
+			}
+		};
+		
+		
+		
+		public String name;
 	
+		DataBaseType(String name){
+			this.name = name;
+		}
+		
+		
+		public abstract String getDriver();
+		public abstract String getURL();
+		
+	}
 	
 	
 	

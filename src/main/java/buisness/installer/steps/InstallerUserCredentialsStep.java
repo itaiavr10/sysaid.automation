@@ -10,7 +10,6 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep{
 	
 	InstallerUserCredentialsStep() {
 		super("Serial Number");
-		// TODO Auto-generated constructor stub
 	}
 
 	private String userFieldId = "2702";
@@ -32,11 +31,11 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep{
 	
 	
 	public void setCredentials(String user, String pass){
-		AutoItAPI.setControlText(installerTitle, userFieldId, user); // Set User
+		AutoItAPI.setText(installerTitle, userFieldId, user); // Set User
 		TestManager.sleep(500);
-		AutoItAPI.setControlText(installerTitle, passFieldId, pass); //Set Pass
+		AutoItAPI.setText(installerTitle, passFieldId, pass); //Set Pass
 		TestManager.sleep(500);
-		AutoItAPI.setControlText(installerTitle, repassFieldId, pass); //Re'enter Password
+		AutoItAPI.setText(installerTitle, repassFieldId, pass); //Re'enter Password
 		TestManager.sleep(500);
 	}
 	
@@ -46,7 +45,7 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep{
 	
 	public void handlePopUp(){
 		LogManager.info("'SysAid Enterprise' popup - click OK");
-		AutoItAPI.waitWin("SysAid Enterprise","Account initialized successfully.",50);
+		AutoItAPI.waitWin("SysAid Enterprise","Account initialized successfully.",60);
 		TestManager.sleep(2,TimeUnit.SECONDS);
 		AutoItAPI.clickButton("SysAid Enterprise", "OK", "2"); //Click OK
 	}

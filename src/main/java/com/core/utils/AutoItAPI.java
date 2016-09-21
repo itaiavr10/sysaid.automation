@@ -111,7 +111,7 @@ public class AutoItAPI {
 			}
 		});
 		if(!isFound)
-			LogManager.warn("Retry: Wait for elment exit due to max time out");
+			LogManager.debug("Retry: Wait for elment exit due to max time out");
 		
 	}
 	

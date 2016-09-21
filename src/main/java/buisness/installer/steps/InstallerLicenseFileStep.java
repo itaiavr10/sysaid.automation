@@ -40,14 +40,18 @@ public class InstallerLicenseFileStep extends InstallerAbstractStep {
 		AutoItAPI.setText("Select the Activation File", fileNameTextBoxID, filePath);
 		TestManager.sleep(5, TimeUnit.SECONDS);
 		AutoItAPI.clickButton("Select the Activation File", "", openButtonId);
-		TestManager.sleep(5, TimeUnit.SECONDS);
+		//TestManager.sleep(5, TimeUnit.SECONDS);
 	}
 
 	public void verifyLicneseMsg(boolean isValid) {
-		if (isValid)
+		
+		if (isValid){
+			AutoItAPI.waitForElement(installerTitle, visibleText, validLicenseMsgID, 10000);		
 			AutoItAPI.verifyVisibility(installerTitle, validLicenseMsgID, true);
-		else
+		}else{
+			AutoItAPI.waitForElement(installerTitle, visibleText, inValidLicenseMsgID, 10000);	
 			AutoItAPI.verifyVisibility(installerTitle, inValidLicenseMsgID, true);
+		}
 	}
 
 	public void clickNext() {

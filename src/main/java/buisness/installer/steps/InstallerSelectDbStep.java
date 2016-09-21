@@ -14,12 +14,12 @@ public class InstallerSelectDbStep extends InstallerAbstractStep {
 		super("Use embedded MsSQL database");
 	}
 
-	@Override
+	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
 		
-	}
+	}*/
 
 	@Override
 	public void waitTo() {

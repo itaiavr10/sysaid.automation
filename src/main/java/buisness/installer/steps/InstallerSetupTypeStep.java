@@ -23,11 +23,11 @@ import com.core.utils.AutoItAPI;
 	
 	
 	
-	@Override
+	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
-	}
+	}*/
 	
 	/**
 	 * Wait for page to be ready

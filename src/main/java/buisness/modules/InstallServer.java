@@ -94,7 +94,7 @@ public class InstallServer {
 		installer.HttpPortStep.clickNext();
 		//Step 14: LDAP integration settings
 		installer.LdapStep.waitTo("LDAP Integration: Skip");
-		installer.LdapStep.clickNext();
+		installer.LdapStep.clickSkip();
 		//Step 15: Language - default
 		installer.LanguageStep.waitTo("Language setting: default , click next");
 		installer.LanguageStep.clickNext();
@@ -163,7 +163,6 @@ public class InstallServer {
 		AutoItAPI.waitWin("InstallShield Wizard","");
 		AutoItAPI.clickButton("InstallShield Wizard", "", "Button2");*/
 		
-		TestManager.sleep(6,TimeUnit.MINUTES);//TODO should be inside step
 		installer.UserCredentialsStep.waitTo("Set credentials");
 		installer.UserCredentialsStep.setCredentials("sysaid", "changeit");
 		installer.UserCredentialsStep.clickNext();

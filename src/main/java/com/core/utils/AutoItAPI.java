@@ -5,7 +5,7 @@ import com.core.base.TestManager;
 
 public class AutoItAPI {
 
-	private static Integer MaxTimeOut = 30;
+	private static Integer MaxTimeOut = 40;
 	
 	private static void sleep(long time) {
 		try {

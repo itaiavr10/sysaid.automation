@@ -21,7 +21,6 @@ public class InstallerLicenseFileStep  extends InstallerAbstractStep{
 	private String inValidLicenseMsgID = "2008";
 	private String nextButtonID = "Button2"; 
 	
-	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText , 360);

@@ -11,11 +11,11 @@ public class InstallerLanguageStep extends InstallerAbstractStep {
 		super("Language");
 	}
 
-	@Override
+	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
-	}
+	}*/
 
 	@Override
 	public void waitTo() {

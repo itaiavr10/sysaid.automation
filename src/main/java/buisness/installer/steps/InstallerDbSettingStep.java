@@ -21,11 +21,11 @@ public class InstallerDbSettingStep extends InstallerAbstractStep{
 		super("Database Type");
 	}
 
-	@Override
+	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
-	}
+	}*/
 
 	@Override
 	public void waitTo() {
@@ -34,7 +34,7 @@ public class InstallerDbSettingStep extends InstallerAbstractStep{
 	
 	public void setDB(DataBaseType dbType){
 		AutoItAPI.selectFromDropDownList(installerTitle, dbTypeComboBoxId, dbType.name);
-		TestManager.sleep(2000);
+		TestManager.sleep(5000);
 		//only in external mode set url
 	/*	AutoItAPI.setText(installerTitle, dbDriverFieldId, dbType.getDriver());
 		TestManager.sleep(500);

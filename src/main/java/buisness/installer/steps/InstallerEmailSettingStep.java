@@ -11,11 +11,11 @@ public class InstallerEmailSettingStep extends InstallerAbstractStep{
 		super("Mail server");
 	}
 
-	@Override
+	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
-	}
+	}*/
 
 	@Override
 	public void waitTo() {

@@ -14,11 +14,11 @@ public class InstallerLicenseAgreementStep extends InstallerAbstractStep {
 	private String acceptCheckBoxId = "1000";
 	private String nextButtonID = "1";
 	
-	@Override
+	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
-	}
+	}*/
 	
 	@Override
 	public void waitTo() {

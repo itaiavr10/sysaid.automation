@@ -12,11 +12,11 @@ public class InstallerCompletedStep extends InstallerAbstractStep{
 
 	private String finishButtonId = "Button1"; 
 	
-	@Override
+/*	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText, 30);
-	}
+	}*/
 	
 	@Override
 	public void waitTo() {

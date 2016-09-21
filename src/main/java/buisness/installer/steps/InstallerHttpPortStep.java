@@ -11,11 +11,11 @@ public class InstallerHttpPortStep extends InstallerAbstractStep{
 		super("Server HTTP Port");
 	}
 
-	@Override
+	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
-	}
+	}*/
 
 	@Override
 	public void waitTo() {

@@ -2,6 +2,8 @@ package buisness.installer.steps;
 
 import java.util.concurrent.TimeUnit;
 
+import buisness.modules.SysAid.InstallType;
+
 import com.core.base.LogManager;
 import com.core.base.TestManager;
 import com.core.utils.AutoItAPI;
@@ -18,10 +20,12 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep{
 	
 	private String nextButtonID = "Button1"; 
 	
-	@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin(installerTitle , visibleText, 250); //TODO: in typical it will take another 6 Min
+		if(installType == InstallType.TYPICAL){
+			AutoItAPI.waitWin(installerTitle , visibleText, 600); //in typical it will take another 6 Min
+		}else
+			AutoItAPI.waitWin(installerTitle , visibleText, 250); 
 	}
 	
 	@Override

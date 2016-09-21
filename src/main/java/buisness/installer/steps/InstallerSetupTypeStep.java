@@ -9,6 +9,8 @@ import com.core.utils.AutoItAPI;
 
  public class InstallerSetupTypeStep extends InstallerAbstractStep {
 	
+	 
+	private InstallType installType = InstallType.TYPICAL;
 	
 	InstallerSetupTypeStep() {
 		super("Typical");
@@ -52,7 +54,7 @@ import com.core.utils.AutoItAPI;
 	}
 	
 	public void clickNext(){
-		SysAid.type = installType;
+		SysAid.setInstallType(installType);
 		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
 	

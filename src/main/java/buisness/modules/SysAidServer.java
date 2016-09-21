@@ -196,7 +196,7 @@ public class SysAidServer {
 	 */
 	public static void verifyDB(){
 		LogManager.bold("Verification - MSSQL embedded");
-		if(SysAid.type == InstallType.TYPICAL)
+		if(SysAid.getInstallType() == InstallType.TYPICAL)
 			DBInstaller.verifyMsSqlEmbedded();
 		DBInstaller.verifyTablesCount();
 		DBInstaller.verifyTableContents();

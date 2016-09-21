@@ -4,6 +4,7 @@ import com.core.base.LogManager;
 import com.core.base.TestManager;
 import com.core.utils.AutoItAPI;
 
+import buisness.modules.SysAid;
 import buisness.modules.SysAid.DataBaseType;
 
 public class InstallerDbSettingStep extends InstallerAbstractStep{
@@ -34,6 +35,7 @@ public class InstallerDbSettingStep extends InstallerAbstractStep{
 	
 	public void setDB(DataBaseType dbType){
 		AutoItAPI.selectFromDropDownList(installerTitle, dbTypeComboBoxId, dbType.name);
+		SysAid.setDbType(dbType);
 		TestManager.sleep(5000);
 		//only in external mode set url
 	/*	AutoItAPI.setText(installerTitle, dbDriverFieldId, dbType.getDriver());

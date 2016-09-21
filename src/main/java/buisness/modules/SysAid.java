@@ -4,7 +4,32 @@ package buisness.modules;
 public abstract class SysAid {
 	
 	
-	public static InstallType type = InstallType.TYPICAL;
+	private static InstallType installType = InstallType.TYPICAL;
+	private static DataBaseType dbType = DataBaseType.MsSQL;
+	
+	public static InstallType getInstallType() {
+		return installType;
+	}
+
+	public static void setInstallType(InstallType installType) {
+		SysAid.installType = installType;
+	}
+
+	public static DataBaseType getDbType() {
+		return dbType;
+	}
+
+	public static void setDbType(DataBaseType dbType) {
+		SysAid.dbType = dbType;
+	}
+
+
+
+	
+	
+	
+	
+	
 	
 	public enum DataBaseType{
 		Oracle("Oracle") {

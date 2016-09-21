@@ -7,8 +7,6 @@ import buisness.modules.SysAid.InstallType;
 
 public abstract class InstallerAbstractStep {
 	
-	static protected InstallType installType = InstallType.TYPICAL;
-	
 	protected String installerTitle = "InstallShield Wizard";
 	protected String visibleText = ""; // visible text of current page
 	

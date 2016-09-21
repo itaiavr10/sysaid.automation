@@ -2,6 +2,7 @@ package buisness.installer.steps;
 
 import java.util.concurrent.TimeUnit;
 
+import buisness.modules.SysAid;
 import buisness.modules.SysAid.InstallType;
 
 import com.core.base.LogManager;
@@ -22,7 +23,7 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep{
 	
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		if(installType == InstallType.TYPICAL){
+		if(SysAid.getInstallType() == InstallType.TYPICAL){
 			AutoItAPI.waitWin(installerTitle , visibleText, 600); //in typical it will take another 6 Min
 		}else
 			AutoItAPI.waitWin(installerTitle , visibleText, 250); 

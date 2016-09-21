@@ -35,8 +35,11 @@ public class InstallerDbSettingStep extends InstallerAbstractStep {
 	public void setDB(DataBaseType dbType) {
 		AutoItAPI.selectFromDropDownList(installerTitle, dbTypeComboBoxId, dbType.name);
 		SysAid.setDbType(dbType);
-		TestManager.sleep(3000);
-		AutoItAPI.activateWindow(installerTitle, visibleText); //reactivate installer page
+		TestManager.sleep(1000);
+		//AutoItAPI.activateWindow(installerTitle,visibleText); //reactivate installer page
+		AutoItAPI.clickButton(installerTitle, visibleText, dbTypeComboBoxId);
+		TestManager.sleep(500);
+		
 		//only in external mode set url
 		/*	AutoItAPI.setText(installerTitle, dbDriverFieldId, dbType.getDriver());
 			TestManager.sleep(500);

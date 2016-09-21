@@ -1,14 +1,14 @@
 package buisness.installer.steps;
 
-import com.core.base.LogManager;
 import com.core.utils.AutoItAPI;
 
 /**
  * Patch Management Data - Destination
+ * 
  * @author itai.avrahami
  *
  */
-public class InstallerRepositoryDestinationStep  extends InstallerAbstractStep{
+public class InstallerRepositoryDestinationStep extends InstallerAbstractStep {
 
 	InstallerRepositoryDestinationStep() {
 		super("Patch Management repository folder");
@@ -16,23 +16,21 @@ public class InstallerRepositoryDestinationStep  extends InstallerAbstractStep{
 	}
 
 	private String nextButtonID = "1";
-	
+
 	/*@Override
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		AutoItAPI.waitWin(installerTitle , visibleText);
 		
 	}*/
-	
+
 	@Override
 	public void waitTo() {
 		waitTo("repository destination");
 	}
-	
-	public void clickNext(){
+
+	public void clickNext() {
 		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
-
-	
 
 }

@@ -1,12 +1,11 @@
 package buisness.installer.steps;
 
-import com.core.base.LogManager;
 import com.core.utils.AutoItAPI;
 
-public class InstallerHttpPortStep extends InstallerAbstractStep{
-	
+public class InstallerHttpPortStep extends InstallerAbstractStep {
+
 	private String nextButtonId = "Button1";
-	
+
 	InstallerHttpPortStep() {
 		super("Server HTTP Port");
 	}
@@ -21,8 +20,8 @@ public class InstallerHttpPortStep extends InstallerAbstractStep{
 	public void waitTo() {
 		waitTo("HTTP port");
 	}
-	
-	public void clickNext(){
+
+	public void clickNext() {
 		AutoItAPI.clickButton(installerTitle, "", nextButtonId);
 	}
 

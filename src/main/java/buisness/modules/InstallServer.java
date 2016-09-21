@@ -1,10 +1,6 @@
 package buisness.modules;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import buisness.installer.steps.InstallerApi;
-import buisness.installer.steps.InstallerSetupTypeStep.SetupType;
 import buisness.modules.SysAid.DataBaseType;
 import buisness.modules.SysAid.InstallType;
 
@@ -12,7 +8,6 @@ import com.core.base.LogManager;
 import com.core.base.TestManager;
 import com.core.utils.AutoItAPI;
 import com.core.utils.SystemUtils;
-import com.core.utils.SystemUtils.Keyboard;
 
 
 public class InstallServer {
@@ -60,7 +55,7 @@ public class InstallServer {
 		installer.LicenseAgreementStep.clickNext();
 		//step 5 : select customized
 		installer.SetupTypeStep.waitTo("Setup type - Select Customized and click Next");
-		installer.SetupTypeStep.selectType(SetupType.Customized);
+		installer.SetupTypeStep.selectType(InstallType.CUSTOMIZED);
 		installer.SetupTypeStep.clickNext();
 		//step 6: Continue to select Patch management destination
 		installer.FolderDestinationStep.waitTo("Accept default destination folder and click Next to continue");

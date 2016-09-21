@@ -1,12 +1,11 @@
 package buisness.installer.steps;
 
-import com.core.base.LogManager;
 import com.core.utils.AutoItAPI;
 
-public class InstallerEmailSettingStep extends InstallerAbstractStep{
-	
-	private String skipButtonId ="Button3";
-	
+public class InstallerEmailSettingStep extends InstallerAbstractStep {
+
+	private String skipButtonId = "Button3";
+
 	InstallerEmailSettingStep() {
 		super("Mail server");
 	}
@@ -21,8 +20,8 @@ public class InstallerEmailSettingStep extends InstallerAbstractStep{
 	public void waitTo() {
 		waitTo("Email settings");
 	}
-	
-	public void clickSkip(){
+
+	public void clickSkip() {
 		AutoItAPI.clickButton(installerTitle, "", skipButtonId);
 	}
 

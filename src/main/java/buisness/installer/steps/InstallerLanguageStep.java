@@ -1,12 +1,11 @@
 package buisness.installer.steps;
 
-import com.core.base.LogManager;
 import com.core.utils.AutoItAPI;
 
 public class InstallerLanguageStep extends InstallerAbstractStep {
-	
+
 	private String nextButtonId = "Button1";
-	
+
 	InstallerLanguageStep() {
 		super("Language");
 	}
@@ -21,8 +20,8 @@ public class InstallerLanguageStep extends InstallerAbstractStep {
 	public void waitTo() {
 		waitTo("Language setting");
 	}
-	
-	public void clickNext(){
+
+	public void clickNext() {
 		AutoItAPI.clickButton(installerTitle, "", nextButtonId);
 	}
 

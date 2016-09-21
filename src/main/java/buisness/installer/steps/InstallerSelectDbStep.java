@@ -1,11 +1,9 @@
 package buisness.installer.steps;
 
-import com.core.base.LogManager;
 import com.core.utils.AutoItAPI;
 
 public class InstallerSelectDbStep extends InstallerAbstractStep {
-	
-	
+
 	private String embeddedCheckBoxOptionId = "1203";
 	private String externalCheckBoxOptionId = "1204";
 	private String nextButtonID = "1";
@@ -25,19 +23,17 @@ public class InstallerSelectDbStep extends InstallerAbstractStep {
 	public void waitTo() {
 		waitTo("select DB");
 	}
-	
-	
-	public void selectEmbedded(){
+
+	public void selectEmbedded() {
 		AutoItAPI.check(installerTitle, embeddedCheckBoxOptionId);
 	}
-	
-	public void selectExternal(){
+
+	public void selectExternal() {
 		AutoItAPI.check(installerTitle, externalCheckBoxOptionId);
 	}
-	
-	public void clickNext(){
+
+	public void clickNext() {
 		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
-	
 
 }

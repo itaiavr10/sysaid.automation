@@ -1,13 +1,12 @@
 package buisness.installer.steps;
 
-import com.core.base.LogManager;
 import com.core.utils.AutoItAPI;
 
-public class InstallerLdapStep extends InstallerAbstractStep{
-	
+public class InstallerLdapStep extends InstallerAbstractStep {
+
 	private String nextButtonId = "Button1";
 	private String skipButtonId = "Button4";
-	
+
 	InstallerLdapStep() {
 		super("Server Type");
 	}
@@ -22,12 +21,12 @@ public class InstallerLdapStep extends InstallerAbstractStep{
 	public void waitTo() {
 		waitTo("LDAP Integration");
 	}
-	
-	public void clickNext(){
+
+	public void clickNext() {
 		AutoItAPI.clickButton(installerTitle, "", nextButtonId);
 	}
-	
-	public void clickSkip(){
+
+	public void clickSkip() {
 		AutoItAPI.clickButton(installerTitle, "", skipButtonId);
 	}
 

@@ -22,5 +22,17 @@ public abstract class InstallerAbstractStep {
 	}
 	
 	public abstract void waitTo();
+	
+	
+	
+	public void click(String debugInfo , String controlID){
+		
+		
+	}
+	
+	public void setText(String debugInfo, String controlID , String text){
+		
+	}
+	
 
 }

@@ -36,6 +36,7 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep{
 	
 	
 	public void setCredentials(String user, String pass){
+		//setText("Set User: ", controlID, text)
 		AutoItAPI.setText(installerTitle, userFieldId, user); // Set User
 		TestManager.sleep(500);
 		AutoItAPI.setText(installerTitle, passFieldId, pass); //Set Pass
@@ -45,6 +46,7 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep{
 	}
 	
 	public void clickNext(){
+		//click("", nextButtonID);
 		AutoItAPI.clickButton(installerTitle, visibleText, nextButtonID);
 	}
 	

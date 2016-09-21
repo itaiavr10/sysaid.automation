@@ -100,6 +100,21 @@ public class AutoItAPI {
 		//LogManager.validateAssert(actual == expected, String.format("Validate Element Enable.  Expected = %s , Actual = %s", expected,actual));
 	}
 	
+	
+	
+	public static void waitForElement(final String winTitle,  final String visibleText, final String controlID, int maxTimeInMil){
+		boolean isFound = Utils.tryUntil(new ActionWrapper("Wait for Element" , maxTimeInMil, 500) {
+			@Override
+			public boolean invoke() throws Exception {
+				boolean results = AutoIt.engine().controlCommandIsVisible(winTitle,visibleText, controlID);
+				return results;
+			}
+		});
+		if(!isFound)
+			LogManager.warn("Retry: Wait for elment exit due to max time out");
+		
+	}
+	
 	public static void verifyVisibility(String winTitle, String controlID,boolean expected){
 		activateWindow(winTitle, "");
 		boolean actual = AutoIt.engine().controlCommandIsVisible(winTitle, "", controlID);

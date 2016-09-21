@@ -56,7 +56,7 @@ public class InstallerDbSettingStep extends InstallerAbstractStep {
 
 	public void checkConnection() {
 		AutoItAPI.clickButton(installerTitle, "", checkButtonId);
-		TestManager.sleep(2000);
+		AutoItAPI.waitForElement(installerTitle, visibleText, connectionOkMsgId, 10000);
 		AutoItAPI.verifyVisibility(installerTitle, connectionOkMsgId, true);
 	}
 

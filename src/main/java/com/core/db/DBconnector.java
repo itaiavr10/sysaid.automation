@@ -18,10 +18,20 @@ public class DBconnector {
 	private String pass = "gSPc5a3a9p";
 	private String url = "jdbc:sqlserver://%s:1450;databaseName=ilient";
 	public static String dbIP = "10.14.1.103";
+	
+	private static DBconnector con;
+	
+	static{
+		con = new DBconnector();
+	}
 
-	public DBconnector() {
+	private DBconnector() {
 		//connect();
 		dbIP = OS.getCurrentIP();
+	}
+	
+	public static DBconnector get(){
+		return con;
 	}
 
 	private void connect() { //TODO: might be a singleton , connect only 1 time!

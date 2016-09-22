@@ -26,7 +26,7 @@ public class SysAidServer {
 	private static String server_build = "unknown";
 	public static String exeName;
 	public static String exePath;
-	
+	private static String activationFilePath = "c:\\SA\\activation.xml";
 	
 	private static List<String> filesList;
 	private static String serverPath = "C:\\Program Files\\SysAidServer";
@@ -56,6 +56,7 @@ public class SysAidServer {
 			getDefaultExe = true;
 		}
 		
+	
 		if(!getDefaultExe){
 			LogManager.info(String.format("SysAid Version:%s , Build: %s",server_ver,server_build));
 			exeName = String.format("SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
@@ -66,6 +67,12 @@ public class SysAidServer {
 			exeName = exeName.replace("64", "");
 		
 		exePath = "C:\\SA\\" + exeName;
+		
+		if(getDefaultExe){
+			exePath = "C:\\SA\\debug\\" + exeName;
+			activationFilePath = "c:\\SA\\debug\\activation.xml";
+		}
+		
 		LogManager.assertTrue(SystemUtils.Files.isFileExist(exePath), "verify exe exists: " + exePath);
 	}
 
@@ -75,8 +82,12 @@ public class SysAidServer {
 		filesList.add(serverPath);
 		filesList.add(tomcatPath);
 		filesList.add(webInfPath);
-		
-		
+	}
+	
+	
+	
+	public static String getActivationFilePath(){
+			return activationFilePath;
 	}
 	
 	

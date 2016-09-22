@@ -68,7 +68,7 @@ public class InstallServer {
 		installer.StartMenuProgramStep.clickNext();
 		//Step 9: Select license file
 		installer.LicenseFileStep.waitTo("set activation file");
-		installer.LicenseFileStep.selectLicenseFile("c:\\SA\\activation.xml");
+		installer.LicenseFileStep.selectLicenseFile(SysAidServer.getActivationFilePath());
 		installer.LicenseFileStep.verifyLicneseMsg(true);
 		installer.LicenseFileStep.clickNext();
 		//Step 10: select DB  - Choose 'Use external database (Oracle, MS SQL, MySQL) and click Next
@@ -135,7 +135,7 @@ public class InstallServer {
 		
 		//LogManager.info("Step4: set activation file");
 		installer.LicenseFileStep.waitTo("Set activation file");
-		installer.LicenseFileStep.selectLicenseFile("c:\\SA\\activation.xml");
+		installer.LicenseFileStep.selectLicenseFile(SysAidServer.getActivationFilePath());
 		/*AutoItAPI.waitWin("InstallShield Wizard" , "License File" , 200);
 		AutoItAPI.clickButton("InstallShield Wizard", "License File", "2005");
 		//set activation & press Open button

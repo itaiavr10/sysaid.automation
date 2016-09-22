@@ -2,7 +2,11 @@ package itai;
 
 import org.testng.annotations.Test;
 
+import buisness.db.DBInstaller;
 import buisness.db.DBconst.TableContent;
+import buisness.modules.SysAid;
+import buisness.modules.SysAidServer;
+import buisness.modules.SysAid.DataBaseType;
 
 import com.core.annotation.TestCase;
 import com.core.base.AbstractSuite;
@@ -14,8 +18,9 @@ public class Suite1 extends AbstractSuite{
 	@Test()
 	@TestCase(number = 0 , description = "TestA - For debug")
 	public void A(){
-		
-		DBQuery.verifyTableRetry(TableContent.COMPUTER ,  60 * 1000 , 3 * 1000);
+		SysAid.setDbType(DataBaseType.MySQL);
+		DBInstaller.verifyTablesCount();
+		DBInstaller.verifyTableContents();
 	}
 	
 	

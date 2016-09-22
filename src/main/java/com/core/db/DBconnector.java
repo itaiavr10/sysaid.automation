@@ -1,4 +1,4 @@
-package com.core.db;
+/*package com.core.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -80,3 +80,4 @@ public class DBconnector {
 	}
 
 }
+*/

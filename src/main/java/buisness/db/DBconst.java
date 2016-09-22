@@ -6,7 +6,7 @@ import java.util.List;
 
 import buisness.modules.SysAidServer;
 
-import com.core.db.DBconnector;
+import com.core.db.AbstractDB;
 import com.core.utils.SystemUtils;
 
 public class DBconst {
@@ -153,7 +153,7 @@ public class DBconst {
 			@Override
 			public List<List<String>> getExpected() {
 				List<List<String>> table = new ArrayList<List<String>>();
-				table.add(Arrays.asList(SystemUtils.OS.getComputerName(), DBconnector.dbIP , SysAidServer.server_ver+".102"));  // TODO :  Computer Name + RDS Version            
+				table.add(Arrays.asList(SystemUtils.OS.getComputerName(),	AbstractDB.dbIP , SysAidServer.server_ver+".102"));  // TODO :  Computer Name + RDS Version            
 				return table;
 			}
 		},

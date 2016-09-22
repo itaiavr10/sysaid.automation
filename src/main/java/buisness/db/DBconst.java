@@ -419,7 +419,7 @@ public class DBconst {
 			
 			@Override
 			public String getQuery() {
-				return "SELECT SR_TYPE, SR_SUB_TYPE, SUB_TYPE_NAME FROM SR_SUB_TYPE";
+				return "SELECT SR_TYPE, SR_SUB_TYPE, SUB_TYPE_NAME FROM SR_SUB_TYPE order by SR_TYPE";
 			}
 			
 			@Override

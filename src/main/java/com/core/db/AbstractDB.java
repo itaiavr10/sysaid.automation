@@ -20,7 +20,7 @@ public abstract class AbstractDB {
 	
 	
 	protected AbstractDB(String user, String pass, String url){
-		//dbIP = OS.getCurrentIP();
+		dbIP = OS.getCurrentIP();
 		this.user = user;
 		this.pass = pass;
 		this.url = String.format(url, dbIP);

@@ -3,18 +3,19 @@ package itai;
 import org.testng.annotations.Test;
 
 import com.core.base.AbstractSuite;
+import com.core.base.LogManager;
 
 public class Suite2 extends AbstractSuite {
 	
 	
-	@Test
+	@Test(groups={"integration"})
 	public void A(){
-		System.out.println("Suite2 - A");
+		LogManager.info("Suite2 - A");
 	}
 	
-	/*@Test
+	@Test
 	public void B(){
-		System.out.println("Suite2 - B");
-	}*/
+		LogManager.info("Suite2 - B");
+	}
 
 }

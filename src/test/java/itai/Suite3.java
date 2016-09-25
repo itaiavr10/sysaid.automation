@@ -7,11 +7,9 @@ import com.core.base.LogManager;
 
 public class Suite3 extends AbstractSuite{
 	
-	@Test
+	@Test(groups="test1")
 	public void A(){
-		LogManager.info("A-Start...");
-		System.out.println("Suite3 - A");
-		LogManager.info("A-End...");
+		LogManager.info("Suite3 - A");
 	}
 	
 	/*@Test

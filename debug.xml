@@ -9,14 +9,29 @@
 
 	
 
-  <test name="example test1-2">
-    <classes>
-       <class name="itai.Suite1" />
+  <test name="debug3">
+ 	<classes>
+        <class name="itai.Suite3" ></class>
     </classes>
+  </test>
+  
+  <test name="debug2">
+ 	<classes>
+        <class name="itai.Suite2" ></class>
+    </classes>   
   </test>
 
 
 <!-- 
+<script language="beanshell"><![CDATA[testngMethod.getMethodName().contains(System.getProperty("testToRun"))]]></script>
+
+
+ <method-selectors>
+  	<method-selector>
+  	<script language="beanshell"><![CDATA[groups.containsKey("test1")]]></script>
+  	</method-selector>
+  </method-selectors>
+
   <test name="example-test2">
     <classes>
        <class name="itai.Suite3" />

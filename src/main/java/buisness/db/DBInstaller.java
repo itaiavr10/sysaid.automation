@@ -1,18 +1,15 @@
 package buisness.db;
 
-import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.concurrent.TimeUnit;
-
-import com.core.base.LogManager;
-import com.core.base.TestManager;
-import com.core.db.DBQuery;
-import com.core.utils.SystemUtils;
-import com.core.utils.XmlUtils;
 
 import buisness.db.DBconst.TableContent;
 import buisness.modules.SysAid;
 import buisness.modules.SysAid.DataBaseType;
+
+import com.core.base.LogManager;
+import com.core.db.DBQuery;
+import com.core.utils.SystemUtils;
+import com.core.utils.XmlUtils;
 
 public class DBInstaller {
 

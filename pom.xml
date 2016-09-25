@@ -11,7 +11,8 @@
 		<suiteName>testng.xml</suiteName>
 		<version>unknown</version>
 		<build>unknown</build>
-		<testme>*</testme>
+		<testme>*</testme> <!--  for define which test from testng.xml to execute -->
+		<testToRun></testToRun>
 	</properties>
 
 
@@ -34,11 +35,17 @@
 							<name>build</name>
 							<value>${build}</value>
 						</property>
+						<property>
+							<name>testToRun</name>
+							<value>${testToRun}</value>
+						</property>
 					</systemProperties>
+
+				
 					<suiteXmlFiles>
 						<suiteXmlFile>${suiteName}</suiteXmlFile>
 					</suiteXmlFiles>
-					<properties>  <!-- Can define specific test to run from xml -->
+					<properties>  <!-- Can define specific test to run from xml : mvn -DsuiteName=debug.xml -Dtestme=debug3 test-->
             			<property>
               				<name>testnames</name>
               				<value>${testme}</value>

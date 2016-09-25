@@ -12,9 +12,9 @@ public class Suite3 extends AbstractSuite{
 		LogManager.info("Suite3 - A");
 	}
 	
-	/*@Test
+	@Test()
 	public void B(){
 		System.out.println("Suite3 - B");
-	}*/
+	}
 
 }

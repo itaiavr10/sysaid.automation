@@ -2,26 +2,47 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Demo">
-	
-	<listeners>
-    	<listener class-name="com.core.base.TestListener" />
-  	</listeners>
-	
 
-  	<test name="pass-failure suite example">
-    <classes>
-       	<class name="server.installer.InstallSanitySuite" >
-       	<methods>
-       		<include name="licenseAgreementPassCase"></include>
-       		<include name="licenseAgreementFailureCase"></include>
-       	</methods>
-       	</class>
+	<listeners>
+		<listener class-name="com.core.base.TestListener" />
+	</listeners>
+
+
+
+	
+	<test name="debug3">
+	
+	<method-selectors>
+     <method-selector>
+     <script language="beanshell"><![CDATA[testngMethod.getMethodName().contains(System.getProperty("testToRun"))]]></script>
+      <!--  
+      <script language="beanshell"><![CDATA[testngMethod.getMethodName().contains(System.getProperty("testToRun"))]]></script>
+      <script language="beanshell"><![CDATA[groups.containsKey("test1")]]></script>  
+      -->
+     	</method-selector>
+  		 </method-selectors>
+	
+ 	<classes>
+        <class name="itai.Suite3" ></class>
     </classes>
   </test>
   
-  
-  
-  
- 
-  
+<!--   	<test name="BeanShell test">
+<class name="itai.Suite3" ></class>
+	<method-selectors>
+     <method-selector>
+       <script language="beanshell"><![CDATA[
+         groups.containsKey("test1")
+       ]]></script>
+     </method-selector>
+   </method-selectors>
+	
+
+	</test>
+ -->
+
+
+
+
+
 </suite> 

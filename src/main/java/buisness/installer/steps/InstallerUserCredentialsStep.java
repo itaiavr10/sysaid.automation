@@ -24,7 +24,7 @@ public class InstallerUserCredentialsStep extends InstallerAbstractStep {
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
 		if (SysAid.getInstallType() == InstallType.TYPICAL) {
-			AutoItAPI.waitWin(installerTitle, visibleText, 600); //in typical it will take another 6 Min
+			AutoItAPI.waitWin(installerTitle, visibleText, 800); //in typical it will take another 10 Min
 		} else
 			AutoItAPI.waitWin(installerTitle, visibleText, 250);
 	}

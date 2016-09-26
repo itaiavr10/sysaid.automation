@@ -19,14 +19,15 @@ public class Suite1 extends AbstractSuite{
 	@Test()
 	@TestCase(number = 0 , description = "TestA - For debug")
 	public void A(){
-		SysAidAgent.logScan();
+		LogManager.error("hello - A");
+		LogManager.info("hello again - A");
 	}
 	
 	
-	//@Test()
+	@Test()
 	@TestCase(number = 1 , description = "TestB - For debug")
 	public void B(){
-		LogManager.error("hello - B");		
+		LogManager.info("hello - B");		
 	}
 
 

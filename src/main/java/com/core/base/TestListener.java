@@ -3,11 +3,14 @@ package com.core.base;
 import java.util.concurrent.TimeUnit;
 
 import org.testng.Assert;
+import org.testng.IInvokedMethod;
+import org.testng.IInvokedMethodListener;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
 
 import com.core.annotation.TestCase;
 import com.core.utils.ScreenShooter;
@@ -18,7 +21,7 @@ import com.core.utils.VideoRecorder;
 import buisness.modules.SysAidServer;
 
 
-public class TestListener implements ITestListener, ISuiteListener { //IInvokedMethodListener
+public class TestListener implements ITestListener, ISuiteListener , IInvokedMethodListener { //IInvokedMethodListener
 	
 	
 	private static String testDescription = "";
@@ -42,6 +45,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 
 	public void onTestStart(ITestResult result) {
 		//System.out.println("-> onTestStart");
+		SuiteReporter.initSoftAssert();
 		initTestDescription(result) ;
 		LogManager.bold(String.format("Starting Test: %s", testDescription));
 		VideoRecorder.getInstance().startRecording();
@@ -51,7 +55,7 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 		//System.out.println("-> onTestSuccess");
 		//System.out.println(result.getName());
 		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
-		Assert.assertTrue(SuiteReporter.isTestPassed());  //TODO : should check if we do it in another place! issue : Test Pass + Test Fail in TESTNG Results
+	//	Assert.assertTrue(SuiteReporter.isTestPassed());  //TODO : should check if we do it in another place! issue : Test Pass + Test Fail in TESTNG Results
 		onTestFinish(result,true);
 		/*VideoRecorder.getInstance().finishRecord(false);
 		LogManager.pass(String.format("Test Passed: %s", testDescription ));
@@ -122,6 +126,18 @@ public class TestListener implements ITestListener, ISuiteListener { //IInvokedM
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
+	}
+
+	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+		// TODO Auto-generated method stub
+		Test test = testResult.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
+		if(test != null)
+			SuiteReporter.softAssertAll();
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import com.core.utils.ConfigProperties;
 import com.core.utils.MailUtils;
@@ -17,14 +18,23 @@ public class SuiteReporter {
 	private ArrayList<String> logTable;
 	private static boolean testFailed;
 	private String suiteName;
+	private static SoftAssert softAssert;
 
 	SuiteReporter(String suiteName) {
 		this.logTable = new ArrayList<String>();
 		this.logTable.add("<table border=\"4\" style=\"width:100%\">");
 		this.suiteName = suiteName;
 		//addTableRow(ReportStepType.BOLD_Type, "XML Suite: " + suiteName);
-		this.testFailed = false;
+		testFailed = false;
 		init();
+	}
+	
+	public static void initSoftAssert(){
+		softAssert= new SoftAssert();
+	}
+	
+	public static void softAssertAll(){
+		softAssert.assertAll();
 	}
 
 	private void init() {
@@ -72,7 +82,8 @@ public class SuiteReporter {
 	public void error(String msg) {
 		addTableRow(ReportStepType.Fail_Type, msg);
 		log.error(msg);
-		this.testFailed = true;
+		testFailed = true;
+		softAssert.assertFalse(true);
 	}
 	
 	public void verify(boolean condition,String msg) {

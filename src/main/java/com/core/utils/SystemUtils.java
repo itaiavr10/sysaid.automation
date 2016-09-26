@@ -90,6 +90,7 @@ public class SystemUtils {
 				
 			} catch (Exception e) {
 				LogManager.error("Scan File - Error : " + e.getMessage());
+				pass = false;
 			} finally {
 				LogManager.assertSoft(pass, "Scan File: " + filePath);
 				try {

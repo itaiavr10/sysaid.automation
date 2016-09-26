@@ -45,7 +45,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 	
 	
-	//@Test()
+	@Test()
 	@TestCase(number = 1 , description = "Typical Installation with MsSQL Embedded")
 	public void typicalInstall(){
 		InstallServer.typicalInstallation();

@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Server Installer">
+<suite name="Server Installer Suite">
 
 	<listeners>
 		<listener class-name="com.core.base.TestListener" />
 	</listeners>
 
 
+
+
 	<test name="Server Installer">
-		<method-selectors>
+		
+	<method-selectors>
 			<method-selector>
-				<script language="beanshell"><![CDATA[testngMethod.getMethodName().contains(System.getProperty("testToRun"))]]></script>
+				<script language="beanshell"><![CDATA[!testngMethod.isTest() || testngMethod.getMethodName().contains(System.getProperty("testToRun"))]]></script>
 			</method-selector>
 		</method-selectors>
-
 		<classes>
 			<class name="server.installer.InstallSanitySuite"></class>
 		</classes>

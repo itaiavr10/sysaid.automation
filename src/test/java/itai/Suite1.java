@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import buisness.db.DBInstaller;
 import buisness.db.DBconst.TableContent;
 import buisness.modules.SysAid;
+import buisness.modules.SysAidAgent;
 import buisness.modules.SysAidServer;
 import buisness.modules.SysAid.DataBaseType;
 
@@ -18,9 +19,7 @@ public class Suite1 extends AbstractSuite{
 	@Test()
 	@TestCase(number = 0 , description = "TestA - For debug")
 	public void A(){
-		SysAid.setDbType(DataBaseType.MySQL);
-		DBInstaller.verifyTablesCount();
-		DBInstaller.verifyTableContents();
+		SysAidAgent.logScan();
 	}
 	
 	

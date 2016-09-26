@@ -66,7 +66,14 @@ public class SystemUtils {
 			try {
 				br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
 				String line;
-				String regex = String.format("(?i:.*%s.*)", Arrays.asList(searchQuery).toString().replace("[", "(").replace(",", "|").replace("]", ")"));
+				String keys = Arrays.asList(searchQuery).toString();
+				keys = keys.substring(1, keys.length() -1);
+				//String keys = "START"+Arrays.asList(searchQuery).toString().replace(",", "|")+ "END";
+				//keys = keys.replace("START[","(").replace("]END", ")");
+				keys = keys.replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>]", "\\\\$0");
+				keys = "(" + keys + ")";
+				keys = keys.replace(",", "|");
+				String regex = String.format("(?i:.*%s.*)",keys);
 				while ((line = br.readLine()) != null) {
 					if(line.matches(regex)){
 						LogManager.error("Found Line: " + line);

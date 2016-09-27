@@ -33,10 +33,10 @@ public class ScreenShooter {
 		System.out.println("DONE");
 	}
 	
-	public static void capture(){
+	public static void capture(String imageName){
 		try {
 			OutputStream out = null;
-			String path = Files.getMediaPath() + "\\itai.jpg";
+			String path = Files.getMediaPath() + imageName + ".jpg";
 			byte[] bytes = regularScreenShot();
 			try {
 			    out = new BufferedOutputStream(new FileOutputStream(path));

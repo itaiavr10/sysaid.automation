@@ -29,18 +29,9 @@ public class InstallSanitySuite extends AbstractSuite{
 	@TestCase(number = 8 , description = "SysAid Server installation - Customized MySQL")
 	public void customizedMySqlInstall(){
 		InstallServer.customizedMySqlInstallation();
-		//sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		
-		//wait for process to finish installation
-		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
+		InstallServer.verify();
 		
-		SysAidServer.verifyInstallation();
-		//TODO : RDS Internal
-		SysAidAgent.verifyInstallation();
-		
-		SysAidServer.verifyDB();
-		
-		SysAidLog.verifyLog();
 	}
 	
 	
@@ -49,18 +40,8 @@ public class InstallSanitySuite extends AbstractSuite{
 	@TestCase(number = 1 , description = "Typical Installation with MsSQL Embedded")
 	public void typicalInstall(){
 		InstallServer.typicalInstallation();
-		//sleep(10,TimeUnit.SECONDS); //Wait for finish to deploy // TODO : should be a smart sleep
 		
-		//wait for process to finish installation
-		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
-		
-		SysAidServer.verifyInstallation();
-		//TODO : RDS Internal
-		SysAidAgent.verifyInstallation();
-		
-		SysAidServer.verifyDB();
-		
-		SysAidLog.verifyLog();
+		InstallServer.verify();
 	}
 	
 	

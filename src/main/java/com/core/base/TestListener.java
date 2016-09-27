@@ -10,6 +10,7 @@ import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 import com.core.annotation.TestCase;
@@ -18,26 +19,27 @@ import com.core.utils.SystemUtils;
 import com.core.utils.TimeUtils;
 import com.core.utils.VideoRecorder;
 
-import buisness.modules.SysAidServer;
 
 
-public class TestListener implements ITestListener, ISuiteListener , IInvokedMethodListener { //IInvokedMethodListener
+public class TestListener implements ITestListener, ISuiteListener , IInvokedMethodListener { 
 	
 	
 	private static String testDescription = "";
+	private static int passed = 0;
+	private static int failed = 0;
+	private static int skipped = 0;
+	
 
 	// --------------------> ISuiteListener 	
 
 	public void onStart(ISuite suite) {
-		//System.out.println("->ISuiteListener onStart");
-		//System.out.println(suite.getName());
 		SuiteReporter log = new SuiteReporter(suite.getName());
 		LogManager.setReport(log);
 		LogManager.info(String.format("VM Name: %s , IP: %s"  , SystemUtils.OS.getComputerName(), SystemUtils.OS.getCurrentIP()));
 	}
 
 	public void onFinish(ISuite suite) {
-		//System.out.println("->ISuiteListener onFinish");
+		LogManager.info(String.format("#Passed=%d , #Failed=%d , Skipped=%d",passed,failed,skipped));
 		LogManager.getReporter().sendResult();
 	}
 
@@ -52,18 +54,8 @@ public class TestListener implements ITestListener, ISuiteListener , IInvokedMet
 	}
 
 	public void onTestSuccess(ITestResult result) {
-		//System.out.println("-> onTestSuccess");
-		//System.out.println(result.getName());
-		//LogManager.pass(String.format("Test: %s - Passed!", result.getName()));
-	//	Assert.assertTrue(SuiteReporter.isTestPassed());  //TODO : should check if we do it in another place! issue : Test Pass + Test Fail in TESTNG Results
+		passed++;
 		onTestFinish(result,true);
-		/*VideoRecorder.getInstance().finishRecord(false);
-		LogManager.pass(String.format("Test Passed: %s", testDescription ));
-		LogManager.bold(String.format("Test Execution time =  %s Seconds" , (result.getEndMillis()- result.getStartMillis())/1000 ))
-		*/
-		/*boolean testPassed = SuiteReporter.isTestPassed();
-		testTerminationHandler(!testPassed);
-		Assert.assertTrue(testPassed);*/	
 	}
 	
 	
@@ -78,13 +70,8 @@ public class TestListener implements ITestListener, ISuiteListener , IInvokedMet
 	}
 
 	public void onTestFailure(ITestResult result) {
+		failed++;
 		onTestFinish(result,false);
-		/*//System.out.println("-> onTestFailure");
-		LogManager.error(String.format("Test Failed: %s", testDescription ));
-		//testTerminationHandler(true);
-		ScreenShooter.capture();
-		VideoRecorder.getInstance().finishRecord(true);
-		LogManager.bold(String.format("Test Execution time =  %s Seconds" , (result.getEndMillis()- result.getStartMillis())/1000 ));*/
 	}
 	
 	private void onTestFinish(ITestResult result , boolean pass){
@@ -92,20 +79,23 @@ public class TestListener implements ITestListener, ISuiteListener , IInvokedMet
 			LogManager.pass(String.format("Test Passed: %s", testDescription ));
 		}else{
 			LogManager.error(String.format("Test Failed: %s", testDescription ));
-			ScreenShooter.capture();
+			ScreenShooter.capture(testDescription);
 		}
-		VideoRecorder.getInstance().finishRecord(pass);
+		VideoRecorder.getInstance().finishRecord(testDescription ,pass);
 		long timeSec = TimeUtils.getTimeDiff(result.getEndMillis() , result.getStartMillis(), TimeUnit.SECONDS);
 		
 		LogManager.info(String.format("Test Execution time:  %d Minutes + %d Seconds" , timeSec/60 , timeSec%60 ));
-		//LogManager.bold("Test Execution time:" + TimeUtils.getTimeDiff(result.getEndMillis() , result.getStartMillis(), TimeUnit.SECONDS));
 	}
 
 	public void onTestSkipped(ITestResult result) {
-		//System.out.println("-> onTestSkipped");
+		skipped++;
 		LogManager.info(String.format("Test: %s - Skiped!", result.getName()));
 	}
 
+	
+	/**
+	 * Invoked after the test class is instantiated and before any configuration method is called
+	 */
 	public void onStart(ITestContext context) {
 		//System.out.println("->ITestListener onStart");
 		//System.out.println(context.getSuite().getClass().getName());
@@ -114,13 +104,13 @@ public class TestListener implements ITestListener, ISuiteListener , IInvokedMet
 		//System.out.println(context.getName());
 		LogManager.info("XML Test: " + context.getName());
 		//TODO: If it is Agent Tests??
-		
-		
 		//TODO: Missing suite class name
-
 	}
 
-	// on suite class finish
+	/**
+	 * on suite class finish
+	 * Invoked after all the tests have run and all their Configuration methods have been called
+	 */
 	public void onFinish(ITestContext context) {
 		System.out.println("->ITestListener onFinish");
 	}

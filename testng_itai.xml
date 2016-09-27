@@ -10,6 +10,13 @@
 	
 
   <test name="example test1-2">
+  
+  <groups>
+    <run>
+      <exclude name="bug"  />
+    </run>
+  </groups>
+  
     <classes>
        <class name="itai.Suite1" />
     </classes>

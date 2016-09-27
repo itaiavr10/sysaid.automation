@@ -13,6 +13,8 @@ import static org.monte.media.FormatKeys.*;
 import static org.monte.media.VideoFormatKeys.*;
 
 import org.monte.screenrecorder.ScreenRecorder;
+import org.testng.ITestResult;
+import org.testng.internal.TestResult;
 
 import com.core.base.LogManager;
 
@@ -45,14 +47,14 @@ public class VideoRecorder {
 				new Format(MediaTypeKey, MediaType.VIDEO, EncodingKey, "black", FrameRateKey, Rational.valueOf(30)),null);	
 	}
 	
-	public void finishRecord(boolean testPassed){
+	public void finishRecord(String videoName, boolean testPassed){
 		stopRecording();
 		if(!testPassed){
-			saveVideo();
+			saveVideo(videoName);
 		}
 	}
 	
-	private void saveVideo(){
+	private void saveVideo(String videoName){
 		LogManager.debug("Saving video record file!");
 		List<File> cachedVideos = screenRecorder.getCreatedMovieFiles();
 		if(cachedVideos == null || cachedVideos.isEmpty()){
@@ -60,7 +62,7 @@ public class VideoRecorder {
 		}
 			
 		File file = cachedVideos.get(0);
-		String fileName =   SystemUtils.Files.getMediaPath() +  "\\video.avi";
+		String fileName =   SystemUtils.Files.getMediaPath() +  videoName +".avi";
 		File newFile = new File(fileName);
 		if(newFile.exists())
 			newFile.delete();

@@ -23,6 +23,7 @@ public class AbstractSuite {
 	public void beforeSuite() { // RUN BEFURE each testng.xml - suite
 		// System.out.println("@BeforeSuite");
 		//validate = TestManager.validator();
+		//System.setProperty("upgradeFrom", "16.1.25.b28"); //TODO : Debug!!
 		SysAidServer.initInstaller();
 	}
 

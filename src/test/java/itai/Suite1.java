@@ -16,10 +16,11 @@ import com.core.db.DBQuery;
 
 public class Suite1 extends AbstractSuite{
 	
-	@Test()
+	//@Test(groups = "bug")
+	@Test(enabled=true)
 	@TestCase(number = 0 , description = "TestA - For debug")
 	public void A(){
-		LogManager.error("hello - A");
+		LogManager.verifyAssert(false, "hello - A");
 		LogManager.info("hello again - A");
 	}
 	
@@ -27,7 +28,7 @@ public class Suite1 extends AbstractSuite{
 	@Test()
 	@TestCase(number = 1 , description = "TestB - For debug")
 	public void B(){
-		LogManager.info("hello - B");		
+		LogManager.error("hello - B");		
 	}
 
 

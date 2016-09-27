@@ -135,7 +135,7 @@ public class SystemUtils {
 		}
 		
 		public static String getMediaPath() {
-			return getProjectPath() + "\\test-output\\media";
+			return getProjectPath() + "\\test-output\\media\\";
 		}
 		
 		public static boolean isFileExist(String path){
@@ -167,28 +167,6 @@ public class SystemUtils {
 				}
 			});
 			LogManager.verify(ispass, String.format("Verify File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
-
-			/*File file = new File(filePath);
-			boolean isExist = file.exists();
-			TestManager.validator().validate(shouldExist == isExist, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isExist));*/
-			//////////////////////////////////////////////////////////////
-			/*File file = new File(filePath);//TODO Should be in Retry Mech
-			long waitInterval = 2000;
-			long maxTimeoutInMiliSec = 20000;
-			//boolean isExist = file.exists();
-			long startTime = System.currentTimeMillis(); //TODO Should be in Retry Mech
-			boolean isok = false;
-			while (System.currentTimeMillis() - startTime < maxTimeoutInMiliSec) {
-				if (file.exists() == shouldExist) {
-					isok = true;
-					break;
-				}
-				// interval to sleep between each iteration
-				try {
-					Thread.sleep(waitInterval);
-				} catch (InterruptedException e) {}
-			}
-			TestManager.validator().validate(isok, String.format("Validate File Exist : %s . Expected = %s , Actual = %s",filePath, shouldExist, isok));*/
 		}
 
 		public static void replaceLine(String filePath, String originalLine, String newLine) {
@@ -245,6 +223,45 @@ public class SystemUtils {
 		
 		public static void moveFile(String srcPath,String destPath) {
 			moveFile(new File(srcPath), new File(destPath));
+		}
+		
+		public static void copyFile(String srcPath, String destPath) {
+			LogManager.debug(String.format("Copy File from:%s , to:%s", srcPath, destPath));
+			File srcFile = new File(srcPath);
+			File destFile = new File(destPath);
+			InputStream in = null;
+			OutputStream out = null;
+			try {
+				if (!srcFile.exists())
+					throw new Exception("Source File is missing");
+
+				if (!destFile.exists()) 
+					destFile.createNewFile();
+				
+				in = new FileInputStream(srcFile);
+				out = new FileOutputStream(destFile);
+
+				// Transfer bytes from in to out
+				byte[] buf = new byte[1024];
+				int len;
+				while ((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+				if(!isFileExist(destPath))
+					throw new Exception("Failed to copy file");
+
+			} catch (Exception e) {
+				LogManager.error("Copy file error: " + e.getMessage());
+			} finally {
+				try {
+					in.close();
+				} catch (IOException e) {
+				}
+				try {
+					out.close();
+				} catch (IOException e) {
+				}
+			}
 		}
 
 	}

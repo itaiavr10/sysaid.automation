@@ -22,6 +22,10 @@ import com.core.utils.XmlUtils;
 
 public class SysAidServer {
 	
+	private static boolean upgradeProcess = false;
+	private static String fromVersion;
+	
+	private static boolean useDefaultExe = false;
 	public static String server_ver = "unknown";
 	private static String server_build = "unknown";
 	public static String exeName;
@@ -43,38 +47,79 @@ public class SysAidServer {
 		initFiles();
 	}
 	
-	public static void initInstaller(){
-		boolean getDefaultExe = false;
-		server_ver = System.getProperty("version");
-		server_build = System.getProperty("build");
-		if(server_ver == null || server_ver.equals("unknown")){
-			LogManager.warn("sysaid version didn't defined via system properties! install default exe");
-			getDefaultExe = true;
-		}
-		else if(server_build == null || server_build.equals("unknown")){
-			LogManager.warn("sysaid build version didn't defined via system properties! install default exe");
-			getDefaultExe = true;
-		}
-		
 	
-		if(!getDefaultExe){
+	public static void initInstaller(){
+		
+		String upgradeFrom = System.getProperty("upgradeFrom"); //16.1.25.b28
+		if(upgradeFrom != null && !upgradeFrom.equals("")){
+			upgradeProcess = true;
+			System.setProperty("upgradeFrom", "");//next time it will init to current version (upgrade process)
+			fromVersion = server_ver = upgradeFrom.substring(0,upgradeFrom.lastIndexOf("."));
+			server_build = upgradeFrom.substring(upgradeFrom.indexOf("b")+1);
+		}else{
+			initCurrentVersion();
+		}
+	
+		initExeEnv();
+		
+		LogManager.assertTrue(SystemUtils.Files.isFileExist(exePath), "verify exe exists: " + exePath);
+		
+	}
+
+	private static void initExeEnv() {
+		if(!useDefaultExe){
 			LogManager.info(String.format("SysAid Version:%s , Build: %s",server_ver,server_build));
 			exeName = String.format("SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
 		}
 		
+		String srcPath= String.format("\\\\fs01.ilient-hq.local\\sysaidarchive\\IT\\%s\\b%s\\installations\\%s",server_ver,server_build,exeName);
+		
 		//Check OS Bit
-		if(SystemUtils.OS.is32Bit())
+		if(SystemUtils.OS.is32Bit()){
 			exeName = exeName.replace("64", "");
-		
-		exePath = "C:\\SA\\" + exeName;
-		
-		if(getDefaultExe){
-			exePath = "C:\\SA\\debug\\" + exeName;
-			activationFilePath = "c:\\SA\\debug\\activation.xml";
+			srcPath = srcPath.replace("64", "");
 		}
 		
-		LogManager.assertTrue(SystemUtils.Files.isFileExist(exePath), "verify exe exists: " + exePath);
+		if(useDefaultExe){
+			exePath = "C:\\SA\\debug\\" + exeName;
+			activationFilePath = "c:\\SA\\debug\\activation.xml";
+		}else{
+			exePath = "C:\\SA\\" + exeName;
+			SystemUtils.Files.copyFile(srcPath, exePath); //copy exe file to SA folder from network
+		}
 	}
+
+	
+	/**
+	 * update current version  install process
+	 */
+	private static void initCurrentVersion() {
+		server_ver = System.getProperty("version");
+		server_build = System.getProperty("build");
+		if(server_ver == null || server_ver.equals("unknown")){
+			LogManager.warn("sysaid version didn't defined via system properties! install default exe");
+			useDefaultExe = true;
+		}
+		else if(server_build == null || server_build.equals("unknown")){
+			LogManager.warn("sysaid build version didn't defined via system properties! install default exe");
+			useDefaultExe = true;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/*public static void initInstaller(){
+		initCurrentVersion();
+	
+		initExeEnv();
+		
+		LogManager.assertTrue(SystemUtils.Files.isFileExist(exePath), "verify exe exists: " + exePath);
+	}*/
 
 	private static void initFiles() {
 		filesList = new ArrayList<String>();

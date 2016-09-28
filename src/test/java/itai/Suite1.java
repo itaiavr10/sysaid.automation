@@ -20,15 +20,15 @@ public class Suite1 extends AbstractSuite{
 	@Test(enabled=true)
 	@TestCase(number = 0 , description = "TestA - For debug")
 	public void A(){
-		LogManager.verifyAssert(false, "hello - A");
-		LogManager.info("hello again - A");
+		//LogManager.verifyAssert(false, "hello - A");
+		LogManager.info(System.getProperty("upgradeFrom")); //16.1.25.b28);
 	}
 	
 	
 	@Test()
-	@TestCase(number = 1 , description = "TestB - For debug")
+	@TestCase(number = 0 , description = "TestB - For debug")
 	public void B(){
-		LogManager.error("hello - B");		
+		//LogManager.error("hello - B");		
 	}
 
 

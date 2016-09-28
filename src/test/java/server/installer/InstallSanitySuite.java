@@ -24,7 +24,22 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 	
 	
-
+	@Test
+	public void typicalUpgrade(){
+		InstallServer.typicalInstallation();
+		
+		//wait for process to finish installation
+		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
+		
+		InstallServer.upgradeMe();
+		
+		SysAidServer.verifyUpgradeProcess();
+		SysAidServer.verifyConfigurationFiles();
+		
+	}
+	
+	
+	
 	@Test()
 	@TestCase(number = 8 , description = "SysAid Server installation - Customized MySQL")
 	public void customizedMySqlInstall(){
@@ -33,6 +48,10 @@ public class InstallSanitySuite extends AbstractSuite{
 		InstallServer.verify();
 		
 	}
+	
+	
+	
+	
 	
 	
 	

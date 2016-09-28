@@ -28,7 +28,6 @@ public class InstallServer {
 	
 	private static void exec(){
 		LogManager.info("Run Installer..");
-		//AutoItAPI.run(SysAidServer.exePath);
 		SystemUtils.Processes.executeAndCheckProcess(SysAidServer.exePath,SysAidServer.exeName);
 		TestManager.sleep(10000);
 	}
@@ -109,6 +108,31 @@ public class InstallServer {
 		
 		AutoItAPI.waitWinClosed("InstallShield Wizard");
 		
+		
+	}
+	
+	
+	
+	public static void upgradeMe(){
+		SysAidServer.initUpgrade();
+		exec();
+		
+		installer.WelcomeStep.waitTo("Welcome.. click next");
+		installer.WelcomeStep.clickNext();
+		
+		installer.LicenseAgreementStep.waitTo("License agreement - check + Click Next");
+		installer.LicenseAgreementStep.acceptAgreement();
+		installer.LicenseAgreementStep.clickNext();
+		
+		//Continue to select Patch management destination
+		installer.FolderDestinationStep.waitTo("Accept default destination folder and click Next to continue");
+		installer.FolderDestinationStep.clickNext();
+		//Continue to select Start menu Program folder
+		installer.PatchMngRepositoryStep.waitTo("Accept default patch managment destination folder and click Next to continue");
+		installer.PatchMngRepositoryStep.clickNext();
+		//
+		installer.CompletedStep.waitTo("completed page",300);
+		installer.CompletedStep.clickFinish();
 		
 	}
 	

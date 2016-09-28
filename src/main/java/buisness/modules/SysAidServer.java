@@ -22,7 +22,7 @@ import com.core.utils.XmlUtils;
 
 public class SysAidServer {
 	
-	private static boolean upgradeProcess = false;
+	//private static boolean upgradeProcess = false;
 	private static String fromVersion;
 	
 	private static boolean useDefaultExe = false;
@@ -52,7 +52,7 @@ public class SysAidServer {
 		
 		String upgradeFrom = System.getProperty("upgradeFrom"); //16.1.25.b28
 		if(upgradeFrom != null && !upgradeFrom.equals("")){
-			upgradeProcess = true;
+			LogManager.debug("upgrade from : " + upgradeFrom);
 			System.setProperty("upgradeFrom", "");//next time it will init to current version (upgrade process)
 			fromVersion = server_ver = upgradeFrom.substring(0,upgradeFrom.lastIndexOf("."));
 			server_build = upgradeFrom.substring(upgradeFrom.indexOf("b")+1);
@@ -60,19 +60,55 @@ public class SysAidServer {
 			initCurrentVersion();
 		}
 	
-		initExeEnv();
+		initExeEnv(false);
 		
 		LogManager.assertTrue(SystemUtils.Files.isFileExist(exePath), "verify exe exists: " + exePath);
-		
 	}
+	
+	
+	
+	public static void initUpgrade(){
+		initCurrentVersion();
+		
+		initExeEnv(true);
+		
+		/*if(!useDefaultExe){
+			LogManager.info(String.format("SysAid Upgrade Version:%s , Build: %s",server_ver,server_build));
+			exeName = String.format("SysAidServerPatch64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
+		}
+		String srcPath= String.format("\\\\fs01.ilient-hq.local\\sysaidarchive\\IT\\%s\\b%s\\PaidUpgrades\\%s",server_ver,server_build,exeName);
+		//Check OS Bit
+		if(SystemUtils.OS.is32Bit()){
+			exeName = exeName.replace("64", "");
+			srcPath = srcPath.replace("64", "");
+		}
+		
+		if(useDefaultExe){
+			exePath = "C:\\SA\\debug\\" + exeName;
+			activationFilePath = "c:\\SA\\debug\\activation.xml";
+		}else{
+			exePath = "C:\\SA\\" + exeName;
+			SystemUtils.Files.copyFile(srcPath, exePath); //copy exe file to SA folder from network
+		}
+		*/
+		LogManager.assertTrue(SystemUtils.Files.isFileExist(exePath), "verify exe exists: " + exePath);
+	}
+	
+	
+	
 
-	private static void initExeEnv() {
+	private static void initExeEnv(boolean isUpgraseProcess) {
 		if(!useDefaultExe){
 			LogManager.info(String.format("SysAid Version:%s , Build: %s",server_ver,server_build));
 			exeName = String.format("SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
 		}
 		
 		String srcPath= String.format("\\\\fs01.ilient-hq.local\\sysaidarchive\\IT\\%s\\b%s\\installations\\%s",server_ver,server_build,exeName);
+		
+		if(isUpgraseProcess){
+			exeName = exeName.replace("64", "Patch64");
+			srcPath = srcPath.replace("installations", "PaidUpgrades");
+		}
 		
 		//Check OS Bit
 		if(SystemUtils.OS.is32Bit()){
@@ -148,10 +184,19 @@ public class SysAidServer {
 		verifyDirectories();
 		verifyConfigurationFiles();
 		//verifySysAidLog();
-		verifyupgradeToNewReports();
 		verifyQschedulerLog();
 		verifyLoginBrowser();
+		verifyupgradeToNewReports();
 	}
+	
+	
+	
+	public static void verifyUpgradeProcess(){ //TODO : might be in dedicate class?
+		LogManager.debug("Verify Upgrade Process");
+		AutoItAPI.waitWin("Upgrade", "", 30);
+		AutoItAPI.verifyWinActivate("Upgrade", true);
+	}
+	
 	
 	//Verify Browser opened with 2 tabs
 	public static void verifyLoginBrowser(){
@@ -207,7 +252,7 @@ public class SysAidServer {
 				}
 			}
 			// after reading all lines , stack should be empty
-			LogManager.verify(stack.isEmpty(), "Verify upgradeToNewReports.log");
+			LogManager.verify(stack.isEmpty(), "Verify upgradeToNewReports.log - correct Start-End tags order");
 		} catch (Exception e) {
 			LogManager.error("Verify upgradeToNewReports.log - Error : " + e.getMessage());
 		} finally {

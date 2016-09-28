@@ -9,6 +9,7 @@ public abstract class InstallerAbstractStep {
 	
 	protected String installerTitle = "InstallShield Wizard";
 	protected String visibleText = ""; // visible text of current page
+	private Integer waifForPage = 60;
 	
 	
 	InstallerAbstractStep(String visibleText){
@@ -17,8 +18,12 @@ public abstract class InstallerAbstractStep {
 	
 	//public abstract void waitTo(String logInfo);
 	public void waitTo(String logInfo) {
+		waitTo(logInfo,waifForPage);
+	}
+	
+	public void waitTo(String logInfo ,Integer MaxTimeOut) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin(installerTitle , visibleText);
+		AutoItAPI.waitWin(installerTitle , visibleText,MaxTimeOut);
 	}
 	
 	public abstract void waitTo();

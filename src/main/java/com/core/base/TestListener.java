@@ -1,8 +1,11 @@
 package com.core.base;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 import org.testng.Assert;
+import org.testng.IAnnotationTransformer;
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
 import org.testng.ISuite;
@@ -11,6 +14,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.annotations.ITestAnnotation;
 import org.testng.annotations.Test;
 
 import com.core.annotation.TestCase;
@@ -21,10 +25,11 @@ import com.core.utils.VideoRecorder;
 
 
 
-public class TestListener implements ITestListener, ISuiteListener , IInvokedMethodListener { 
+public class TestListener implements ITestListener, ISuiteListener , IInvokedMethodListener , IAnnotationTransformer{ 
 	
 	
 	private static String testDescription = "";
+	private static int totalRun=0;
 	private static int passed = 0;
 	private static int failed = 0;
 	private static int skipped = 0;
@@ -40,13 +45,14 @@ public class TestListener implements ITestListener, ISuiteListener , IInvokedMet
 
 	public void onFinish(ISuite suite) {
 		LogManager.info(String.format("#Passed=%d , #Failed=%d , Skipped=%d",passed,failed,skipped));
-		LogManager.getReporter().sendResult();
+		LogManager.getReporter().sendResult(totalRun);
 	}
 
 	//---------------> ITestListener 
 
 	public void onTestStart(ITestResult result) {
 		//System.out.println("-> onTestStart");
+		totalRun++;
 		SuiteReporter.initSoftAssert();
 		initTestDescription(result) ;
 		LogManager.bold(String.format("Starting Test: %s", testDescription));
@@ -119,33 +125,31 @@ public class TestListener implements ITestListener, ISuiteListener , IInvokedMet
 	}
 
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-		// TODO Auto-generated method stub
-		Test test = testResult.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
-		if(test != null)
+		if(isTestMethod(testResult.getMethod().getConstructorOrMethod().getMethod()))
 			SuiteReporter.softAssertAll();
 	}
 
-}
-
-//---------------> IInvokedMethodListener	
-
-/*public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-		System.out.println("-> beforeInvocation");
-		System.out.println(method.getClass().getName());
-		System.out.println(method.getDate());
-		System.out.println(method.getTestMethod().getMethodName());
-		
+	public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {
+		/*int skipTestID = 0;
+		//if(isTestMethod(testMethod)){
+			TestCase testcase =testMethod.getAnnotation(TestCase.class);
+			if(testcase != null && testcase.number() == skipTestID){ //Skip Test
+				annotation.setEnabled(false);
+				//LogManager.warn("Skip test: " + testDescription);
+				skipped++;
+			}
+		//}
+*/	}
+	
+	
+	private boolean isTestMethod(Method testMethod){
+		Test test = testMethod.getAnnotation(Test.class);
+		if(test != null)
+			return true;
+		return false;
 	}
 
-	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-		System.out.println("-> afterInvocation");
-		System.out.println(method.getClass().getName());
-		System.out.println(method.getDate());
-		System.out.println(method.getTestMethod().getMethodName());
-		System.out.println(method.getTestResult());
-	}*/
+}

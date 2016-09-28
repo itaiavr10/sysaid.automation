@@ -129,13 +129,15 @@ public class SuiteReporter {
 		logTable.add("</tr>");
 	}
 	
-	 public  void sendResult(){
+	 public  void sendResult(int totalRun){
 	        logTable.add("</table>");
 	        String[] recipients = (ConfigProperties.getValue("mailRecipients")).split(";");
 	        String[] bccRecipients = new String[]{};
 	        String subject = this.suiteName  + " - Test Resuls";
 	        if (testFailed)
 	            subject += " : Failed";
+	        else if(totalRun == 0)
+	        	 subject += " : No Tests";
 	        else
 	            subject += " : Passed";
 	        new MailUtils().sendMail(recipients, bccRecipients, subject, logTable.toString().replace(",","").replace("[","").replace("]",""));

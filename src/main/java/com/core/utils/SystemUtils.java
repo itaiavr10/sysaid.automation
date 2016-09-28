@@ -233,7 +233,7 @@ public class SystemUtils {
 			OutputStream out = null;
 			try {
 				if (!srcFile.exists())
-					throw new Exception("Source File is missing");
+					throw new Exception(srcFile.getName() + " - Source File is missing");
 
 				if (!destFile.exists()) 
 					destFile.createNewFile();

@@ -168,6 +168,18 @@ public class SystemUtils {
 			});
 			LogManager.verify(ispass, String.format("Verify File Exist : %s . Expected = %s , Actual = %s", filePath, shouldExist, isExist.value));
 		}
+		
+		
+		public static boolean waitForFile(String filePath,Integer maxTimeOutMs,Integer interval){
+			final File file = new File(filePath);
+			boolean ispass = Utils.tryUntil(new ActionWrapper("Wait for File : " + filePath, maxTimeOutMs,interval) {
+				@Override
+				public boolean invoke() throws Exception {
+					return file.exists();
+				}
+			});
+			return ispass;
+		}
 
 		public static void replaceLine(String filePath, String originalLine, String newLine) {
 			LogManager.debug(String.format("Replace File Content, Original line= %s , new line=%s",originalLine,newLine));

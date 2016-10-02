@@ -25,6 +25,7 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 	
 	@Test
+	@TestCase(number = 0 , description = "Upgrade Process After Typical Installation with MsSQL Embedded")
 	public void typicalUpgrade(){
 		InstallServer.typicalInstallation();
 		
@@ -33,8 +34,8 @@ public class InstallSanitySuite extends AbstractSuite{
 		
 		InstallServer.upgradeMe();
 		
-		SysAidServer.verifyUpgradeProcess();
-		SysAidServer.verifyConfigurationFiles();
+		//SysAidServer.verifyUpgradeProcess();
+		SysAidServer.verifyInstallation();
 		
 	}
 	

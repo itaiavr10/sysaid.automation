@@ -52,7 +52,7 @@ public class SysAidServer {
 		
 		String upgradeFrom = System.getProperty("upgradeFrom"); //16.1.25.b28
 		if(upgradeFrom != null && !upgradeFrom.equals("")){
-			LogManager.debug("upgrade from : " + upgradeFrom);
+			LogManager.debug("bese version : " + upgradeFrom);
 			System.setProperty("upgradeFrom", "");//next time it will init to current version (upgrade process)
 			fromVersion = server_ver = upgradeFrom.substring(0,upgradeFrom.lastIndexOf("."));
 			server_build = upgradeFrom.substring(upgradeFrom.indexOf("b")+1);
@@ -107,7 +107,7 @@ public class SysAidServer {
 		
 		if(isUpgraseProcess){
 			exeName = exeName.replace("64", "Patch64");
-			srcPath = srcPath.replace("installations", "PaidUpgrades");
+			srcPath = srcPath.replace("64", "Patch64").replace("installations", "PaidUpgrades");
 		}
 		
 		//Check OS Bit
@@ -233,6 +233,9 @@ public class SysAidServer {
 		LogManager.debug("Verify upgradeToNewReports.log ..");
 		BufferedReader br = null;
 		try {
+			//wait for file
+			if(!SystemUtils.Files.waitForFile(upgradeToNewReportsPath, 180 *1000, 5 * 1000))
+				throw new Exception("File is missing");
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(upgradeToNewReportsPath)));
 			String line;
 			Stack<String> stack = new Stack<String>();

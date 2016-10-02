@@ -114,6 +114,7 @@ public class InstallServer {
 	
 	
 	public static void upgradeMe(){
+		LogManager.info("Starting upgrade process..");
 		SysAidServer.initUpgrade();
 		exec();
 		
@@ -128,10 +129,10 @@ public class InstallServer {
 		installer.FolderDestinationStep.waitTo("Accept default destination folder and click Next to continue");
 		installer.FolderDestinationStep.clickNext();
 		//Continue to select Start menu Program folder
-		installer.PatchMngRepositoryStep.waitTo("Accept default patch managment destination folder and click Next to continue");
-		installer.PatchMngRepositoryStep.clickNext();
+		//installer.PatchMngRepositoryStep.waitTo("Accept default patch managment destination folder and click Next to continue",300);
+		//installer.PatchMngRepositoryStep.clickNext();
 		//
-		installer.CompletedStep.waitTo("completed page",300);
+		installer.CompletedStep.waitTo("completed page",600);
 		installer.CompletedStep.clickFinish();
 		
 	}

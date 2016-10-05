@@ -220,7 +220,7 @@ public class SysAidServer {
 			AutoItAPI.softWait("SysAid Help Tree", "", 5);
 			AutoItAPI.verifyWinActivate("SysAid Help Tree",true);
 		}
-		
+		SystemUtils.Processes.killProcess("chrome.exe");
 		
 		
 	}

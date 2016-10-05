@@ -493,6 +493,18 @@ public class SystemUtils {
 			}
 			return processList;
 		}
+
+		public static void killProcess(String processName) {
+			LogManager.debug("Kill process: " + processName);
+			String KILL = "taskkill /f /IM ";
+			try {
+				Process proc = Runtime.getRuntime().exec(KILL + processName);
+				int exit = proc.exitValue();
+				LogManager.assertSoft(exit == 0, processName + " - kill process , exit code = " + exit);
+			} catch (IOException e) {
+				LogManager.error("Kill process Error :" + e.getMessage());
+			}
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

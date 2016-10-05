@@ -29,6 +29,12 @@ public class SuiteReporter {
 		init();
 	}
 	
+	static{
+		//remove web driver http debug report
+		System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+		System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http", "warn");
+	}
+	
 	public static void initSoftAssert(){
 		softAssert= new SoftAssert();
 	}

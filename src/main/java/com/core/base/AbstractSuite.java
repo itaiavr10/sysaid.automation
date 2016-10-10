@@ -14,10 +14,13 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
 import buisness.modules.SysAidServer;
+import buisness.pages.Admin;
 
 public class AbstractSuite {
 
 	//protected Validate validate;
+	
+	public Admin admin;
 
 	@BeforeSuite
 	public void beforeSuite() { // RUN BEFURE each testng.xml - suite
@@ -25,6 +28,7 @@ public class AbstractSuite {
 		//validate = TestManager.validator();
 		//System.setProperty("upgradeFrom", "16.1.25.b28"); //TODO : Debug!!
 		SysAidServer.initInstaller();
+		admin = new Admin();
 	}
 
 	@BeforeClass

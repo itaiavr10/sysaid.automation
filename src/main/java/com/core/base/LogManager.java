@@ -42,8 +42,9 @@ public class LogManager {
 	 * @param condition
 	 * @param msg
 	 */
-	public static void assertSoft(boolean condition , String msg) {
+	public static boolean assertSoft(boolean condition , String msg) {
 		report.get().assertSoft(condition,msg);
+		return condition;
 	}
 	
 	/**

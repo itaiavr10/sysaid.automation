@@ -38,7 +38,7 @@ public class SysAidAgent {
 		verifyDesktopIcon();
 		verifyDirectories();
 		verifyInventorySent();
-		logScan();
+		//logScan(); TODO : Remove due to open bug #24,262
 		
 	}
 	

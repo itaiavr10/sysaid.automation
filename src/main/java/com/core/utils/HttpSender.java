@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.Header;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -24,12 +25,34 @@ public class HttpSender {
 		}
 		return instance;
 	}
+	
+	//private String cookieSession;
+	private String cookieName;
+	private String cookieValue;
 
 	
 	//TODO: check
 	public String postJson(String postUrl, Object msgAsJson) throws Exception {
 		return postJson(postUrl, msgAsJson, new HashMap<String, String>());
 	}
+	
+	//TODO: check
+		public String postJson(String postUrl, Object msgAsJson, boolean setCookieSeesionId) throws Exception {
+			String jsonAsString = msgAsJson.toString();
+			LogManager.debug("Post json: " + jsonAsString);
+			HttpPost httpPost = new HttpPost(postUrl);
+			StringEntity entity = new StringEntity(jsonAsString);
+			httpPost.setEntity(entity);
+			if(setCookieSeesionId)
+				httpPost.setHeader("Cookie", cookieName+"="+cookieValue);
+			//httpPost.setHeader(cookieName, cookieValue);
+			
+			httpPost.setHeader("Accept", "application/json");
+			httpPost.setHeader("Content-type", "application/json");
+			return post(httpPost);
+		}
+	
+	
 
 	//TODO: check
 	public String postJson(String postUrl, Object msgAsJson, Map<String, String> additionalHeaders) throws Exception {
@@ -60,8 +83,25 @@ public class HttpSender {
 			int statusCode = httpResponse.getStatusLine().getStatusCode();
 			if (statusCode == 200)
 				LogManager.debug("posted successfully..");
-			else
+			else{
+				LogManager.error(httpResponse.getStatusLine().getReasonPhrase());
 				throw new Exception("Post process failed , code status: " + statusCode);
+			}
+			
+			//get all headers
+			Header[] headers = httpResponse.getAllHeaders();
+			for (Header header : headers) {
+				if(header.getName().equals("Set-Cookie")){
+					String cookieSession = header.getValue();
+					String cookie = cookieSession.substring(0, cookieSession.indexOf(";"));
+			        cookieName = cookie.substring(0, cookie.indexOf("="));
+			        cookieValue = cookie.substring(cookie.indexOf("=") + 1, cookie.length());
+					LogManager.debug("cookie name = " + cookieName);
+					LogManager.debug("cookie value= " + cookieValue);
+					break;
+				}
+			}
+			
 			reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
 			String inputLine;
 			response = new StringBuffer();

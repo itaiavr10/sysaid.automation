@@ -27,8 +27,10 @@ public class AbstractSuite {
 		// System.out.println("@BeforeSuite");
 		//validate = TestManager.validator();
 		//System.setProperty("upgradeFrom", "16.1.25.b28"); //TODO : Debug!!
+		//System.setProperty("version", "16.3.15"); //TODO : Debug!!
+		//System.setProperty("build", "73"); //TODO : Debug!!
 		SysAidServer.initInstaller();
-		admin = new Admin();
+		
 	}
 
 	@BeforeClass
@@ -40,6 +42,7 @@ public class AbstractSuite {
 	@BeforeMethod
 	public void beforeMethod() { // RUN BEFURE each test
 		// System.out.println("@BeforeMethod - RUN BEFURE each test");
+		admin = Admin.get();
 	}
 
 	@BeforeTest
@@ -62,7 +65,6 @@ public class AbstractSuite {
 	public void afterMethod(ITestResult tr) { // RUN AFTER each test
 		//Assert.assertTrue(SuiteReporter.isTestPassed()); 
 		//LogManager.bold("Test Execution time = " + (tr.getEndMillis() - tr.getStartMillis()));
-		
 	}
 	@AfterMethod
 	public void getRunTime(ITestResult tr) {

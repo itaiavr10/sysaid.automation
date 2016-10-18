@@ -24,9 +24,13 @@ public class PageDriver {
 
 	public PageDriver() {
 		LogManager.debug("init web driver");
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		try {
+			driver = new FirefoxDriver();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			LogManager.error("init web driver Error: " + e.getMessage());
+		}
 	}
 
 	public void navigate(String to) {

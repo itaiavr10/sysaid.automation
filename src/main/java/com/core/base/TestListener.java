@@ -17,6 +17,8 @@ import org.testng.Reporter;
 import org.testng.annotations.ITestAnnotation;
 import org.testng.annotations.Test;
 
+import buisness.pages.Admin;
+
 import com.core.annotation.TestCase;
 import com.core.utils.ScreenShooter;
 import com.core.utils.SystemUtils;
@@ -128,8 +130,11 @@ public class TestListener implements ITestListener, ISuiteListener , IInvokedMet
 	}
 
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-		if(isTestMethod(testResult.getMethod().getConstructorOrMethod().getMethod()))
+		if(isTestMethod(testResult.getMethod().getConstructorOrMethod().getMethod())){
+			//After Test Finished..
+			Admin.get().teardown();
 			SuiteReporter.softAssertAll();
+		}
 	}
 
 	public void transform(ITestAnnotation annotation, Class testClass, Constructor testConstructor, Method testMethod) {

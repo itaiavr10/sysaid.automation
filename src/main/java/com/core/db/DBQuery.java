@@ -133,6 +133,10 @@ public class DBQuery {
 		}
 	}*/
 	
+	public static void verifyResult(String query , int expected){
+		verifyResult(query , Integer.toString(expected));
+	}
+	
 	
 	public static void verifyResult(String query , String expected){
 		LogManager.debug("Verify Query results..");

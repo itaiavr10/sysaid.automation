@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import buisness.db.DBconst.TableContent;
 import buisness.modules.SysAid;
 import buisness.modules.SysAid.DataBaseType;
+import buisness.sr.ServiceRequestTables;
 
 import com.core.base.LogManager;
 import com.core.db.DBQuery;
@@ -70,7 +71,8 @@ public class DBInstaller {
 		DBQuery.verifyTable(TableContent.SYSAID_USER);
 
 		//Step 4 Table: service_req 
-		DBQuery.verifyResult("SELECT COUNT(*) FROM SERVICE_REQ", "24");
+		//DBQuery.verifyResult("SELECT COUNT(*) FROM SERVICE_REQ", 23 + IncidentSrTable.get().getCurrentTotoal());
+		DBQuery.verifyResult("SELECT COUNT(*) FROM SERVICE_REQ", 23 + ServiceRequestTables.get().incidents().size());
 		DBQuery.verifyTable(TableContent.SERVICE_REQ);
 
 		//Step 5 Table: sr_sub_type

@@ -3,15 +3,13 @@ package buisness.pages;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
-import buisness.modules.Incident;
-import buisness.modules.IncidentTable;
+import buisness.sr.IncidentSR;
+import buisness.sr.ServiceRequestTables;
 
 import com.core.base.LogManager;
 import com.core.driver.BasePage;
-import com.core.driver.JsExecutor;
 import com.core.driver.PageDriver;
 import com.core.driver.PageElement;
 
@@ -23,25 +21,28 @@ public class IncidentsPage extends BasePage {
 	
 	
 	
-	public void verifyTable(IncidentTable table){
+	public void verifyTable(){
 		try {
 			LogManager.debug("Verify Incident table");
+			//add default Incident
+			//table.addDefaultIncident();
 			switchToFrame(Elements.Table_IFrame);
-			int expectedSize = table.total();
+			//int expectedSize = IncidentSrTable.get().getCurrentTotoal();
+			int expectedSize = ServiceRequestTables.get().incidents().size();
 			verifyTableSize(Elements.Table_rows, expectedSize);
 			//pass on each one and validate:
 			
 			List<WebElement> rows = getElements(Elements.Table_rows.getBy());
 			
 				
-			List<Incident> list = table.getList();
-			for (Incident incident : list) {
+			//List<IncidentSR> list = IncidentSrTable.get().getList();
+			List<IncidentSR> list = ServiceRequestTables.get().incidents();
+			for (IncidentSR incident : list) {
 				String id = incident.getID();
 				for (WebElement row : rows) {
 					String xpath = "//td[2]/div[text()='"+id+"']";
 					List<WebElement> idCol =  row.findElements(By.xpath(xpath));
 					if(idCol != null && idCol.size() == 1){
-						System.out.println("This is the row");
 						investigateRowContent(idCol.get(0),incident);
 						rows.remove(row);
 						break;
@@ -81,25 +82,29 @@ public class IncidentsPage extends BasePage {
 	
 	
 	
-	private void investigateRowContent(WebElement webElement, Incident incident) {
+	private void investigateRowContent(WebElement webElement, IncidentSR incident) {
 		LogManager.debug("Verify Incidnet..");
 		try{
 			boolean pass= true;
-			System.out.println(webElement.getText());
 			WebElement td = webElement.findElement(By.xpath("./.."));
 			String cat = td.findElement(By.xpath("../td[4]")).getText();
-			pass = pass | LogManager.assertSoft(cat.equals(incident.getCategory().toString()), String.format("Verify Incident - Category: Expected= %s , Actual= %s",incident.getCategory().toString(),cat));
+			pass = pass & LogManager.assertSoft(cat.equals(incident.getCategory().toString()), String.format("Verify Incident - Category: Expected= %s , Actual= %s",incident.getCategory().toString(),cat));
 			String sub_cat = td.findElement(By.xpath("../td[5]")).getText();
-			pass = pass | LogManager.assertSoft(sub_cat.equals(incident.getSub_category()), String.format("Verify Incident - Sub Category: Expected= %s , Actual= %s",incident.getSub_category().toString(),sub_cat));
+			pass = pass & LogManager.assertSoft(sub_cat.equals(incident.getSub_category()), String.format("Verify Incident - Sub Category: Expected= %s , Actual= %s",incident.getSub_category().toString(),sub_cat));
 			String title = td.findElement(By.xpath("../td[6]")).getText();
-			pass = pass | LogManager.assertSoft(title.equals(incident.getTitle()), String.format("Verify Incident - Title: Expected= %s , Actual= %s",incident.getTitle().toString(),title));
-		/*	String status = td.findElement(By.xpath("../td[7]")).getText();
-			pass = pass | LogManager.assertSoft(status.equals(incident.getStatus()), String.format("Verify Incident - Status: Expected= %s , Actual= %s",incident.getStatus().toString(),status));
+			pass = pass & LogManager.assertSoft(title.equals(incident.getTitle()), String.format("Verify Incident - Title: Expected= %s , Actual= %s",incident.getTitle().toString(),title));
+			String status = td.findElement(By.xpath("../td[7]")).getText();
+			pass = pass & LogManager.assertSoft(status.equals(incident.getStatus().toString()), String.format("Verify Incident - Status: Expected= %s , Actual= %s",incident.getStatus().toString(),status));
 			String reqUser = td.findElement(By.xpath("../td[8]")).getText();
-			pass = pass | LogManager.assertSoft(reqUser.equals(incident.getRequest_user()), String.format("Verify Incident - RequestUser: Expected= %s , Actual= %s",incident.getRequest_user().toString(),reqUser));
+	
+			if(incident.getID().equals("6"))
+				;	//workaround for default incident , no need to verify req_user , it's empty
+			else
+				pass = pass & LogManager.assertSoft(reqUser.equals("sysaid"), String.format("Verify Incident - RequestUser: Expected= %s , Actual= %s","sysaid",reqUser));
+			
 			String priority = td.findElement(By.xpath("../td[10]")).getText();
-			pass = pass | LogManager.assertSoft(priority.equals(incident.getPriority()), String.format("Verify Incident - Priority: Expected= %s , Actual= %s",incident.getPriority().toString(),priority));
-*/
+			pass = pass & LogManager.assertSoft(priority.equals(incident.getPriority().toString()), String.format("Verify Incident - Priority: Expected= %s , Actual= %s",incident.getPriority().toString(),priority));
+
 			LogManager.verify(pass, "Verify Incidnet Content With ID = " + incident.getID());
 		}catch(Exception e){
 			LogManager.error("Verify Incidnet - Error: " + e.getMessage());

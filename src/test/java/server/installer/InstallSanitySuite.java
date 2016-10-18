@@ -1,5 +1,7 @@
 package server.installer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.hamcrest.Description;
@@ -15,9 +17,13 @@ import com.core.utils.SystemUtils;
 
 import buisness.db.DBInstaller;
 import buisness.modules.InstallServer;
+import buisness.modules.SysAidAPI;
 import buisness.modules.SysAidAgent;
 import buisness.modules.SysAidLog;
 import buisness.modules.SysAidServer;
+import buisness.sr.AbstractSR;
+import buisness.sr.AbstractSR.Category;
+import buisness.sr.IncidentSR;
 
 
 public class InstallSanitySuite extends AbstractSuite{
@@ -25,18 +31,30 @@ public class InstallSanitySuite extends AbstractSuite{
 	
 	
 	@Test
-	@TestCase(number = 0 , description = "Upgrade Process After Typical Installation with MsSQL Embedded")
+	@TestCase(number = 14 , description = "Upgrade Process After Typical Installation with MsSQL Embedded")
 	public void typicalUpgrade(){
 		InstallServer.typicalInstallation();
 		
 		//wait for process to finish installation
 		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
 		
+		
+		List<IncidentSR> newIncidetns = new ArrayList<IncidentSR>();
+		newIncidetns.add(new IncidentSR(Category.APPLICATION_ABC,"Administration","Error Message","Failed Patches","WTF"));
+		newIncidetns.add(new IncidentSR(Category.MOBILE_DEVICES,"Smartphone","Error Message","itai test","WTF"));
+		
+		SysAidAPI.get().createNewSRs(newIncidetns);
+		
 		InstallServer.upgradeMe();
 		
 		//SysAidServer.verifyUpgradeProcess();
-		SysAidServer.verifyInstallation();
+		//SysAidServer.verifyInstallation();
+		InstallServer.verify();
 		
+		admin.launch();
+		admin.login().loginWith("sysaid", "changeit");
+		admin.dashboard().goToIncidentsTable();
+		admin.incidents().verifyTable();
 	}
 	
 	

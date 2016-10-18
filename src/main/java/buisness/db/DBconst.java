@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import buisness.modules.SysAidServer;
+import buisness.sr.ServiceRequestTables;
 
 import com.core.db.AbstractDB;
 import com.core.utils.SystemUtils;
@@ -520,7 +521,7 @@ public class DBconst {
 			@Override
 			public List<List<String>> getExpected() {
 				List<List<String>> table = new ArrayList<List<String>>();
-				table.add(Arrays.asList("Incident","1"));
+				table.add(Arrays.asList("Incident",Integer.toString( ServiceRequestTables.get().incidents().size())));
 				table.add(Arrays.asList("Incident template" ,"6"));
 				table.add(Arrays.asList("Change template" ,"5"));
 				table.add(Arrays.asList("Problem template" ,"3"));

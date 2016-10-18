@@ -30,12 +30,12 @@ public abstract class InstallerAbstractStep {
 	
 	
 	
-	public void click(String debugInfo , String controlID){
+	protected void click(String debugInfo , String controlID){
 		
 		
 	}
 	
-	public void setText(String debugInfo, String controlID , String text){
+	protected void setText(String debugInfo, String controlID , String text){
 		
 	}
 	

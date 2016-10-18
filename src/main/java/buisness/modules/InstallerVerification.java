@@ -7,7 +7,7 @@ public class InstallerVerification {
 	public void verify() {
 		
 		//wait for process to finish installation
-		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
+		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 90 * 1000, 3000);
 
 		SysAidServer.verifyInstallation();
 		//TODO : RDS Internal

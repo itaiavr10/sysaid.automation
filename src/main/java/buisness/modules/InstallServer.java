@@ -132,7 +132,7 @@ public class InstallServer {
 		//installer.PatchMngRepositoryStep.waitTo("Accept default patch managment destination folder and click Next to continue",300);
 		//installer.PatchMngRepositoryStep.clickNext();
 		//
-		installer.CompletedStep.waitTo("completed page",600);
+		installer.CompletedStep.waitTo("completed page",650);
 		installer.CompletedStep.clickFinish();
 		
 	}
@@ -161,6 +161,7 @@ public class InstallServer {
 		installer.UserCredentialsStep.setCredentials("sysaid", "changeit");
 		installer.UserCredentialsStep.clickNext();
 		installer.UserCredentialsStep.handlePopUp();
+		
 		
 		installer.CompletedStep.waitTo("completed page");
 		installer.CompletedStep.clickFinish();

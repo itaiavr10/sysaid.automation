@@ -6,7 +6,7 @@ import com.core.utils.SystemUtils;
 
 public class Admin {
 	
-	
+	static Admin admin;
 	private PageDriver driver;
 	private String URL =null;
 	
@@ -15,13 +15,28 @@ public class Admin {
 	private DashboardPage dashboard = null;
 	private IncidentsPage incidents = null;
 
+	
+	private Admin(){
+	}
+	
+	public static Admin get(){
+		if(admin == null)
+			admin = new Admin();
+		return admin;
+	}
 
 	public void launch() {
 		LogManager.info("Launch Admin");
 		driver = new PageDriver();
-		URL = "http://10.14.1.103:8080"; // TODO : Current ip
-		//URL = String.format("http://%s:8080",SystemUtils.OS.getCurrentIP());
+		//URL = "http://10.14.1.103:8080"; // TODO : Current ip
+		URL = String.format("http://%s:8080",SystemUtils.OS.getCurrentIP());
 		driver.navigate(URL);
+	}
+	
+	public void teardown(){
+		LogManager.debug("Admin - tear down");
+		if(driver != null)
+			driver.get().quit();
 	}
 
 

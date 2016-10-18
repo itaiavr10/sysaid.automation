@@ -1,35 +1,40 @@
-package buisness.modules;
-
-import java.util.HashMap;
+package buisness.sr;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Incident {
+
+public abstract class AbstractSR {
 	
 	
-	private String id;
+	protected String id;
 	//
-	private String problem_type;
-	private String title;
-	private String description;
-	private String status;
-	private String priority;
-	private String request_user;
+	protected String problem_type;
+	protected String title;
+	protected String description;
+	protected StatusType status;
+	protected PriorityType priority;
+	protected String request_user;
 	
-	private Category category;
-	private String sub_category;
-	private String third_category;
-	public Incident(Category category,String sub_category,String third_category, String title,String description){
+	protected Category category;
+	protected String sub_category;
+	protected String third_category;
+	
+	
+	protected AbstractSR(Category category,String sub_category,String third_category, String title,String description , PriorityType priority, String request_user){
 		this.problem_type = String.format("%s_%s_%s", category,sub_category,third_category);
 		this.category = category;
 		this.sub_category = sub_category;
 		this.third_category = third_category;
 		this.title = title;
 		this.description = description;
-		this.status = "1"; //New
-		this.priority = "1"; //Highest
-		this.request_user = "1"; //sysaid
+		this.status = StatusType.New;
+		this.priority = priority; 
+		this.request_user = request_user; //sysaid
+	}
+	
+	public AbstractSR(Category category,String sub_category,String third_category, String title,String description){
+		this(category, sub_category, third_category,  title, description, PriorityType.Highest, "1" );
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -55,12 +60,12 @@ public class Incident {
 		
 		jsoninfo = new JSONObject();
 		jsoninfo.put("key", "status");
-		jsoninfo.put("value", this.status);
+		jsoninfo.put("value", this.status.id);
 		infoArray.add(jsoninfo);
 		
 		jsoninfo = new JSONObject();
 		jsoninfo.put("key", "priority");
-		jsoninfo.put("value", this.priority);
+		jsoninfo.put("value", this.priority.id);
 		infoArray.add(jsoninfo);
 		
 		jsoninfo = new JSONObject();
@@ -83,11 +88,14 @@ public class Incident {
 		return srJson;*/
 		
 	}
-
-
-	public Incident setID(String id){
+	
+	
+	public abstract void addToTable(); 
+	public abstract String getSuffix();
+	
+	public <T extends AbstractSR> T setID(String id){
 		this.id = id;
-		return this;
+		return (T)this;
 	}
 	
 	public String getID(){
@@ -103,11 +111,11 @@ public class Incident {
 		return description;
 	}
 
-	public String getStatus() {
+	public StatusType getStatus() {
 		return status;
 	}
 
-	public String getPriority() {
+	public PriorityType getPriority() {
 		return priority;
 	}
 
@@ -127,8 +135,7 @@ public class Incident {
 	public String getThird_category() {
 		return third_category;
 	}
-
-
+	
 	public enum Category{
 		APPLICATION_ABC("Application ABC"),
 		BASIC_SOFTWARE("Basic Software"),
@@ -145,5 +152,44 @@ public class Incident {
 		}
 	}
 	
+	public enum PriorityType{
+		Highest("1","Highest"),
+		VeryHigh("2","Very High"),
+		High("3","High"),
+		Normal("4","Normal"),
+		Low("5","Low")
+		;
+		
+		String id;
+		String name;
+		
+		public String toString(){
+			return name;
+		}
+		
+		public String getID(){
+			return id;
+		}
+		
+		PriorityType(String id, String name){
+			this.id = id;
+			this.name = name;
+		}
+		
+	}
+	
+	public enum StatusType{
+		New("1"),Open("2"),Closed("3");
+		
+		String id;
+		public String getID(){
+			return id;
+		}
+		
+		StatusType(String id){
+			this.id = id;
+		}
+		
+	}
 
 }

@@ -1,13 +1,15 @@
 package buisness.modules;
 
+import java.util.List;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import buisness.sr.AbstractSR;
 
 import com.core.base.LogManager;
 import com.core.utils.HttpSender;
 import com.core.utils.SystemUtils;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
 public class SysAidAPI {
 	
@@ -15,8 +17,8 @@ public class SysAidAPI {
 	private String pre_url;
 	
 	private SysAidAPI(){
-		//pre_url = "http://"+SystemUtils.OS.getCurrentIP()+":8080/api/v1/";
-		pre_url = "http://10.14.1.225:8080/api/v1/";
+		pre_url = "http://"+SystemUtils.OS.getCurrentIP()+":8080/api/v1/";
+		//pre_url = "http://10.14.1.225:8080/api/v1/";
 	}
 	
 	
@@ -41,23 +43,41 @@ public class SysAidAPI {
 		}
 	}
 	
-	public void createNewSR(Incident incident){
+/*	public void createNewSRs(IncidentTable table){
+		List<Incident> list = table.getList();
+		for (Incident incident : list) {
+			createNewSR(incident);
+		}
+	}*/
+	
+	public void createNewSRs(List<? extends AbstractSR> srList){
+		for (AbstractSR sr : srList) {
+			boolean succeed = createNewSR(sr);
+			if(succeed)
+				sr.addToTable();
+		}
+	}
+	
+	
+	public boolean createNewSR(AbstractSR sr){
 		/*String cat = "helloAutomation";
 		String srJson = "{\"info\":[{\"key\":\"problem_type\",\"value\":\""+cat+"\"},{\"key\":\"title\",\"value\":\"from Advanced REST Client\"},{\"key\":\"description\",\"value\":\"test SR from ARC\"},"
 				+ "{\"key\":\"status\",\"value\":\"2\"},{\"key\":\"priority\",\"value\":\"3\"},{\"key\":\"impact\",\"value\":\"2\"},{\"key\":\"urgency\",\"value\":\"2\"},"
 				+ "{\"key\":\"request_user\",\"value\":\"2\"},{\"key\":\"responsibility\",\"value\":\"1\"},{\"key\":\"assigned_group\",\"value\":\"1\"},{\"key\":\"due_date\",\"value\":\"1507932485000\"}]}";*/
 		
-		
+		boolean succeed = false;
 		LogManager.debug("ServerAPI - create new SR...");
-		String suffix_url = "sr";
+		String suffix_url = sr.getSuffix();
 		try {
 			//HttpSender.getInstance().postJson(pre_url+suffix_url , srJson,true);
-			String response = HttpSender.getInstance().postJson(pre_url+suffix_url , incident.getJson(),true);
+			String response = HttpSender.getInstance().postJson(pre_url+suffix_url , sr.getJson(),true);
 			String id = extractID(response);
-			incident.setID(id);
+			sr.setID(id);
+			succeed =true;
 		} catch (Exception e) {
 			LogManager.error("ServerAPI - Login error: " + e.getMessage());
 		}
+		return succeed;
 	}
 	
 	private String extractID(String response){

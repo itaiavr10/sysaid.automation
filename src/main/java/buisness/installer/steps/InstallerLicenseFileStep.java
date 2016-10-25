@@ -22,7 +22,8 @@ public class InstallerLicenseFileStep extends InstallerAbstractStep {
 
 	public void waitTo(String logInfo) {
 		LogManager.info("Step: " + logInfo);
-		AutoItAPI.waitWin(installerTitle, visibleText, 600);
+		//AutoItAPI.waitWin(installerTitle, visibleText, 900);
+		AutoItAPI.waitWin(installerTitle, visibleText, 1200);
 
 	}
 

@@ -1,15 +1,13 @@
 package buisness.modules;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Stack;
-import java.util.regex.Pattern;
 
 import buisness.db.DBInstaller;
 import buisness.modules.SysAid.InstallType;
@@ -18,7 +16,6 @@ import com.core.base.LogManager;
 import com.core.base.TestManager;
 import com.core.utils.AutoItAPI;
 import com.core.utils.SystemUtils;
-import com.core.utils.XmlUtils;
 
 public class SysAidServer {
 	
@@ -98,12 +95,18 @@ public class SysAidServer {
 	
 
 	private static void initExeEnv(boolean isUpgraseProcess) {
+		String srcPath = "";
 		if(!useDefaultExe){
 			LogManager.info(String.format("SysAid Version:%s , Build: %s",server_ver,server_build));
 			exeName = String.format("SysAidServer64_%s_b%s.exe",server_ver.replace(".", "_"),server_build);
+			
+			String path = "\\\\fs01.ilient-hq.local\\sysaidarchive\\IT";
+			File versionFile = SystemUtils.Files.getFile(path, server_ver);
+			File buildFile = SystemUtils.Files.getFile(versionFile.getAbsolutePath(), server_build);
+			
+			srcPath= String.format("%s\\installations\\%s",buildFile.getAbsoluteFile(),exeName);
 		}
 		
-		String srcPath= String.format("\\\\fs01.ilient-hq.local\\sysaidarchive\\IT\\%s\\b%s\\installations\\%s",server_ver,server_build,exeName);
 		
 		if(isUpgraseProcess){
 			exeName = exeName.replace("64", "Patch64");
@@ -296,7 +299,7 @@ public class SysAidServer {
 	}
 
 	/**
-	 * Test# 251 , #252
+	 * Test# 11 , #12
 	 */
 	public static void verifyDB(){
 		LogManager.bold("Verification - MSSQL embedded");

@@ -43,9 +43,11 @@ public class ServiceRequestTables {
 	}
 
 	private void initRequests() {
-		RequestSR  req1 = new RequestSR(Category.BASIC_SOFTWARE, "Other", "How to?", "Welcome to SysAid!", "description").setID("224");
+		//RequestSR  req1 = new RequestSR(Category.BASIC_SOFTWARE, "Other", "How to?", "Welcome to SysAid!", "description").setID("224");
 		requestTable = new ArrayList<RequestSR>();		
-		requestTable.add(req1);
+		//requestTable.add((RequestSR) new RequestSR(Category.APPLICATION_ABC, "Administration", "third", "Basic Request", "description").setID("27"));//TODO REMOVE FOR DEBUG ONLY
+		//requestTable.add((RequestSR) new RequestSR(Category.DATA_CENTER, "Availability", "third", "Basic Request", "description").setID("28"));
+		//requestTable.add((RequestSR) new RequestSR(Category.MOBILE_DEVICES, "new req", "third", "itai test", "description").setID("29"));
 	}
 
 	private void initIncidents() {
@@ -57,6 +59,10 @@ public class ServiceRequestTables {
 	
 	public List<IncidentSR> incidents(){
 		return this.incidentTable;
+	}
+	
+	public List<RequestSR> requests(){
+		return this.requestTable;
 	}
 	
 	public void addIncident(IncidentSR newIncident){

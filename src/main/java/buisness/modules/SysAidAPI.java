@@ -19,6 +19,7 @@ public class SysAidAPI {
 	private SysAidAPI(){
 		pre_url = "http://"+SystemUtils.OS.getCurrentIP()+":8080/api/v1/";
 		//pre_url = "http://10.14.1.225:8080/api/v1/";
+		//pre_url = "http://10.14.1.30:8080/api/v1/";
 	}
 	
 	

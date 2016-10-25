@@ -14,6 +14,9 @@ public class Admin {
 	private LoginPage login = null;
 	private DashboardPage dashboard = null;
 	private IncidentsPage incidents = null;
+	private RequestsPage requests = null;
+	private CompaniesPage companies = null;
+	private GroupsPage groups = null;
 
 	
 	private Admin(){
@@ -28,7 +31,7 @@ public class Admin {
 	public void launch() {
 		LogManager.info("Launch Admin");
 		driver = new PageDriver();
-		//URL = "http://10.14.1.103:8080"; // TODO : Current ip
+		//URL = "http://10.14.1.33:8080"; // TODO : Current ip
 		URL = String.format("http://%s:8080",SystemUtils.OS.getCurrentIP());
 		driver.navigate(URL);
 	}
@@ -44,6 +47,24 @@ public class Admin {
 		if(incidents == null)
 			incidents = new IncidentsPage(driver);
 		return incidents;
+	}
+	
+	public RequestsPage requests() {
+		if(requests == null)
+			requests = new RequestsPage(driver);
+		return requests;
+	}
+	
+	public CompaniesPage companies() {
+		if(companies == null)
+			companies = new CompaniesPage(driver);
+		return companies;
+	}
+	
+	public GroupsPage groups() {
+		if(groups == null)
+			groups = new GroupsPage(driver);
+		return groups;
 	}
 
 

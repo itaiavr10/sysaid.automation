@@ -20,7 +20,7 @@ public class DBQuery {
 		boolean ispass = Utils.tryUntil(new ActionWrapper("Verify Table Content: "+ tableContent , timeOutMs, delay) {
 			@Override
 			public boolean invoke() throws Exception {
-				ResultSet rs = DbFactory.get().exec(tableContent.getQuery());
+				ResultSet rs = DbFactory.get().execQuery(tableContent.getQuery());
 				try {
 					List<List<String>> actualTable = new ArrayList<List<String>>();
 					List<List<String>> expectedTable = tableContent.getExpected();
@@ -69,7 +69,7 @@ public class DBQuery {
 	
 	public static void verifyTable(TableContent tableContent){
 		LogManager.debug("Verify Table Content: "+ tableContent);
-		ResultSet rs = DbFactory.get().exec(tableContent.getQuery());
+		ResultSet rs = DbFactory.get().execQuery(tableContent.getQuery());
 		boolean passed = true;
 		try {
 			List<List<String>> actualTable = new ArrayList<List<String>>();
@@ -140,7 +140,7 @@ public class DBQuery {
 	
 	public static void verifyResult(String query , String expected){
 		LogManager.debug("Verify Query results..");
-		ResultSet rs = DbFactory.get().exec(query);
+		ResultSet rs = DbFactory.get().execQuery(query);
 		//ResultSet rs = DBconnector.get().exec(query);
 		try {
 			if(rs.next()){
@@ -159,7 +159,7 @@ public class DBQuery {
 	
 	public static void verifyNumOfRows(String query , int expectedRows){
 		LogManager.debug("Verify DB - Num Of Rows..");
-		ResultSet rs = DbFactory.get().exec(query);
+		ResultSet rs = DbFactory.get().execQuery(query);
 		try {
 			int actualRows = 0;
 			while(rs.next()){

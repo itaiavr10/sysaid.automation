@@ -15,7 +15,7 @@ public abstract class AbstractDB {
 	protected String user = "sa";
 	protected String pass = "gSPc5a3a9p";
 	protected String url = "jdbc:sqlserver://%s:1450;databaseName=ilient";
-	public static String dbIP = "10.14.1.103";
+	public static String dbIP = "10.14.1.46";
 	
 	
 	
@@ -27,8 +27,23 @@ public abstract class AbstractDB {
 		//connect();
 	}
 	
+	public boolean execUpdate(String insertQuery) {
+		connect();
+		LogManager.debug("MS SQL - exec insert query : " + insertQuery);
+		boolean pass = false ;
+		try {
+			statment = conn.createStatement();
+			int rs = statment.executeUpdate(insertQuery);
+			if(rs == 1)
+				pass = true;
+		} catch (SQLException e) {
+			LogManager.error("Failed to execute DB query , Error : " + e.getMessage());
+		}
+		return pass;
+	}
 	
-	public ResultSet exec(String query) {
+	
+	public ResultSet execQuery(String query) {
 		connect();
 		LogManager.debug("MS SQL - exec query : " + query);
 		ResultSet rs = null;

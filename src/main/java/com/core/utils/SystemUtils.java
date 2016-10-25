@@ -46,6 +46,19 @@ public class SystemUtils {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static class Files {
+		
+		
+		public static File getFile(String directoryPath , String fileName){
+			File directory = new File(directoryPath);
+			File[] files = directory.listFiles();
+			for (File file : files) {
+				if(file.getName().contains(fileName))
+					return file;
+			}
+			LogManager.error("Failed to find file with prefix : " + fileName);
+			return null;
+		}
+		
 
 		//TODO: Check
 		public static String read(final File srcFile) throws IOException {

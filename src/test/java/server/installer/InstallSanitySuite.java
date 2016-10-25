@@ -24,6 +24,10 @@ import buisness.modules.SysAidServer;
 import buisness.sr.AbstractSR;
 import buisness.sr.AbstractSR.Category;
 import buisness.sr.IncidentSR;
+import buisness.sr.RequestSR;
+import buisness.tools.usermanagement.Company;
+import buisness.tools.usermanagement.Group;
+import buisness.tools.usermanagement.Group.GroupType;
 
 
 public class InstallSanitySuite extends AbstractSuite{
@@ -38,23 +42,47 @@ public class InstallSanitySuite extends AbstractSuite{
 		//wait for process to finish installation
 		SystemUtils.Processes.waitForProcessStop(SysAidServer.exeName, 60 * 1000, 3000);
 		
+		//Create new SRs (Incdients & Requests)
+		List<AbstractSR> newSRs = new ArrayList<AbstractSR>();
+		newSRs.add(new IncidentSR(Category.APPLICATION_ABC,"Administration","Error Message","Failed Patches","WTF"));
+		newSRs.add(new IncidentSR(Category.MOBILE_DEVICES,"Smartphone","Error Message","itai test","WTF"));
+		newSRs.add(new RequestSR(Category.APPLICATION_ABC,"Administration","Basic Rquest Process","request 1 - title","WTF"));
+		newSRs.add(new RequestSR(Category.DATA_CENTER,"Avilability","Basic Rquest Process","request 2 - title","WTF"));
+		SysAidAPI.get().createNewSRs(newSRs);
 		
-		List<IncidentSR> newIncidetns = new ArrayList<IncidentSR>();
-		newIncidetns.add(new IncidentSR(Category.APPLICATION_ABC,"Administration","Error Message","Failed Patches","WTF"));
-		newIncidetns.add(new IncidentSR(Category.MOBILE_DEVICES,"Smartphone","Error Message","itai test","WTF"));
+		//Create Companies:
+		Company.createNewCompany("company1", "address1","TA1" , "70101", "Israel1", "972-3-5333671", "972-3-7617201");
+		Company.createNewCompany("company2", "address1","TA2" , "70102", "Israel2", "972-3-5333672", "972-3-7617202");
+		Company.createNewCompany("company3", "address1","TA3" , "70103", "Israel3", "972-3-5333673", "972-3-7617203");
+		//Create Groups:
+		Group.createNewGroup("Group1", GroupType.Administrators, 1);
+		Group.createNewGroup("Group2", GroupType.EndUser, 2);
+		Group.createNewGroup("Group3", GroupType.Administrators, 3);
+		Group.createNewGroup("Group4", GroupType.EndUser, 4);
 		
-		SysAidAPI.get().createNewSRs(newIncidetns);
 		
 		InstallServer.upgradeMe();
 		
-		//SysAidServer.verifyUpgradeProcess();
-		//SysAidServer.verifyInstallation();
 		InstallServer.verify();
 		
 		admin.launch();
 		admin.login().loginWith("sysaid", "changeit");
+		
+		//Incident table verification
 		admin.dashboard().goToIncidentsTable();
 		admin.incidents().verifyTable();
+		
+		//Request table verification
+		admin.incidents().goToRquestsTable();
+		admin.requests().verifyTable();
+		
+		//Company table verification
+		admin.dashboard().goToCompaniesTable();
+		admin.companies().verifyTable();
+		
+		//Group table verification
+		admin.dashboard().goToGroupsTable();
+		admin.groups().verifyTable();
 	}
 	
 	

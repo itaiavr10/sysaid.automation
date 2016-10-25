@@ -31,6 +31,9 @@ public class SysAidAgent {
 		filesList.add(sysaidAgentLogPath);
 	}
 	
+	/**
+	 *  Test #5 Verification - SysAid Agent installation
+	 */
 	public static void verifyInstallation(){
 		LogManager.bold("SysAid Agent : Verify Installation");
 		verifyProcesses();

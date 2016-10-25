@@ -13,7 +13,7 @@ import com.core.driver.BasePage;
 import com.core.driver.PageDriver;
 import com.core.driver.PageElement;
 
-public class IncidentsPage extends BasePage {
+public class IncidentsPage extends DashboardPage {
 
 	protected IncidentsPage(PageDriver driver) {
 		super(driver);
@@ -46,44 +46,22 @@ public class IncidentsPage extends BasePage {
 						investigateRowContent(idCol.get(0),incident);
 						rows.remove(row);
 						break;
-					}
+					}else
+						LogManager.error("Failed to find row for incident id:" + id);
 				}
-				
 			}
 			
-			/*for (Incident incident : list) {
-				String id = incident.getID();
-				for (WebElement row : rows) {
-					String xpath = "//td[2]/div[text()='"+id+"']";
-					List<WebElement> idCol =  row.findElements(By.xpath(xpath));
-					if(idCol != null && idCol.size() == 1){
-						System.out.println("This is the row");
-						List<WebElement> category = row.findElements(By.cssSelector("td:nth-child(4)"));
-						if(category == null || category.size() == 0)
-							LogManager.error("Failed to get category");
-						String cat = category.get(0).getText();
-						System.out.println(cat);
-						rows.remove(row);
-						break;
-					}
-				}
-				
-			}*/
-			
-			
-		
 			//return to default
 			switchToMainWin();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogManager.error("Verify Incident table - Error :" + e.getMessage());
 		}
 	}
 	
 	
 	
 	private void investigateRowContent(WebElement webElement, IncidentSR incident) {
-		LogManager.debug("Verify Incidnet..");
+		LogManager.debug("Verify Incidnet content for incidnet id: " + incident.getID());
 		try{
 			boolean pass= true;
 			WebElement td = webElement.findElement(By.xpath("./.."));
@@ -107,7 +85,7 @@ public class IncidentsPage extends BasePage {
 
 			LogManager.verify(pass, "Verify Incidnet Content With ID = " + incident.getID());
 		}catch(Exception e){
-			LogManager.error("Verify Incidnet - Error: " + e.getMessage());
+			LogManager.error("Verify Incidnet content - Error: " + e.getMessage());
 		}
 		
 	}

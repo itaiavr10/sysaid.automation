@@ -140,6 +140,7 @@ public abstract class AbstractSR {
 		APPLICATION_ABC("Application ABC"),
 		BASIC_SOFTWARE("Basic Software"),
 		MOBILE_DEVICES("Mobile Devices"),
+		DATA_CENTER("Data Center"),
 		;
 		
 		private String name;
